@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+    {% for venue in venues %}
+        <div class="venue">
+            <p>published: {{ venue.priority }}</p>
+            <h1>{{ venue.type }}</h1>
+            <p>{{ venue.description|linebreaks }}</p>
+        </div>
+    {% endfor %}
+
+    <div class="col-sm-4">
+        <div class="clearfix">
+            <div class="post-media clearfix">
+                <a href="blog-single.html"><img src="{% static 'images/venues/meeting.jpg' %}" alt=""
+                                                class="img-responsive"></a>
+            </div><!-- end post-media -->
+
+            <div class="post-title clearfix">
+                <div class="pull-left">
+                    <h5><a href="blog-single.html">Meetings</a></h5>
+                    <h6>120 PLACES</h6>
+                </div>
+            </div><!-- end ost-title -->
+            <div class="post-content clearfix">
+                <p>Find and book venues for a range of corporate events.</p>
+            </div><!-- end post-content -->
+        </div><!-- end post-wrapper -->
+    </div><!-- end col -->
+
