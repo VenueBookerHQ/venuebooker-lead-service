@@ -1,6 +1,8 @@
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class Venue(models.Model):
     priority = models.IntegerField()
     type = models.CharField(max_length=30)
