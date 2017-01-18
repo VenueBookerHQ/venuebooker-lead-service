@@ -1,0 +1,24 @@
+#   A basic travis.yml boilerplate for Django projects
+#
+#   The set-up assumes a postgreSQL database.
+#
+#   Replace the following variables in the code:
+# * your_project_settings
+# * your_github_username
+# * your_repo
+
+language: python
+
+python:
+  - 2.7
+
+services: postgresql
+
+env:
+  - DJANGO=1.9.2
+
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=base_site.settings
+  - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
+  - export PIP_USE_MIRRORS=true
