@@ -21,4 +21,3 @@ env:
 before_install:
   - export DJANGO_SETTINGS_MODULE=base_site.settings
   - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
-  - export PIP_USE_MIRRORS=true
