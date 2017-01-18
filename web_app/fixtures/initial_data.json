@@ -7,7 +7,7 @@
         "type": "Hotel",
         "description": "This is a hotel",
 	"places": "2",
-	"image": "stock-image"
+	"image": "stockimage"
     }
 },
 {
@@ -18,7 +18,7 @@
         "type": "Restaurant",
         "description": "This is a restaurant",
 	"places": "1",
-	"image": "stock-image2"
+	"image": "stockimage2"
     }
 }
 ]
