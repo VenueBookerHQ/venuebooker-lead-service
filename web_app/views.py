@@ -18,3 +18,11 @@ def venue_list(request):
 
     return render(request, 'index.html', {})
 
+def login(request):
+    #venues = Venue.objects.order_by('priority')
+
+    #if len(venues) == 0:
+     #   venues = {}
+
+    return render(request, 'login.html', {})
+
