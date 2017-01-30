@@ -20,3 +20,22 @@ from django.db import models
 
     #def __str__(self):              # __unicode__ on Python 2
      #   return self.type
+
+class Venue(models.Model):
+    type = models.CharField(max_length=30)
+    description = models.TextField(max_length=200)
+    image = models.CharField(max_length=100)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.type
+
+
+class Event_campaign(models.Model):
+    type = models.CharField(max_length=30)
+    details = models.TextField(max_length=200)
+    name = models.TextField(max_length=200)
+    image = models.CharField(max_length=100)
+    capacity = models.IntegerField()
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.type
