@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-    {% for venue in venues %}
-        <div class="venue">
-            <p>published: {{ venue.pk }}</p>
-            <h1>{{ venue.type }}</h1>
-            <p>{{ venue.description|linebreaks }}</p>
+    {% for event_campaign in event_campaigns %}
+        <div class="event_campaign">
+            <p>published: {{ event_campaign.pk }}</p>
+	    <h1>{{ event_campaign.name }}</p>	
+            <h1>{{ event_campaign.type }}</h1>
+            <p>{{ event_campaign.details|linebreaks }}</p>
+	    <p>{{ event_campaign.capacity }}</p>
         </div>
     {% endfor %}
 
