@@ -23,7 +23,7 @@ def venue_list(request):
     if len(venues) == 0:
         venues = {}
 
-    return render(request, 'venues.html', {'venues': venues})
+    return render(request, 'venues.html', {})
 
 
 def event_campaign_list(request):
@@ -32,5 +32,5 @@ def event_campaign_list(request):
     if len(event_campaigns) == 0:
         event_campaigns = {}
 
-    return render(request, 'eventcampaigns.html', {'event_campaigns': event_campaigns})
+    return render(request, 'eventcampaigns.html', {})
 

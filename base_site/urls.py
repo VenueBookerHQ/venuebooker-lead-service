@@ -11,8 +11,6 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),
-    url(r'^venues/', web_app.views.venue_list, name='venue_list'),
-    url(r'^eventcampaigns/', web_app.views.event_campaign_list, name='event_campaign_list'),
     url(r'^web_app/', include('web_app.urls')),
     url(r'', include('web_app.urls')),
     url(r'^admin/', include(admin.site.urls)),
