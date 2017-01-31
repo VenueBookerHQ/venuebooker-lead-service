@@ -25,5 +25,5 @@ def event_campaign_list(request):
     if len(event_campaigns) == 0:
         event_campaigns = {}
 
-    return render(request, 'eventcampaigns.html', {'eventcampaigns': eventcampaigns})
+    return render(request, 'eventcampaigns.html', {'eventcampaigns': event_campaigns})
 
