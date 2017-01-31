@@ -50,13 +50,19 @@
                                 <div id="navbar-collapse" class="navbar-right navbar-collapse collapse clearfix">
                                     <ul class="nav navbar-nav yamm">
                                         <li class="dropdown">
-                                            <a href="#" class="active dropdown-toggle" data-toggle="dropdown">HOME</a>
+                                            <a href="index">HOME</a>
                                         </li><!-- end yamm-fw -->
                                         <li>
                                             <a href="#">ASK AN EXPERT</a>
                                         </li>
                                         <li>
                                             <a href="#">CONTACT</a>
+                                        </li>
+					<li>
+                                            <a href="#" class="active dropdown-toggle" data-toggle="dropdown">VENUES</a>
+                                        </li>
+					<li>
+                                            <a href="/eventcampaigns">EVENT CAMPAIGNS</a>
                                         </li>
                                         <li class="sidebar-dropper">
                                             <a data-toggle="sidebar" data-target=".sidebar-right" class="noborder"
@@ -173,13 +179,13 @@
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="blog-single.html"><img src="static/{{ venue.image }}" alt=""
+                                        <a href="venue/{{ venue.pk }}"><img src="static/{{ venue.image }}" alt=""
                                                                         class="img-responsive"></a>
                                     </div><!-- end post-media -->
 
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
-                                            <h5><a href="blog-single.html">{{ venue.type }}</a></h5>
+                                            <h5><a href="venue/{{ venue.pk }}">{{ venue.type }}</a></h5>
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
