@@ -1,6 +1,7 @@
 from django.db import models
 
 class Venue(models.Model):
+    name = models.TextField(max_length=200)
     type = models.CharField(max_length=30)
     description = models.TextField(max_length=200)
     image = models.FileField()
