@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^index$', views.index, name='index'),
     url(r'^login$', views.login, name='login'),
+    url(r'^contact$', views.contact, name='contact'),
     url(r'^venues/$', views.VenueList.as_view(), name='venue_list'),
     url(r'^venues/(?P<pk>[0-9]+)/$', views.DetailViewVenue.as_view(), name='venue_detail'),
     url(r'^venues/add/$', views.VenueCreate.as_view(), name='venue-add'),
