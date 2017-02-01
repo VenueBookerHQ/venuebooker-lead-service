@@ -13,9 +13,6 @@ def index(request):
 def login(request):
     return render(request, 'login.html', {})
 
-
-
-
 class VenueList(generic.ListView):
     template_name = 'venues.html'
 
@@ -28,17 +25,13 @@ class EventCampaignList(generic.ListView):
     def get_queryset(self):
     	return Event_campaign.objects.all()
 
-
 class DetailViewVenue(generic.DetailView):
 	model = Venue
 	template_name = 'venue_detail.html'
  
-
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html' 
-
-
 
 class VenueCreate(CreateView):
 	model = Venue
@@ -56,7 +49,6 @@ class EventCampaignUpdate(UpdateView):
 	model = Event_campaign
 	fields = ['name', 'type', 'details', 'capacity', 'image']
 
-
 class VenueDelete(DeleteView):
 	model = Venue
     success_url = reverse_lazy('index')
@@ -64,6 +56,3 @@ class VenueDelete(DeleteView):
 class EventCampaignDelete(DeleteView):
 	model = Event_campaign
     success_url = reverse_lazy('index')
-
-
-
