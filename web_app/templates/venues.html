@@ -179,13 +179,13 @@
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="venues/{% url 'detail' venue.pk %}"><img src="{{ venue.image.url }}" alt=""
+                                        <a href="/{% url 'detail' venue.pk %}"><img src="{{ venue.image.url }}" alt=""
                                                                         class="img-responsive"></a>
                                     </div><!-- end post-media -->
 
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
-				            <h4><a href="venues/{% url 'detail' venue.pk %}">{{ venue.name }}</a></h4>
+				            <h4><a href="/{% url 'detail' venue.pk %}">{{ venue.name }}</a></h4>
                                             <h5>{{ venue.type }}</h5>
                                         </div>
                                     </div><!-- end ost-title -->
