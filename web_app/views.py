@@ -1,5 +1,6 @@
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -46,3 +47,23 @@ class VenueCreate(CreateView):
 class EventCampaignCreate(CreateView):
 	model = Event_campaign
 	fields = ['name', 'type', 'details', 'capacity', 'image']
+
+class VenueUpdate(UpdateView):
+	model = Venue
+	fields = ['name', 'type', 'description', 'image']
+
+class EventCampaignUpdate(UpdateView):
+	model = Event_campaign
+	fields = ['name', 'type', 'details', 'capacity', 'image']
+
+
+class VenueDelete(DeleteView):
+	model = Venue
+    success_url = reverse_lazy('index')
+
+class EventCampaignDelete(DeleteView):
+	model = Event_campaign
+    success_url = reverse_lazy('index')
+
+
+
