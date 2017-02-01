@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Venue(models.Model):
     name = models.TextField(max_length=200)

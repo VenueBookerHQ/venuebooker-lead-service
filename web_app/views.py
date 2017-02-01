@@ -1,3 +1,4 @@
+from django.views import generic
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -10,13 +11,17 @@ def index(request):
 def login(request):
     return render(request, 'login.html', {})
 
-def venue_list(request):
-    venues = Venue.objects.order_by('pk')
+class VenueList(generic.ListView):
+    template_name = 'venues.html'
 
-    if len(venues) == 0:
-        venues = {}
+    def get_queryset(self):
+    	return Venue.objects.all()
 
-    return render(request, 'venues.html', {'venues': venues})
+
+class DetailView(generic.DetailView):
+	model = Venue
+	template_name = 'detail.html' 
+
 
 
 def event_campaign_list(request):
