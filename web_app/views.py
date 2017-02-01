@@ -18,22 +18,28 @@ class VenueList(generic.ListView):
     def get_queryset(self):
     	return Venue.objects.all()
 
+class EventCampaignList(generic.ListView):
+    template_name = 'eventcampaigns.html'
 
-class DetailView(generic.DetailView):
+    def get_queryset(self):
+    	return Event_campaign.objects.all()
+
+
+class DetailViewVenue(generic.DetailView):
 	model = Venue
-	template_name = 'detail.html' 
+	template_name = 'venue_detail.html'
+ 
 
+class DetailViewEvent(generic.DetailView):
+	model = Event_campaign
+	template_name = 'event_campaign_detail.html' 
 
-
-def event_campaign_list(request):
-    event_campaigns = Event_campaign.objects.order_by('pk')
-
-    if len(event_campaigns) == 0:
-        event_campaigns = {}
-
-    return render(request, 'eventcampaigns.html', {'event_campaigns': event_campaigns})
 
 
 class VenueCreate(CreateView):
 	model = Venue
 	fields = ['name', 'type', 'description', 'image']
+
+class EventCampaignCreate(CreateView):
+	model = Event_campaign
+	fields = ['name', 'type', 'details', 'capacity', 'image']

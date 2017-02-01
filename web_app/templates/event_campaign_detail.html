@@ -23,7 +23,7 @@
                         <li><a href="https://twitter.com/Venuebooker"><i class="icon-twitter"></i></a></li>
                         <li><a href="https://www.facebook.com/Venuebooker.info"><i class="icon-facebook"></i></a></li>
                         <li><a href="https://www.linkedin.com/company/2749848"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-instagrem"></i></a></li>
+                        <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-flickr"></i></a></li>
                         <li><a href="/login">MY ACCOUNT</a></li>
                         <li><a href="/login">LOGIN</a></li>
                     </ul><!-- end list-style -->
@@ -62,7 +62,7 @@
                                             <a href="/venues">VENUES</a>
                                         </li>
 					<li>
-                                            <a href="#" class="active dropdown-toggle" data-toggle="dropdown">EVENT CAMPAIGNS</a>
+                                            <a href="/eventcampaigns" class="active dropdown-toggle" data-toggle="dropdown">>EVENT CAMPAIGNS</a>
                                         </li>
                                         <li class="sidebar-dropper">
                                             <a data-toggle="sidebar" data-target=".sidebar-right" class="noborder"
@@ -86,6 +86,8 @@
                         <li><a href="/index.html">Home</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Forums</a></li>
+                        <li><a href="page-sidebar.html">Terms Usage</a></li>
                         <li><a href="blog.html">News / Blog</a></li>
                     </ul>
                 </div>
@@ -173,27 +175,26 @@
 
                     <div class="row">
 
-                        {% for event_campaign in object_list %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="eventcampaign/{{ event_campaign.pk }}"><img src="{{ event_campaign.image.url }}" alt=""
+                                        <a href="#"><img src="{{ event_campaign.image.url }}" alt=""
                                                                         class="img-responsive"></a>
                                     </div><!-- end post-media -->
 
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
-					    <h5><a href="eventcampaign/{{ event_campaign.pk }}">{{ event_campaign.name }}</h5>
-                                            <h6>Type: {{ event_campaign.type }}</h6>
+				            <h4>{{ event_campaign.name }}</a></h4>
+                                            <h5>{{ event_campaign.type }}</h5>
+					    <br>
+					    <p>{{ event_campaign.details }}</p>
+					    <p>Capacity: {{ event_campaign.capacity }}</p>
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
-{#                                        <p>Details: {{ event_campaign.details }}</p>#}
-					  <p>Capacity: {{ event_campaign.capacity }}</p>
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
-                        {% endfor %}
 
                     </div><!-- end row -->
                 </div><!-- end related-hotels -->
