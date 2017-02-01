@@ -7,6 +7,10 @@ class Venue(models.Model):
     description = models.TextField(max_length=200)
     image = models.FileField()
 
+    def get_absolute_url(self):
+	return reverse('detail', kwargs={'pk': self.pk})
+	
+
     def __str__(self):              # __unicode__ on Python 2
         return self.type
 

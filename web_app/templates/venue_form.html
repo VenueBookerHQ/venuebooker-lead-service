@@ -23,7 +23,7 @@
                         <li><a href="https://twitter.com/Venuebooker"><i class="icon-twitter"></i></a></li>
                         <li><a href="https://www.facebook.com/Venuebooker.info"><i class="icon-facebook"></i></a></li>
                         <li><a href="https://www.linkedin.com/company/2749848"><i class="icon-linkedin"></i></a></li>
-                        <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-flickr"></i></a></li>
+                        <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-instagrem"></i></a></li>
                         <li><a href="/login">MY ACCOUNT</a></li>
                         <li><a href="/login">LOGIN</a></li>
                     </ul><!-- end list-style -->
@@ -43,26 +43,26 @@
                                         <span class="sr-only">Toggle navigation</span>
                                         <i class="icon-menu27"></i>
                                     </button>
-                                    <a id="brand" class="clearfix navbar-brand" href="/index.html"><img
+                                    <a id="brand" class="clearfix navbar-brand" href="index"><img
                                             src="{% static 'images/vblogo.jpg' %}" alt="Trips"
                                             style="width: 208px;padding-top: 10px;"></a>
                                 </div><!-- end navbar-header -->
                                 <div id="navbar-collapse" class="navbar-right navbar-collapse collapse clearfix">
                                     <ul class="nav navbar-nav yamm">
                                         <li class="dropdown">
-                                            <a href="/index">HOME</a>
+                                            <a href="#" class="active dropdown-toggle" data-toggle="dropdown">HOME</a>
                                         </li><!-- end yamm-fw -->
                                         <li>
                                             <a href="#">ASK AN EXPERT</a>
                                         </li>
                                         <li>
-                                            <a href="#">CONTACT</a>
+                                            <a href="contact">CONTACT US</a>
                                         </li>
 					<li>
-                                            <a href="#" class="active dropdown-toggle" data-toggle="dropdown">VENUES</a>
+                                            <a href="venues">VENUES</a>
                                         </li>
 					<li>
-                                            <a href="/eventcampaigns">EVENT CAMPAIGNS</a>
+                                            <a href="eventcampaigns">EVENT CAMPAIGNS</a>
                                         </li>
                                         <li class="sidebar-dropper">
                                             <a data-toggle="sidebar" data-target=".sidebar-right" class="noborder"
@@ -83,13 +83,12 @@
                             class="icon-wrong6-1"></i></a>
                     <img src="{% static 'images/vblogo.jpg' %}" alt="Venuebooker">
                     <ul class="nav navbar-stacked">
-                        <li><a href="/index.html">Home</a></li>
+                        <li><a href="index">Home</a></li>
                         <li><a href="#">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Forums</a></li>
-                        <li><a href="page-sidebar.html">Terms Usage</a></li>
+                        <li><a href="contact">Contact</a></li>
+                        <!-- <li><a href="#">Forums</a></li>
+                        <li><a href="page-sidebar.html">Terms Usage</a></li> -->
                         <li><a href="blog.html">News / Blog</a></li>
-			<li><a href="{% url 'venue-add' %}">Add a Venue</a></li>
                     </ul>
                 </div>
             </div><!-- end sidebar menu -->
@@ -131,9 +130,9 @@
                         </li>
 
                         <li data-transition="slideup" data-slotamount="7" data-masterspeed="1000"
-                            data-thumb="uploads/home_slider_01.jpg" data-saveperformance="off" data-title="Parallax 3D">
+                            data-thumb="uploads/home_slider_02.jpg" data-saveperformance="off" data-title="Parallax 3D">
                             <img src="{% static 'images/dummy.png' %}" alt="greenbg"
-                                 data-lazyload="{% static 'uploads/home_slider_01.jpg' %}" data-bgposition="center top"
+                                 data-lazyload="{% static 'uploads/home_slider_02.jpg' %}" data-bgposition="center top"
                                  data-bgfit="cover" data-bgrepeat="no-repeat">
                             <div class="tp-caption slider-title tp-fade tp-resizeme rs-parallaxlevel-2"
                                  data-x="center"
@@ -175,29 +174,19 @@
                     </div>
 
                     <div class="row">
+			<div class ="col-sm-12 col md-7">
+				<div class ="panel panel-default">
+					<div class ="panel-body">
+						<form class ="form-horizontal" action="" method="post" enctype="multipart/form-data">
+							{% include 'form-template.html' %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
-                        {% for venue in object_list %}
-                            <div class="col-sm-4">
-                                <div class="clearfix">
-                                    <div class="post-media clearfix">
-                                        <a href="{% url 'detail' venue.pk %}"><img src="{{ venue.image.url }}" alt=""
-                                                                        class="img-responsive"></a>
-                                    </div><!-- end post-media -->
-
-                                    <div class="post-title clearfix">
-                                        <div class="pull-left">
-				            <h4><a href="{% url 'detail' venue.pk %}">{{ venue.name }}</a></h4>
-                                            <h5>{{ venue.type }}</h5>
-                                        </div>
-                                    </div><!-- end ost-title -->
-                                    <div class="post-content clearfix">
-{#                                        <p>{{ venue.details }}</p>#}
-                                    </div><!-- end post-content -->
-                                </div><!-- end post-wrapper -->
-                            </div><!-- end col -->
-                        {% endfor %}
-
-                    </div><!-- end row -->
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->
@@ -253,7 +242,7 @@
                             </div>
                             <div class="col-md-9 col-xs-9 col-sm-9">
                                 <h5>MORE BOOKINGS!</h5>
-                                <p>Venuebooker gives venue managers the ability to bring their service based sales skills online to generate event booking revenue. Getting there venue infant of customers through there smartphones. In summary Venuebooker connects your till to the internet </p>
+                                <p>Venuebooker gives venue managers the ability to bring their service based sales skills online to generate event booking revenue. Getting their venue infront of customers through their smartphones. In summary Venuebooker connects your till to the internet </p>
                             </div>
                         </div><!-- end service -->
                     </div><!-- end col -->
@@ -307,14 +296,14 @@
 
                     <div class="col-md-6 text-right">
                         <div class="social-footer">
-                            <a href="#" title="Facebook"><i class="icon-facebook"></i></a>
-                            <a href="#" title="Twitter"><i class="icon-twitter"></i></a>
-                            <a href="#" title="Pinterest"><i class="icon-pinterest"></i></a>
-                            <a href="#" title="SU.PR"><i class="icon-stumbleupon"></i></a>
-                            <a href="#" title="Instagram"><i class="icon-instagrem"></i></a>
-                            <a href="#" title="Dribbble"><i class="icon-dribbble"></i></a>
-                            <a href="#" title="Vimeo"><i class="icon-vimeo"></i></a>
-                            <a href="#" title="Tumblr"><i class="icon-tumblr"></i></a>
+                            <a href="https://www.facebook.com/Venuebooker.info" title="Facebook"><i class="icon-facebook"></i></a>
+                            <a href="https://twitter.com/Venuebooker" title="Twitter"><i class="icon-twitter"></i></a>
+                            <a href="https://in.pinterest.com/v6606/" title="Pinterest"><i class="icon-pinterest"></i></a>
+                            <!--<a href="#" title="SU.PR"><i class="icon-stumbleupon"></i></a> -->
+                            <a href="https://www.instagram.com/venuebooker_/" title="Instagram"><i class="icon-instagrem"></i></a>
+                            <!--<a href="#" title="Dribbble"><i class="icon-dribbble"></i></a>
+                            <a href="#" title="Vimeo"><i class="icon-vimeo"></i></a> -->
+                            <a href="http://venuebookerblog.tumblr.com/" title="Tumblr"><i class="icon-tumblr"></i></a>
                             <a href="#" title="RSS"><i class="icon-rss"></i></a>
                         </div><!-- end social-footer -->
                     </div><!-- end col -->
@@ -346,4 +335,3 @@
 
 
 {% endblock %}
-    

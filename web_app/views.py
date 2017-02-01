@@ -1,4 +1,5 @@
 from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -32,3 +33,7 @@ def event_campaign_list(request):
 
     return render(request, 'eventcampaigns.html', {'event_campaigns': event_campaigns})
 
+
+class VenueCreate(CreateView):
+	model = Venue
+	fields = ['name', 'type', 'description', 'image']
