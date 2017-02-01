@@ -8,7 +8,7 @@ class Venue(models.Model):
     image = models.FileField()
 
     def get_absolute_url(self):
-	return reverse('venue_detail', kwargs={'pk': self.pk})
+    	return reverse('venue_detail', kwargs={'pk': self.pk})
 	
 
     def __str__(self):              # __unicode__ on Python 2
@@ -23,7 +23,8 @@ class Event_campaign(models.Model):
     capacity = models.IntegerField()
 
     def get_absolute_url(self):
-	return reverse('event_campaign_detail', kwargs={'pk': self.pk})
+	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
+
 
     def __str__(self):              # __unicode__ on Python 2
         return self.type

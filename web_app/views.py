@@ -12,6 +12,9 @@ def index(request):
 def login(request):
     return render(request, 'login.html', {})
 
+
+
+
 class VenueList(generic.ListView):
     template_name = 'venues.html'
 
