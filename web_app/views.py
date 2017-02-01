@@ -36,7 +36,7 @@ class DetailViewVenue(generic.DetailView):
  
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
-	template_name = 'event_campaign_detail.html' 
+	template_name = 'event_campaign_detail.html'
 
 
 class VenueCreate(CreateView):
@@ -57,13 +57,3 @@ class VenueUpdate(UpdateView):
 class EventCampaignUpdate(UpdateView):
 	model = Event_campaign
 	fields = ['name', 'type', 'details', 'capacity', 'image']
-
-
-class EventCampaignDelete(DeleteView):
-	model = Event_campaign
-    success_url = reverse_lazy('index')
-
-
-class VenueDelete(DeleteView):
-	model = Venue
-    success_url = reverse_lazy('index')
