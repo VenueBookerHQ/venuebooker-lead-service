@@ -61,3 +61,7 @@ class EventCampaignUpdate(UpdateView):
 class EventCampaignDelete(DeleteView):
     model = Event_campaign
     success_url = reverse_lazy('index')
+
+class VenueDelete(DeleteView):
+    model = Venue
+    success_url = reverse_lazy('index')
