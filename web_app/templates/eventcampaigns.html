@@ -177,13 +177,13 @@
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="eventcampaign/{{ event_campaign.pk }}"><img src="{{ event_campaign.image.url }}" alt=""
+                                        <a href="{% url 'event_campaign_detail' event_campaign.pk %}"><img src="{{ event_campaign.image.url }}" alt=""
                                                                         class="img-responsive"></a>
                                     </div><!-- end post-media -->
 
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
-					    <h5><a href="eventcampaign/{{ event_campaign.pk }}">{{ event_campaign.name }}</h5>
+					    <h5><a href="{% url 'event_campaign_detail' event_camapign.pk %}">{{ event_campaign.name }}</h5>
                                             <h6>Type: {{ event_campaign.type }}</h6>
                                         </div>
                                     </div><!-- end ost-title -->
