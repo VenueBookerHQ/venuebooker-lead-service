@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
 from .forms import UserRegisterForm, UserLoginForm
 
@@ -100,10 +100,6 @@ class LoginView(View):
     form_class = UserLoginForm
     template_name = 'web_app/login_form.html'
 
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form' : form})
-
     def post(self, request):
         form = self.form_class(request.POST)
 
@@ -119,6 +115,12 @@ class LoginView(View):
                     return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
+
+def logout_user(request):
+    logout(request)
+    form = UserForm(request.POST or None)
+
+    return render(request, 'login', {'form' : form})
 
 
 
