@@ -100,6 +100,10 @@ class LoginView(View):
     form_class = UserLoginForm
     template_name = 'web_app/login_form.html'
 
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form' : form})
+
     def post(self, request):
         form = self.form_class(request.POST)
 
@@ -117,10 +121,11 @@ class LoginView(View):
         return render(request, self.template_name, {'form' : form})
 
 def logout_user(request):
+    template_name = 'web_app/login_form.html'
     logout(request)
-    form = UserForm(request.POST or None)
+    form = UserLoginForm(request.POST or None)
 
-    return render(request, 'login', {'form' : form})
+    return render(request, self.template_name, {'form' : form})
 
 
 
