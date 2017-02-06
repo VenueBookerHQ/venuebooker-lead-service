@@ -125,7 +125,7 @@ def logout_user(request):
     logout(request)
     form = UserLoginForm(request.POST or None)
 
-    return render(request, self.template_name, {'form' : form})
+    return render(request, 'web_app/login_form.html', {'form' : form})
 
 
 
