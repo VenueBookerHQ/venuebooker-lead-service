@@ -96,7 +96,7 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form' : form})
 
-class LoginView(View)
+class LoginView(View):
     form_class = UserLoginForm
     template_name = 'web_app/login_form.html'
 
