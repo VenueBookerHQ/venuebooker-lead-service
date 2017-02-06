@@ -13,10 +13,6 @@ from .forms import UserForm
 def index(request):
     return render(request, 'index.html', {})
 
-
-def login(request):
-    return render(request, 'login.html', {})
-
 def contact(request):
     return render(request, 'contact.html', {})
 
@@ -71,8 +67,8 @@ class VenueDelete(DeleteView):
     model = Venue
     success_url = reverse_lazy('index')
 
-class UserFormView(View):
-    form_class = UserForm
+class RegisterView(View):
+    form_class = UserRegisterForm
     template_name = 'web_app/register_form.html'
 
     def get(self, request):
@@ -90,6 +86,30 @@ class UserFormView(View):
             user.set_password(password)
             user.save()
 
+            user = authenticate(username=username, password=password)
+        
+            if user is not None:
+                
+                if user.is_active:
+                    auth_login(request, user)
+                    return redirect('index')
+
+        return render(request, self.template_name, {'form' : form})
+
+class LoginView(View)
+    form_class = UserLoginForm
+    template_name = 'web_app/login_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form' : form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
         
             if user is not None:
