@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from .models import *
 from .forms import UserForm
 
@@ -95,7 +95,7 @@ class UserFormView(View):
             if user is not None:
                 
                 if user.is_active:
-                    login(request, user)
+                    auth_login(request, user)
                     return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
