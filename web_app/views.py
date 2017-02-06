@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login
 from .models import *
-from .forms import UserForm
+from .forms import RegisterForm, LoginForm
 
 # Create your views here.
 def index(request):
