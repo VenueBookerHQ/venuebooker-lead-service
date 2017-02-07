@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserForm
 
 # Create your views here.
 def index(request):
@@ -68,7 +68,7 @@ class VenueDelete(DeleteView):
     success_url = reverse_lazy('index')
 
 class RegisterView(View):
-    form_class = UserRegisterForm
+    form_class = UserForm
     template_name = 'web_app/register_form.html'
 
     def get(self, request):
@@ -92,12 +92,12 @@ class RegisterView(View):
                 
                 if user.is_active:
                     auth_login(request, user)
-                    return redirect('index.html')
+                    return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
 
 class LoginView(View):
-    form_class = UserLoginForm
+    form_class = UserForm
     template_name = 'web_app/login_form.html'
 
     def get(self, request):
@@ -113,16 +113,17 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
         
             if user is not None:
+
                 if user.is_active:
                     auth_login(request, user)
-                    return redirect('index.html')
+                    return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
 
 def logout_user(request):
     template_name = 'web_app/login_form.html'
     logout(request)
-    form = UserLoginForm(request.POST or None)
+    form = UserForm(request.POST or None)
 
     return render(request, 'web_app/login_form.html', {'form' : form})
 
