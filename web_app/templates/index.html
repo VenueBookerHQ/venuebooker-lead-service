@@ -25,7 +25,12 @@
                         <li><a href="https://www.linkedin.com/company/2749848"><i class="icon-linkedin"></i></a></li>
                         <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-instagrem"></i></a></li>
                         <li><a href="/login">MY ACCOUNT</a></li>
+                        {% if user.is_authenticated %}
+                        <li>{{ user.username }}</li>
+                        <li><a href="/logout">LOGOUT</a></li>
+                        {% else %}
                         <li><a href="/login">LOGIN</a></li>
+                        {% endif %}
                     </ul><!-- end list-style -->
                 </div><!-- end right -->
             </div><!-- end container -->
