@@ -17,6 +17,10 @@ def contact(request):
     return render(request, 'contact.html', {})
 
 class VenueList(generic.ListView):
+
+    if not request.user.is_authenticated():
+        return render(request, 'login.html')
+
     template_name = 'venues.html'
 
     def get_queryset(self):
@@ -24,6 +28,10 @@ class VenueList(generic.ListView):
 
 
 class EventCampaignList(generic.ListView):
+
+    if not request.user.is_authenticated():
+        return render(request, 'login.html')
+
     template_name = 'eventcampaigns.html'
 
     def get_queryset(self):
@@ -31,11 +39,19 @@ class EventCampaignList(generic.ListView):
 
 
 class DetailViewVenue(generic.DetailView):
+
+    if not request.user.is_authenticated():
+        return render(request, 'login.html')
+
 	model = Venue
 	template_name = 'venue_detail.html'
 
  
 class DetailViewEvent(generic.DetailView):
+
+    if not request.user.is_authenticated():
+        return render(request, 'login.html')
+
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html'
 
@@ -92,7 +108,7 @@ class RegisterView(View):
                 
                 if user.is_active:
                     auth_login(request, user)
-                    return redirect('index')
+                    return redirect('index.html')
 
         return render(request, self.template_name, {'form' : form})
 
@@ -113,10 +129,9 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
         
             if user is not None:
-                
                 if user.is_active:
                     auth_login(request, user)
-                    return redirect('index')
+                    return redirect('index.html')
 
         return render(request, self.template_name, {'form' : form})
 
