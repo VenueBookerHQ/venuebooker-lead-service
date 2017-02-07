@@ -103,8 +103,8 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                login(request, user)
-                return render(request, 'web_app/login_form.html')
+                auth_login(request, user)
+                return render(request, 'index.html')
         else:
             return render(request, 'web_app/login_form.html')
     return render(request, 'web_app/login_form.html')
