@@ -104,9 +104,10 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                    return render(request, 'index.html', {})
-
-        return render(request, self.template_name, {'form' : form})
+                return render(request, 'index.html')
+        else:
+            return render(request, 'login.html')
+    return render(request, 'login.html')
 
 def logout_user(request):
     template_name = 'web_app/login_form.html'
