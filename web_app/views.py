@@ -96,27 +96,15 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form' : form})
 
-class LoginView(View):
-    form_class = UserForm
-    template_name = 'web_app/login_form.html'
-
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form' : form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-        
-            if user is not None:
-
-                if user.is_active:
-                    auth_login(request, user)
-                    return redirect('index')
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                    return render(request, 'index.html', {})
 
         return render(request, self.template_name, {'form' : form})
 
