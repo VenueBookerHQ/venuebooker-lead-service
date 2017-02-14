@@ -26,4 +26,4 @@ before_install:
   - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
 
 script:
-  - python tests.py
+  - python web_app/tests.py
