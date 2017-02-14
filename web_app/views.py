@@ -49,7 +49,7 @@ class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html'
 
-class ProfieView(generic.DetailView):
+class ProfileView(generic.DetailView):
 	model = User
 	template_name = 'profile.html'
 
