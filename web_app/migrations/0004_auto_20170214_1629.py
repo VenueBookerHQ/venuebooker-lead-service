@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event_campaign',
             name='cost_per_capacity_unit',
-            field=models.FloatField(default=0),
+            field=models.FloatField(default="0"),
             preserve_default=False,
         ),
         migrations.AddField(
