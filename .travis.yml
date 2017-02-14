@@ -17,7 +17,13 @@ services: postgresql
 env:
   - DJANGO=1.9.2
 
+cache: pip
+install:
+  - pip install -r requirements.txt
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=base_site.settings
   - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
+
+script:
+  - python tests.py
