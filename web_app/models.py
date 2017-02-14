@@ -13,7 +13,7 @@ class Organisation(models.Model):
 
 
     def __str__(self):              
-        return self.type
+        return self.name
 
 class Venue(models.Model):
     name = models.TextField(max_length=200)
@@ -28,7 +28,7 @@ class Venue(models.Model):
 	
 
     def __str__(self):              
-        return self.type
+        return self.name
 
 class Event_campaign(models.Model):
     type = models.CharField(max_length=30)
@@ -47,5 +47,5 @@ class Event_campaign(models.Model):
 
 
     def __str__(self):              
-        return self.type
+        return self.name
     
