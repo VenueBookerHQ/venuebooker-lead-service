@@ -53,7 +53,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'oauth2_provider.middleware.OAuth2TokenMiddleware',
 )
 
@@ -61,7 +60,6 @@ AUTHENTICATION_BACKENDS = (
     'oauth2_provider.backends.OAuth2Backend',
     # Uncomment following if you want to access the admin
     #'django.contrib.auth.backends.ModelBackend'
-    '...',
 )
 
 ROOT_URLCONF = 'base_site.urls'
