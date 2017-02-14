@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import User
+
 
 
 
@@ -46,6 +48,29 @@ class Event_campaign(models.Model):
 	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
 
 
+    def __str__(self):              
+        return self.name
+
+class Enquiry(models.Model):
+    message = models.TextField()
+    attendeeNum = models.IntegerField()
+    date = models.DateField()
+    event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    #def get_absolute_url(self):
+	    #return reverse('enquiry_detail', kwargs={'pk': self.pk})
+    def __str__(self):              
+        return self.name
+
+class Quote(models.Model):
+    description = models.TextField()
+    cost = models.FloatField()
+    accepted = models.BooleanField()
+    enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
+
+    #def get_absolute_url(self):
+	    #return reverse('enquiry_detail', kwargs={'pk': self.pk})
     def __str__(self):              
         return self.name
     
