@@ -41,7 +41,7 @@ class DetailViewVenue(generic.DetailView):
 
 class DetailViewOrganisation(generic.DetailView):
 	model = Organisation
-	template_name = 'org_detail.html'
+	template_name = 'organisation_detail.html'
 
  
 class DetailViewEvent(generic.DetailView):
