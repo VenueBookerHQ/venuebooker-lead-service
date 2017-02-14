@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event_campaign',
             name='venue',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='web_app.Venue'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_app.Venue'),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -93,7 +93,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venue',
             name='organisation',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='web_app.Organisation'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_app.Organisation'),
             preserve_default=False,
         ),
     ]
