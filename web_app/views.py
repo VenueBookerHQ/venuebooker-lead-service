@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
 from .forms import UserForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -47,6 +48,10 @@ class DetailViewOrganisation(generic.DetailView):
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html'
+
+class ProfieView(generic.DetailView):
+	model = User
+	template_name = 'profile.html'
 
 
 class VenueCreate(CreateView):

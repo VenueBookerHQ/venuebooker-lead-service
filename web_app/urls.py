@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^eventcampaigns/add/$', views.EventCampaignCreate.as_view(), name='event_campaign-add'), 
     url(r'^eventcampaigns/update/(?P<pk>[0-9]+)/$', views.EventCampaignUpdate.as_view(), name='event_campaign-update'), 
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/delete/$', views.EventCampaignDelete.as_view(), name='event_campaign-delete'),
+    url(r'^profile/(?P<pk>[0-9]+)/$', views.ProfileView.as_view(), name='profile'),
 ]
