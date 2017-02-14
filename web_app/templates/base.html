@@ -98,8 +98,9 @@
                                             <a href="#">ASK AN EXPERT</a>
                                         </li>
                                         <li>
-                                            <a href="/contact">CONTACT US</a>
+                                            <a href="#">I AM A VENUE</a>
                                         </li>
+                                        {% if user.is_authenticated %}
                                         <li>
                                             <a href="/organisations">ORGANISATIONS</a>
                                         </li>
@@ -109,6 +110,7 @@
 					                    <li>
                                             <a href="/eventcampaigns">EVENT CAMPAIGNS</a>
                                         </li>
+                                        {% endif %}
                                         <li class="sidebar-dropper">
                                             <a data-toggle="sidebar" data-target=".sidebar-right" class="noborder"
                                                href="#">
@@ -130,10 +132,10 @@
                     <ul class="nav navbar-stacked">
                         <li><a href="/index">Home</a></li>
                         <li><a href="#">About</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
                         <!-- <li><a href="#">Forums</a></li>
                         <li><a href="page-sidebar.html">Terms Usage</a></li> -->
-                        <li><a href="blog.html">News / Blog</a></li>
+                        <li><a href="#">News / Blog</a></li>
                     </ul>
                 </div>
             </div><!-- end sidebar menu -->
