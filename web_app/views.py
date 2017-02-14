@@ -22,6 +22,11 @@ class VenueList(generic.ListView):
     def get_queryset(self):
     	return Venue.objects.all()
 
+class OrganisationList(generic.ListView):
+    template_name = 'organisations.html'
+
+    def get_queryset(self):
+    	return Organisation.objects.all()
 
 class EventCampaignList(generic.ListView):
     template_name = 'eventcampaigns.html'
@@ -34,6 +39,10 @@ class DetailViewVenue(generic.DetailView):
 	model = Venue
 	template_name = 'venue_detail.html'
 
+class DetailViewOrganisation(generic.DetailView):
+	model = Organisation
+	template_name = 'org_detail.html'
+
  
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
@@ -42,29 +51,41 @@ class DetailViewEvent(generic.DetailView):
 
 class VenueCreate(CreateView):
 	model = Venue
-	fields = ['name', 'type', 'description', 'image']
-
-
-class EventCampaignCreate(CreateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'capacity', 'image']
+	fields = ['name', 'address', 'socialmedialinks', 'description', 'organisation', 'image']
 
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'type', 'description', 'image']
-
-
-class EventCampaignUpdate(UpdateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'capacity', 'image']
-
-class EventCampaignDelete(DeleteView):
-    model = Event_campaign
-    success_url = reverse_lazy('index')
+	fields = ['name', 'address', 'socialmedialinks', 'description', 'image']
 
 class VenueDelete(DeleteView):
     model = Venue
+    success_url = reverse_lazy('index')
+
+
+class OrganisationCreate(CreateView):
+	model = Venue
+	fields = ['name', 'address']
+
+class OrganisationUpdate(UpdateView):
+	model = Organisation
+	fields = ['name', 'address']
+
+class OrganisationDelete(DeleteView):
+    model = Organisation
+    success_url = reverse_lazy('index')
+
+
+class EventCampaignCreate(CreateView):
+	model = Event_campaign
+	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+
+class EventCampaignUpdate(UpdateView):
+	model = Event_campaign
+	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+
+class EventCampaignDelete(DeleteView):
+    model = Event_campaign
     success_url = reverse_lazy('index')
 
 class RegisterView(View):
