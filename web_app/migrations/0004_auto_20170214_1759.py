@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venue',
             name='socialmedialinks',
-            field=django.contrib.postgres.fields.ArrayField(base_field=models.TextField(blank=True, max_length=200), default=1, size=None),
+            field=django.contrib.postgres.fields.ArrayField(base_field=models.TextField(blank=True, max_length=200), default=None, size=None),
             preserve_default=False,
         ),
         migrations.AddField(
