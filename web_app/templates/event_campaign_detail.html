@@ -94,10 +94,14 @@
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
 				            <h4>{{ event_campaign.name }}</a></h4>
-                                            <h5>{{ event_campaign.type }}</h5>
+                            <h5>{{ event_campaign.type }}</h5>
+                            <h5>{{ event_campaign.venue }}</h5>
 					    <br>
-					    <p>{{ event_campaign.details }}</p>
+					    <p>Details: {{ event_campaign.details }}</p>
 					    <p>Capacity: {{ event_campaign.capacity }}</p>
+                        <p>Cost per Person: {{ event_campaign.cost_per_capacity_unit }}</p>
+                        <p>Start Time: {{ event_campaign.startTime }}</p>
+                        <p>End Time: {{ event_campaign.endTime }}</p>
                         <br>
                         <form action="{% url 'event_campaign-update' event_campaign.pk %}" method="post">
 							{% csrf_token %}
