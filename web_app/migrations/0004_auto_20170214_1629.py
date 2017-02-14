@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event_campaign',
             name='eventID',
-            field=models.AutoField(default=0, primary_key=True, serialize=False),
+            field=models.AutoField(primary_key=True, serialize=False),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='venue',
             name='venueID',
-            field=models.AutoField(default=0, primary_key=True, serialize=False),
+            field=models.AutoField(primary_key=True, serialize=False),
             preserve_default=False,
         ),
         migrations.AddField(
