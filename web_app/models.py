@@ -5,7 +5,6 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Organisation(models.Model):
-    organisationID = models.AutoField(primary_key=True)
     name = models.TextField(max_length=200)
     address = models.TextField(max_length=200)
 
@@ -17,13 +16,12 @@ class Organisation(models.Model):
         return self.type
 
 class Venue(models.Model):
-    venueID = models.AutoField(primary_key=True)
     name = models.TextField(max_length=200)
     address = models.TextField(max_length=200)
     socialmedialinks = ArrayField(models.TextField(max_length=200, blank=True))
     description = models.TextField(max_length=200)
     image = models.FileField()
-    organisation = models.ForeignKey(Organisation, to_field='organisationID', on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
     	return reverse('venue_detail', kwargs={'pk': self.pk})
@@ -33,7 +31,6 @@ class Venue(models.Model):
         return self.type
 
 class Event_campaign(models.Model):
-    eventID = models.AutoField(primary_key=True)
     type = models.CharField(max_length=30)
     details = models.TextField(max_length=200)
     name = models.TextField(max_length=200)
@@ -43,7 +40,7 @@ class Event_campaign(models.Model):
     image = models.FileField()
     capacity = models.IntegerField()
     cost_per_capacity_unit = models.FloatField()
-    venue = models.ForeignKey(Venue, to_field='venueID', on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
 	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
