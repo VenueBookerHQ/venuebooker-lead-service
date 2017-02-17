@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^web_app/', include('web_app.urls')),
     url(r'', include('web_app.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
 
 
