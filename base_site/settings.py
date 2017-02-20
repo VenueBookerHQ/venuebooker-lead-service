@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'admin_honeypot',
     'oauth2_provider',
+    'social_django',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,10 +59,14 @@ MIDDLEWARE_CLASSES = (
 
 AUTHENTICATION_BACKENDS = (
     'oauth2_provider.backends.OAuth2Backend',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
     # Uncomment following if you want to access the admin
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 ROOT_URLCONF = 'base_site.urls'
 
 TEMPLATES = [
