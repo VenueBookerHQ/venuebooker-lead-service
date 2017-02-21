@@ -58,8 +58,8 @@ class Enquiry(models.Model):
     event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    #def get_absolute_url(self):
-	    #return reverse('enquiry_detail', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+	    return reverse('index')
     def __str__(self):              
         return self.name
 
@@ -69,8 +69,8 @@ class Quote(models.Model):
     accepted = models.BooleanField()
     enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
 
-    #def get_absolute_url(self):
-	    #return reverse('enquiry_detail', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+	    return reverse('index')
     def __str__(self):              
         return self.name
     
