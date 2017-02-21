@@ -61,6 +61,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOpenId',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.facebook.FacebookOAuth2'
     # Uncomment following if you want to access the admin
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -70,7 +71,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '745625103135-o9k6ma41dvpdaabqfh0rn1slenuligmp.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'bnen67ROpn42dCbFAKlDsnr-'
 SOCIAL_AUTH_FACEBOOK_KEY = '225699221227840'
 SOCIAL_AUTH_FACEBOOK_SECRET = '1f87ed4ce07c5a64f6a80f8fecf9f177'
-SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'facebook'
+SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'venuebookerfb'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 LOGIN_REDIRECT_URL ="/index"
 ROOT_URLCONF = 'base_site.urls'
 
