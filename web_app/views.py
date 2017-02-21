@@ -93,6 +93,10 @@ class EventCampaignDelete(DeleteView):
     model = Event_campaign
     success_url = reverse_lazy('index')
 
+class EnquiryCreate(CreateView):
+	model = Enquiry
+	fields = ['message', 'attendeeNum', 'date', 'event_campaign', 'user']
+
 class RegisterView(View):
     form_class = UserForm
     template_name = 'web_app/register_form.html'

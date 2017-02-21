@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^organisations/(?P<pk>[0-9]+)/delete/$', views.OrganisationDelete.as_view(), name='organisation-delete'),
     url(r'^eventcampaigns/$', views.EventCampaignList.as_view(), name='event_campaign_list'),
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/$', views.DetailViewEvent.as_view(), name='event_campaign_detail'),
+    url(r'^eventcampaigns/(?P<pk>[0-9]+)/enquiry/$', views.EnquiryCreate.as_view(), name='enquiry-add'),
     url(r'^eventcampaigns/add/$', views.EventCampaignCreate.as_view(), name='event_campaign-add'), 
     url(r'^eventcampaigns/update/(?P<pk>[0-9]+)/$', views.EventCampaignUpdate.as_view(), name='event_campaign-update'), 
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/delete/$', views.EventCampaignDelete.as_view(), name='event_campaign-delete'),

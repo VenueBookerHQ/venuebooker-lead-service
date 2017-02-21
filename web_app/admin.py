@@ -8,3 +8,5 @@ from .models import Organisation
 admin.site.register(Venue)
 admin.site.register(Event_campaign)
 admin.site.register(Organisation)
+admin.site.register(Enquiry)
+admin.site.register(Quote)
