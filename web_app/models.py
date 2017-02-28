@@ -51,6 +51,15 @@ class Event_campaign(models.Model):
     def __str__(self):              
         return self.name
 
+class Event_type(models.Model):
+    name = models.TextField(max_length=40)
+    description = models.TextField(max_length=500)
+    active = models.BooleanField()
+    seasonal = models.BooleanField()
+
+    def __str__(self):              
+        return self.name
+
 class Enquiry(models.Model):
     message = models.TextField()
     attendeeNum = models.IntegerField()
