@@ -32,8 +32,18 @@ class Venue(models.Model):
     def __str__(self):              
         return self.name
 
+
+class Event_type(models.Model):
+    name = models.TextField(max_length=40)
+    description = models.TextField(max_length=500)
+    active = models.BooleanField()
+    seasonal = models.BooleanField()
+
+    def __str__(self):              
+        return self.name
+
 class Event_campaign(models.Model):
-    type = models.CharField(max_length=30)
+    type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
     details = models.TextField(max_length=200)
     name = models.TextField(max_length=200)
     startTime = models.TimeField(blank=True)
@@ -47,15 +57,6 @@ class Event_campaign(models.Model):
     def get_absolute_url(self):
 	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
 
-
-    def __str__(self):              
-        return self.name
-
-class Event_type(models.Model):
-    name = models.TextField(max_length=40)
-    description = models.TextField(max_length=500)
-    active = models.BooleanField()
-    seasonal = models.BooleanField()
 
     def __str__(self):              
         return self.name
