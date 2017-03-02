@@ -28,7 +28,7 @@ class CustomUserAdmin(UserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference the removed 'username' field
     fieldsets = (
-        (None, {'fields': ('first_name', 'last_name', 'contact')}),
+        (None, {'fields': ('username', 'email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
