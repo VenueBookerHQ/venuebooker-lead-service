@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.postgres.fields import ArrayField
-
+from django.contrib.auth.models import User
 from django.contrib.auth.models import Group as Auth_Group
 from django.contrib.auth.models import PermissionsMixin
 #from django.contrib.auth.base_user import AbstractBaseUser
