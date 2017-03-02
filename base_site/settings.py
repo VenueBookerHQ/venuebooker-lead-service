@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'admin_honeypot',
-    'oauth2_provider',
     'social_django',
 )
 
@@ -54,7 +53,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'oauth2_provider.middleware.OAuth2TokenMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -68,6 +66,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 AUTH_USER_MODEL = 'web_app.CustomUser'
+SOCIAL_AUTH_USER_MODEL = 'web_app.CustomUser'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '745625103135-o9k6ma41dvpdaabqfh0rn1slenuligmp.apps.googleusercontent.com'
