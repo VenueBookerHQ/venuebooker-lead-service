@@ -6,7 +6,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
-class Migration(DataMigration):
+class Migration(migrations.Migration):
     def forwards(self, orm):
         "Write your forwards methods here."
         for old_u in orm['auth.User'].objects.all():
