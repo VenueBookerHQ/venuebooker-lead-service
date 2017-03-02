@@ -67,7 +67,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL = 'web_app.CustomUser'
+AUTH_USER_MODEL = 'User'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '745625103135-o9k6ma41dvpdaabqfh0rn1slenuligmp.apps.googleusercontent.com'
