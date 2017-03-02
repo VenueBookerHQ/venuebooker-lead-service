@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
 from .forms import UserForm
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 
 # Create your views here.
 def index(request):
@@ -117,6 +118,9 @@ class RegisterView(View):
             user.save()
 
             user = authenticate(username=username, password=password)
+            
+            g = Group.objects.get(name='VenueAdmin') 
+            g.user_set.add(your_user)
         
             if user is not None:
                 
