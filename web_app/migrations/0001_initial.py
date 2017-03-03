@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(blank=True, max_length=30, verbose_name='first name')),
                 ('last_name', models.CharField(blank=True, max_length=30, verbose_name='last name')),
                 ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('date_joined', models.DateTimeField(default=datetime.datetime.now, verbose_name='date joined')),
+                ('date_joined', models.DateTimeField(default=datetime.datetime.now(), verbose_name='date joined')),
                 ('is_active', models.BooleanField(default=True, verbose_name='active')),
                 ('avatar', models.ImageField(blank=True, null=True, upload_to='avatars/')),
             ],

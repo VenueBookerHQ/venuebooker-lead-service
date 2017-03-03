@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group as Auth_Group
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
+import datetime
 
 
 from django.contrib.auth.models import BaseUserManager
@@ -122,7 +122,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True)
-    date_joined = models.DateTimeField(_('date joined'), default=datetime.datetime.now)
+    date_joined = models.DateTimeField(_('date joined'), default=datetime.datetime.now())
     is_active = models.BooleanField(_('active'), default=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
