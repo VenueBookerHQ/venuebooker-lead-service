@@ -25,7 +25,7 @@ admin.site.register(Event_type)
 
 def roles(self):
     #short_name = unicode # function to get group name
-    p = sorted([u"<a title='%s'>%s</a>" % x for x in self.groups.all()])
+    p = self.groups.all()
     if self.user_permissions.count(): p += ['+']
     value = ', '.join(p)
     return mark_safe("<nobr>%s</nobr>" % value)
