@@ -8,7 +8,9 @@ from .models import Enquiry
 from .models import Quote
 from .models import Event_type
 
+from django.utils.safestring import mark_safe
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
@@ -20,6 +22,16 @@ admin.site.register(Organisation)
 admin.site.register(Enquiry)
 admin.site.register(Quote)
 admin.site.register(Event_type)
+
+def roles(self):
+    #short_name = unicode # function to get group name
+    short_name = lambda x:unicode(x)[:1].upper() # first letter of a group
+    p = sorted([u"<a title='%s'>%s</a>" % self.groups.all()])
+    if self.user_permissions.count(): p += ['+']
+    value = ', '.join(p)
+    return mark_safe("<nobr>%s</nobr>" % value)
+roles.allow_tags = True
+roles.short_description = u'Groups'
 
 class CustomUserAdmin(UserAdmin):
     # The forms to add and change user instances
@@ -42,7 +54,7 @@ class CustomUserAdmin(UserAdmin):
     )
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ('username', 'first_name', 'last_name')
+    list_display = ('username', 'first_name', 'last_name', roles)
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('username',)
 
