@@ -6,6 +6,7 @@ from django.conf import settings
 import django.contrib.postgres.fields
 from django.db import migrations, models
 import django.db.models.deletion
+import datetime
 
 
 class Migration(migrations.Migration):
