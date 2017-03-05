@@ -63,8 +63,8 @@ pip install -r requirements.txt
 #    dropdb venuebooker
 #fi
 
-#print " - creating venuebooker database"
-#createdb venuebooker
+print " - creating venuebooker database"
+createdb venuebooker
 
 
 USER=$(psql postgres -tAc "SELECT 1 from pg_roles where rolname='admin'")
@@ -83,8 +83,8 @@ python manage.py makemigrations web_app
 print " - making database migrations"
 python manage.py migrate
 
-print " - populating schema with initial data"
-python manage.py loaddata web_app/fixtures/initial_data.json
+#print " - populating schema with initial data"
+#python manage.py loaddata web_app/fixtures/initial_data.json
 
 print " - running web server"
 python manage.py runserver
