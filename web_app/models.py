@@ -28,7 +28,7 @@ class Organisation(models.Model):
     name = models.TextField(max_length=200)
     image = models.ImageField(blank=True, default='default.jpg')
     address = models.TextField(max_length=200)
-    primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
+    primary_contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     description = models.TextField('description')
 
     def get_absolute_url(self):
