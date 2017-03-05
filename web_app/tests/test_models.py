@@ -1,6 +1,7 @@
 import datetime
 
 from unittest.mock import MagicMock
+from unittest.mock import patch
 
 from django.core.files import File
 from django.core.files.storage import Storage
@@ -34,10 +35,10 @@ def create_organisation():
                                             'A spectacular location in the heart of Midtown Manhattan '
                                             'It is all about location in NYC and New York Hilton Midtown places you right in the heart of the action')
     storage_mock = MagicMock(spec=Storage, name='StorageMock')
-    storage_mock.save = mock.MagicMock(name='save')
+    storage_mock.save = MagicMock(name='save')
     storage_mock.save.return_value = '/tmp/test1.jpg'
 
-    with mock.patch('django.core.files.storage.default_storage._wrapped', storage_mock):
+    with patch('django.core.files.storage.default_storage._wrapped', storage_mock):
         organisation.save()
 
 class OrganisationModelTest(TestCase):
