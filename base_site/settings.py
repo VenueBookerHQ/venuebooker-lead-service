@@ -79,6 +79,8 @@ SOCIAL_AUTH_TWITTER_KEY = 'LSw5dz6JUVxZwKQrITbwCAYOi'
 SOCIAL_AUTH_TWITTER_SECRET = 'AGQJILmMKpbgDYX5nka3WN9p9Ritukhuf1Z0FGQGGEUsu2fCqF'
 LOGIN_REDIRECT_URL ="/index"
 
+
+
 ROOT_URLCONF = 'base_site.urls'
 
 TEMPLATES = [
@@ -176,11 +178,19 @@ ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+AWS_STORAGE_BUCKET_NAME = 'venuebooker-images'
+    AWS_ACCESS_KEY_ID = 'AKIAIXNCHQY3B3Q7D7PQ'
+    AWS_SECRET_ACCESS_KEY = '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'
+
+    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
 # Extra places for collectstatic to find static files.
