@@ -16,6 +16,9 @@ from django.utils.translation import ugettext_lazy as _
 from web_app.models import CustomUser
 from web_app.forms import CustomUserChangeForm, CustomUserCreationForm
 
+admin.AdminSite.site_header = "Venuebooker Administration"
+admin.AdminSite.site_title = "Venuebooker Site Admin"
+
 admin.site.register(Venue)
 admin.site.register(Event_campaign)
 admin.site.register(Organisation)

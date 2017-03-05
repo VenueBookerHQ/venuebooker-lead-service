@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'social_django',
     'storages',
     'letsencrypt',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
