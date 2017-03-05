@@ -10,20 +10,27 @@
 language: python
 
 python:
-  - 2.7
+  - 3.5
 
 services: postgresql
 
 env:
+  global:
+  - PIP_USE_MIRRORS=true
+  - DATABASE_URL='postgres://admin:bcadminpass123@localhost:5432/venuebooker'
   - DJANGO=1.9.2
 
 cache: pip
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=base_site.settings
   - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
 
 script:
-  - python web_app/tests.py
+  - coverage run --source base_site,web_app manage.py test
+
+after_success:
+  - echo Uploading code coverage data...; coveralls
