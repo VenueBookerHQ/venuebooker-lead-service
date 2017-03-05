@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from django.core.files import File
+from django.utils.html import *
 from django.core.files.storage import Storage
 from django.test import TestCase
 from django.utils import timezone
