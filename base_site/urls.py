@@ -16,7 +16,8 @@ urlpatterns = [
     url(r'^web_app/', include('web_app.urls')),
     url(r'', include('web_app.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url('', include('social_django.urls', namespace='social'))
+    url('', include('social_django.urls', namespace='social')),
+    url(r'^\.well-known/', include('letsencrypt.urls'))
 ]
 
 

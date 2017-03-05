@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'admin_honeypot',
     'social_django',
     'storages',
+    'letsencrypt',
 )
 
 MIDDLEWARE_CLASSES = (
