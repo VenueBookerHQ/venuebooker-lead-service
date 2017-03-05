@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, ContactResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -37,4 +37,9 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ("username","email")
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactResponse
+        fields = ['name', 'email', 'phone', 'message']
 

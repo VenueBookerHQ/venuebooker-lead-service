@@ -14,24 +14,58 @@ import datetime
 from django.contrib.auth.models import BaseUserManager
 
 
+class Contact(models.Model):
+    first_name = models.CharField('first name', max_length=30)
+    surname = models.CharField('surname', max_length=30)
+    telephone = models.CharField('telephone', max_length=15, blank=True)
+    mobile = models.CharField('mobile', max_length=15, blank=True)
+    email = models.EmailField('email', max_length=50)
+
+    def __str__(self):
+        return self.first_name + " " + self.surname
 
 class Organisation(models.Model):
     name = models.TextField(max_length=200)
+    image = models.ImageField(blank=True, default='default.jpg')
     address = models.TextField(max_length=200)
+    primary_contact = ForeignKey(Contact, on_delete=models.CASCADE)
+    description = models.TextField('description')
 
     def get_absolute_url(self):
 	    return reverse('organisation_detail', kwargs={'pk': self.pk})
 
 
     def __str__(self):              
-        return self.name
+        return str(self.id) + " " + self.name
+
+     def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_large.short_description = 'Image Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_small.short_description = 'Image Preview'
 
 class Venue(models.Model):
     name = models.TextField(max_length=200)
     address = models.TextField(max_length=200)
-    socialmedialinks = ArrayField(models.TextField(max_length=200, blank=True))
+    facebook_link = models.TextField(max_length=200, blank=True)
+    twitter_link = models.TextField(max_length=200, blank=True)
+    instagram_link = models.TextField(max_length=200, blank=True)
     description = models.TextField(max_length=200)
-    image = models.FileField()
+    image = models.ImageField(blank=True, default='default.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
@@ -69,17 +103,6 @@ class Event_campaign(models.Model):
 
     def __str__(self):              
         return self.name
-
-
-class Contact(models.Model):
-    first_name = models.CharField('first name', max_length=30)
-    surname = models.CharField('surname', max_length=30)
-    telephone = models.CharField('telephone', max_length=15, blank=True)
-    mobile = models.CharField('mobile', max_length=15, blank=True)
-    email = models.EmailField('email', max_length=50)
-
-    def __str__(self):
-        return self.first_name + " " + self.surname
 
 class CustomUserManager(BaseUserManager):
 
@@ -249,4 +272,14 @@ class Quote(models.Model):
 	    return reverse('index')
     def __str__(self):              
         return self.name
+
+class ContactResponse(models.Model):
+    name = models.CharField('name', max_length=300)
+    email = models.EmailField('email', max_length=50)
+    phone = models.CharField('phone number', max_length=15, blank=True)
+    message = models.TextField('message')
+    timestamp = models.DateTimeField('timestamp', auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
     
