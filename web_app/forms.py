@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User, ContactResponse
+from django.contrib.auth.models import User
+from web_app.models import ContactResponse
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
