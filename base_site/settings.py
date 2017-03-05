@@ -179,10 +179,10 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 AWS_STORAGE_BUCKET_NAME = 'venuebooker-images'
-    AWS_ACCESS_KEY_ID = 'AKIAIXNCHQY3B3Q7D7PQ'
-    AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAIXNCHQY3B3Q7D7PQ'
+AWS_SECRET_ACCESS_KEY = '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'
 
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
