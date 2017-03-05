@@ -37,7 +37,7 @@ def create_organisation():
                                             'It is all about location in NYC and New York Hilton Midtown places you right in the heart of the action')
     storage_mock = MagicMock(spec=Storage, name='StorageMock')
     storage_mock.save = MagicMock(name='save')
-    storage_mock.save.return_value = '/tmp/test1.jpg'
+    storage_mock.save.return_value = '/tmp/test.jpg'
 
     with patch('django.core.files.storage.default_storage._wrapped', storage_mock):
         organisation.save()
@@ -53,7 +53,7 @@ class OrganisationModelTest(TestCase):
 
     def test_image_preview_large_valid_logo(self):
         organisation = Organisation.objects.all()[0]
-        self.assertEqual(organisation.image_preview_large(), '<img src="/tmp/test1.jpg" width="150" height="150"/>',
+        self.assertEqual(organisation.image_preview_large(), '<img src="/tmp/test.jpg" width="150" height="150"/>',
                          "Generated html does not match expected")
 
     def test_image_preview_large_no_logo(self):
@@ -64,7 +64,7 @@ class OrganisationModelTest(TestCase):
 
     def test_image_preview_small_valid_logo(self):
         organisation = Organisation.objects.all()[0]
-        self.assertEqual(organisation.image_preview_small(), '<img src="/tmp/test1.jpg" width="50" height="50"/>',
+        self.assertEqual(organisation.image_preview_small(), '<img src="/tmp/test.jpg" width="50" height="50"/>',
                          "Generated html does not match expected")
 
     def test_image_preview_small_no_logo(self):
