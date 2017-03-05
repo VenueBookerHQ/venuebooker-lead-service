@@ -1,6 +1,6 @@
 import datetime
 
-from unittest import mock
+from unittest.mock import MagicMock
 
 from django.core.files import File
 from django.core.files.storage import Storage
