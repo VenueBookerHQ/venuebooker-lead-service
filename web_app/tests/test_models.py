@@ -15,7 +15,7 @@ class ContactModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         contact = Contact.objects.get(surname="Bloggs")
-        self.assertEqual(str(contact), "Bloggs", "Contact string representation does not match expected")
+        self.assertEqual(str(contact), "Joe Bloggs", "Contact string representation does not match expected")
 
 
 
@@ -24,7 +24,7 @@ def create_organisation():
     Contact.objects.create(first_name="Joe", surname="Bloggs", telephone="02590768976", mobile="07717453257",
                            email="j.bloggs@hotmail.com")
 
-    file_mock = mock.MagicMock(spec=File, name='FileMock')
+    file_mock = MagicMock(spec=File, name='FileMock')
     file_mock.name = 'test.jpg'
 
     organisation = Organisation(name='Hilton Hotels', primary_contact=Contact.objects.all()[0],
