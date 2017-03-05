@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'admin_honeypot',
     'social_django',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
