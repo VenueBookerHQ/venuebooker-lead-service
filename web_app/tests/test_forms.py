@@ -1,5 +1,5 @@
 from datetime import timedelta
-from unittest import mock
+from unittest.mock import MagicMock
 
 from django.core.files import File
 from django.test import SimpleTestCase, TestCase
