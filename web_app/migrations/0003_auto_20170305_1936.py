@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organisation',
             name='description',
-            field=models.TextField(default='Default', verbose_name='description'),
+            field=models.TextField(verbose_name='description'),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='organisation',
             name='primary_contact',
-            field=models.ForeignKey(default=datetime.datetime(2017, 3, 5, 19, 36, 14, 955770, tzinfo=utc), on_delete=django.db.models.deletion.CASCADE, to='web_app.Contact'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_app.Contact'),
             preserve_default=False,
         ),
         migrations.AddField(
