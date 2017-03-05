@@ -5,7 +5,7 @@ from web_app.models import *
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ('url', 'username', 'email', 'is_staff')
 
 
@@ -17,7 +17,7 @@ class ContactSerializer(serializers.HyperlinkedModelSerializer):
 class OrganisationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Organisation
-        fields = ('name', 'image', 'primary_contact', 'address', 'description', 'just_giving_link', 'raised', 'goal')
+        fields = ('name', 'image', 'primary_contact', 'address', 'description')
 
 class ContactResponseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
