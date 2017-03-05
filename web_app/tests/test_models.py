@@ -33,7 +33,7 @@ def create_organisation():
                                 description='Enjoy breakfast for 2 and in-room WiFi during your stay in NYC '
                                             'A spectacular location in the heart of Midtown Manhattan '
                                             'It is all about location in NYC and New York Hilton Midtown places you right in the heart of the action')
-    storage_mock = mock.MagicMock(spec=Storage, name='StorageMock')
+    storage_mock = MagicMock(spec=Storage, name='StorageMock')
     storage_mock.save = mock.MagicMock(name='save')
     storage_mock.save.return_value = '/tmp/test1.jpg'
 
