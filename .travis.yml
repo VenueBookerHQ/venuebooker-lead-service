@@ -25,6 +25,12 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 
+before_script:
+  - psql -c "CREATE DATABASE venuebooker;" -U postgres
+  - psql -d venuebooker -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
+  - psql -d venuebooker -c "ALTER USER admin CREATEDB;"
+  - python manage.py collectstatic --noinput
+
 before_install:
   - export DJANGO_SETTINGS_MODULE=base_site.settings
   - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
