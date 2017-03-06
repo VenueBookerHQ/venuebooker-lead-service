@@ -96,7 +96,10 @@ class EventCampaignDelete(DeleteView):
 
 class EnquiryCreate(CreateView):
 	model = Enquiry
-	fields = ['message', 'attendeeNum', 'date', 'event_campaign', 'user']
+	fields = ['message', 'attendeeNum', 'date', 'event_campaign']
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(EnquiryCreate, self).form_valid(form)
 
 class RegisterView(View):
     form_class = UserForm
