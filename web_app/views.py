@@ -51,7 +51,7 @@ class DetailViewEvent(generic.DetailView):
 	template_name = 'event_campaign_detail.html'
 
 class ProfileView(generic.DetailView):
-	model = User
+	model = CustomUser
 	template_name = 'profile.html'
 
 
