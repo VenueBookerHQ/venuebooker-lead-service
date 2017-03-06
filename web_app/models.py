@@ -284,4 +284,3 @@ class ContactResponse(models.Model):
 
     def __str__(self):
         return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
-    
