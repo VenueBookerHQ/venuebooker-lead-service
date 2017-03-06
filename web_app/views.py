@@ -151,8 +151,23 @@ def logout_user(request):
     return render(request, 'web_app/login_form.html', {'form' : form})
 
 
-#
-#def search
+class VenueDashView(generic.ListView):
+    template_name = 'venuedash.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def get_queryset(self):
+    	return Event_campaign.objects.filter(venue=request.venue.name)
+
+class OrganisationDashView(generic.ListView):
+    template_name = 'organisationdash.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def get_queryset(self):
+    	return Venue.objects.filter(organisation=request.organisation.name)
 
 
 
