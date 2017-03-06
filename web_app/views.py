@@ -57,12 +57,12 @@ class ProfileView(generic.DetailView):
 
 class VenueCreate(CreateView):
 	model = Venue
-	fields = ['name', 'address', 'socialmedialinks', 'description', 'organisation', 'image']
+	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
 
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'address', 'socialmedialinks', 'description', 'image']
+	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 class VenueDelete(DeleteView):
     model = Venue
@@ -71,11 +71,11 @@ class VenueDelete(DeleteView):
 
 class OrganisationCreate(CreateView):
 	model = Organisation
-	fields = ['name', 'address']
+	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
 
 class OrganisationUpdate(UpdateView):
 	model = Organisation
-	fields = ['name', 'address']
+	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
 
 class OrganisationDelete(DeleteView):
     model = Organisation
