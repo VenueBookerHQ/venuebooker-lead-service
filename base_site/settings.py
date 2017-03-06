@@ -181,9 +181,9 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_STORAGE_BUCKET_NAME = 'venuebooker-images'
-AWS_ACCESS_KEY_ID = '#'
-AWS_SECRET_ACCESS_KEY = '#'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
@@ -193,11 +193,11 @@ AWS_SES_REGION_ENDPOINT = 'email.eu-west-1.amazonaws.com'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-#MEDIAFILES_LOCATION = 'media'
-#MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-#DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
 # Extra places for collectstatic to find static files.
