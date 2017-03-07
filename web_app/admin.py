@@ -25,6 +25,8 @@ admin.site.register(Organisation)
 admin.site.register(Enquiry)
 admin.site.register(Quote)
 admin.site.register(Event_type)
+admin.site.register(Contact)
+admin.site.register(ContactResponse)
 
 def roles(self):
     p = sorted([u"<a title='%s'>%s</a>" % (x, x) for x in self.groups.all()])
