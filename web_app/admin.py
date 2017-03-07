@@ -7,6 +7,8 @@ from .models import Organisation
 from .models import Enquiry
 from .models import Quote
 from .models import Event_type
+from .models import Contact
+from .models import ContactResponse
 
 from django.utils.safestring import mark_safe
 from django.contrib.auth.admin import UserAdmin
