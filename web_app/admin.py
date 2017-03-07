@@ -27,7 +27,6 @@ admin.site.register(Quote)
 admin.site.register(Event_type)
 
 def roles(self):
-    #short_name = unicode # function to get group name
     p = sorted([u"<a title='%s'>%s</a>" % (x, x) for x in self.groups.all()])
     if self.user_permissions.count(): p += ['+']
     value = ', '.join(p)
@@ -36,11 +35,6 @@ roles.allow_tags = True
 roles.short_description = u'Groups'
 
 class CustomUserAdmin(UserAdmin):
-    # The forms to add and change user instances
-
-    # The fields to be used in displaying the User model.
-    # These override the definitions on the base UserAdmin
-    # that reference the removed 'username' field
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
