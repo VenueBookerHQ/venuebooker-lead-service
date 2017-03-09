@@ -12,7 +12,7 @@ from .models import ContactResponse
 from .models import VenueUser
 from .models import VenueAdmin
 from .models import OrganisationUser
-from .models import OrganisationAdmin
+
 
 from django.utils.safestring import mark_safe
 from django.contrib.auth.admin import UserAdmin
@@ -20,14 +20,13 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
 admin.site.register(Venue)
 admin.site.register(Event_campaign)
-admin.site.register(Organisation)
 admin.site.register(Enquiry)
 admin.site.register(Quote)
 admin.site.register(Event_type)
@@ -36,15 +35,25 @@ admin.site.register(ContactResponse)
 admin.site.register(VenueUser)
 admin.site.register(VenueAdmin)
 admin.site.register(OrganisationUser)
-admin.site.register(OrganisationAdmin)
 
-def roles(self):
-    p = sorted([u"<a title='%s'>%s</a>" % (x, x) for x in self.groups.all()])
-    if self.user_permissions.count(): p += ['+']
-    value = ', '.join(p)
-    return mark_safe("<nobr>%s</nobr>" % value)
-roles.allow_tags = True
-roles.short_description = u'Groups'
+class OrganisationUserInline(admin.StackedInline):
+    model = OrganisationUser
+    extra = 1
+
+class OrganisationAdmin(admin.ModelAdmin):
+    form = OrganisationForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'description', 'primary_contact')
+        }),
+    )
+
+    list_display = ('image_preview_small', 'name', 'address', 'primary_contact',
+                     'associated_user_accounts')
+    list_display_links = ('image_preview_small', 'name')
+    inlines = [OrganisationUserInline]
+    readonly_fields = ('image_preview_large',)
+    search_fields = ['name']
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
@@ -62,8 +71,9 @@ class CustomUserAdmin(UserAdmin):
     )
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ('username', 'first_name', 'last_name', roles)
+    list_display = ('username', 'first_name', 'last_name')
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('username',)
 
+admin.site.register(Organisation, OrganisationAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)

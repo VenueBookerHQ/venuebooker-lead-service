@@ -60,6 +60,13 @@ class Organisation(models.Model):
 
     image_preview_small.short_description = 'Image Preview'
 
+    def associated_user_accounts(self):
+        if not self.organisationuser_set.count():
+            return 'No Accounts'
+        return ','.join(str(item.user.id) + ': ' + item.user.username for item in self.organisationuser_set.all())
+
+    associated_user_accounts.short_description = 'User Accounts'    
+
 class Venue(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=150)
