@@ -63,9 +63,9 @@ class Organisation(models.Model):
 class Venue(models.Model):
     name = models.TextField(max_length=200)
     address = models.TextField(max_length=200)
-    facebook_link = models.TextField(max_length=200, blank=True)
-    twitter_link = models.TextField(max_length=200, blank=True)
-    instagram_link = models.TextField(max_length=200, blank=True)
+    facebook_link = models.URLField('facebook_link', max_length=255, blank=True)
+    twitter_link = models.URLField('twitter_link', max_length=255, blank=True)
+    instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
     description = models.TextField(max_length=200)
     image = models.ImageField(blank=True, default='default.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
