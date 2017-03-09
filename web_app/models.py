@@ -213,6 +213,7 @@ class Enquiry(models.Model):
     date = models.DateField()
     event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
 
     def get_absolute_url(self):
 	    return reverse('index')

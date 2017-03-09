@@ -54,6 +54,11 @@ class OrganisationAdmin(admin.ModelAdmin):
     inlines = [OrganisationUserInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
+    
+    def queryset(self, request):
+        if request.user.is_superuser:
+            return Organisation.objects.all()
+        return Organisation.objects.filter(name=request.user.organisation.name)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
