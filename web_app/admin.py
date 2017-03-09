@@ -58,7 +58,7 @@ class OrganisationAdmin(admin.ModelAdmin):
     def queryset(self, request):
         if request.user.is_superuser:
             return Organisation.objects.all()
-        return Organisation.objects.filter(name=request.user.organisation)
+        return Organisation.objects.filter(name='org')
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
