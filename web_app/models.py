@@ -38,7 +38,7 @@ class Organisation(models.Model):
 
 
     def __str__(self):              
-        return str(self.id) + " " + self.name
+        return self.name
 
     def image_preview_large(self):
         if self.image:
