@@ -27,9 +27,9 @@ class Contact(models.Model):
         return self.first_name + " " + self.surname
 
 class Organisation(models.Model):
-    name = models.TextField(max_length=200)
+    name = models.CharField(max_length=50)
     image = models.ImageField(blank=True, default='default.jpg')
-    address = models.TextField(max_length=200)
+    address = models.CharField(max_length=150)
     primary_contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
     description = models.TextField('description')
 
@@ -61,8 +61,8 @@ class Organisation(models.Model):
     image_preview_small.short_description = 'Image Preview'
 
 class Venue(models.Model):
-    name = models.TextField(max_length=200)
-    address = models.TextField(max_length=200)
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=150)
     facebook_link = models.URLField('facebook_link', max_length=255, blank=True)
     twitter_link = models.URLField('twitter_link', max_length=255, blank=True)
     instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
@@ -79,8 +79,8 @@ class Venue(models.Model):
 
 
 class Event_type(models.Model):
-    name = models.TextField(max_length=40)
-    description = models.TextField(max_length=500)
+    name = models.CharField(max_length=50)
+    description = models.TextField('description', blank=True)
     active = models.BooleanField()
     seasonal = models.BooleanField()
 
@@ -89,14 +89,14 @@ class Event_type(models.Model):
 
 class Event_campaign(models.Model):
     type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
-    details = models.TextField(max_length=200)
-    name = models.TextField(max_length=200)
+    details = models.TextField('details', blank=True)
+    name = models.CharField(max_length=50)
     startTime = models.TimeField(blank=True)
     endTime = models.TimeField(blank=True)
     recurring = models.BooleanField()
     image = models.FileField()
     capacity = models.IntegerField()
-    cost_per_capacity_unit = models.FloatField()
+    cost_per_capacity_unit = models.DecimalField('cost_per_capacity_unit', max_digits=10, decimal_places=2, blank=True, null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
@@ -147,7 +147,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True)
-    date_joined = models.DateTimeField(_('date joined'), default=datetime.datetime.now())
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
