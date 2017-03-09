@@ -172,85 +172,33 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
 
-class VenueAdmin(Auth_Group):
-
+class VenueAdmin(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details")
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
+    def __str__(self):
+        return self.organisation.name + " Venue Admin " + str(self.user.username)
 
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
-
-class VenueUser(Auth_Group):
-
+class VenueUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details")
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
+    def __str__(self):
+        return self.organisation.name + " Venue User " + str(self.user.username)
 
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
-
-class OrganisationAdmin(Auth_Group):
-
+class OrganisationAdmin(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details")
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
-
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
+    def __str__(self):
+        return self.organisation.name + " Organisation User " + str(self.user.username)
     
-class OrganisationUser(Auth_Group):
-
+class OrganisationUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details")
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
-
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
+    def __str__(self):
+        return self.organisation.name + " Organisation Admin " + str(self.user.username)
 
 class Enquiry(models.Model):
     message = models.TextField()
