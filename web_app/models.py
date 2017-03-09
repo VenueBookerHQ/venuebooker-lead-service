@@ -173,28 +173,28 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class VenueAdmin(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details")
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.organisation.name + " Venue Admin " + str(self.user.username)
 
 class VenueUser(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details")
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.organisation.name + " Venue User " + str(self.user.username)
 
 class OrganisationAdmin(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details")
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.organisation.name + " Organisation User " + str(self.user.username)
     
 class OrganisationUser(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details")
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def __str__(self):

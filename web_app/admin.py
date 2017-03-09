@@ -9,6 +9,10 @@ from .models import Quote
 from .models import Event_type
 from .models import Contact
 from .models import ContactResponse
+from .models import VenueUser
+from .models import VenueAdmin
+from .models import OrganisationUser
+from .models import OrganisationAdmin
 
 from django.utils.safestring import mark_safe
 from django.contrib.auth.admin import UserAdmin
