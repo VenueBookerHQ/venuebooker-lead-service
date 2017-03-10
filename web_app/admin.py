@@ -67,7 +67,7 @@ class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
         ('Basic Details', {
-            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description')
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
         }),
     )
 
@@ -89,7 +89,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
     form = EventCampaignForm
     fieldsets = (
         ('Basic Details', {
-            'fields': ('name', ('image', 'image_preview_large'), 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit')
+            'fields': ('name', ('image', 'image_preview_large'), 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue')
         }),
     )
 
