@@ -82,9 +82,9 @@ class VenueAdmin(admin.ModelAdmin):
         qs = super(VenueAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        elif request.user.organisationuser__isnull=True:
-            return qs.filter(name=request.user.venueuser.venue)
-        return qs.filter(organisation=request.user.organisationuser.organisation)
+        elif hasattr(request.user, 'organisationuser'):
+            return qs.filter(organisation=request.user.organisationuser.organisation)
+        return qs.filter(name=request.user.venueuser.venue)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
