@@ -213,12 +213,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
 
-class VenueAdmin(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.venue.name + " Venue Admin " + str(self.user.username)
 
 class VenueUser(models.Model):
     user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
@@ -227,19 +221,19 @@ class VenueUser(models.Model):
     def __str__(self):
         return self.venue.name + " Venue User " + str(self.user.username)
 
-class OrganisationAdmin(models.Model):
-    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.organisation.name + " Organisation User " + str(self.user.username)
     
 class OrganisationUser(models.Model):
     user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.organisation.name + " Organisation Admin " + str(self.user.username)
+        return self.organisation.name + " Organisation User " + str(self.user.username)
+
+class VenuebookerUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
+
+    def __str__(self):
+        return "Venuebooker User " + str(self.user.username)
 
 class Enquiry(models.Model):
     message = models.TextField()
