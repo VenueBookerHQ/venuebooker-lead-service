@@ -26,7 +26,6 @@ from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, Organisa
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
-admin.site.register(Venue)
 admin.site.register(Event_campaign)
 admin.site.register(Enquiry)
 admin.site.register(Quote)
@@ -34,7 +33,6 @@ admin.site.register(Event_type)
 admin.site.register(Contact)
 admin.site.register(ContactResponse)
 admin.site.register(VenueUser)
-admin.site.register(VenueAdmin)
 admin.site.register(OrganisationUser)
 
 class OrganisationUserInline(admin.StackedInline):
@@ -106,5 +104,6 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('username',)
 
+admin.site.register(Venue, VenueAdmin)
 admin.site.register(Organisation, OrganisationAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)
