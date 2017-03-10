@@ -21,12 +21,11 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
-admin.site.register(Event_campaign)
 admin.site.register(Enquiry)
 admin.site.register(Quote)
 admin.site.register(Event_type)
@@ -86,6 +85,27 @@ class VenueAdmin(admin.ModelAdmin):
             return qs.filter(organisation=request.user.organisationuser.organisation)
         return qs.filter(name=request.user.venueuser.venue)
 
+class EventCampaignAdmin(admin.ModelAdmin):
+    form = EventCampaignForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('name', ('image', 'image_preview_large'), 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit')
+        }),
+    )
+
+    list_display = ('image_preview_small', 'name', 'type', 'venue')
+    list_display_links = ('image_preview_small', 'name')
+    readonly_fields = ('image_preview_large',)
+    search_fields = ['name']
+    
+    def get_queryset(self, request):
+        qs = super(EventCampiagnAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        elif hasattr(request.user, 'organisationuser'):
+            return qs.filter(venue__organisation=request.user.organisationuser.organisation)
+        return qs.filter(venue=request.user.venueuser.venue)
+
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
@@ -106,6 +126,7 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('username',)
 
+admin.site.register(Event_campaign, EventCampaignAdmin)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Organisation, OrganisationAdmin)
 admin.site.register(CustomUser, CustomUserAdmin)

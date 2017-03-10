@@ -88,6 +88,8 @@ class Venue(models.Model):
             )
         return 'No Logo'
 
+    image_preview_large.short_description = 'Image Preview'
+
     def image_preview_small(self):
         if self.image:
             return format_html(
@@ -110,9 +112,9 @@ class Event_type(models.Model):
         return self.name
 
 class Event_campaign(models.Model):
+    name = models.CharField(max_length=50)
     type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
     details = models.TextField('details', blank=True)
-    name = models.CharField(max_length=50)
     startTime = models.TimeField(blank=True)
     endTime = models.TimeField(blank=True)
     recurring = models.BooleanField()
@@ -124,6 +126,23 @@ class Event_campaign(models.Model):
     def get_absolute_url(self):
 	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
 
+    def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_large.short_description = 'Image Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
 
     def __str__(self):              
         return self.name
