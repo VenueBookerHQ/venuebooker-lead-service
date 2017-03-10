@@ -11,7 +11,6 @@ from .models import Event_type
 from .models import Contact
 from .models import ContactResponse
 from .models import VenueUser
-from .models import VenueAdmin
 from .models import OrganisationUser
 
 
@@ -58,10 +57,9 @@ class OrganisationAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        qs = super(OrganisationAdmin, self).get_queryset(request)
         if request.user.is_superuser:
-            return qs
-        return qs.filter(name=request.user.organisationuser.organisation)
+            return Organisation.objects.all()
+        return Organisation.objects.filter(name=request.user.organisationuser.organisation)
 
 class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
@@ -78,13 +76,11 @@ class VenueAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        qs = super(VenueAdmin, self).get_queryset(request)
         if request.user.is_superuser:
-            return qs
+            return Venue.objects.all()
         elif hasattr(request.user, 'venueuser'):
-            return qs.filter(name=request.user.venueuser.venue)
-            return qs.filter(organisation=request.user.organisationuser.organisation)
-        return qs.filter(organisation=request.user.organisationuser.organisation)
+            return Venue.objects.filter(name=request.user.venueuser.venue)
+        return Venue.objects.filter(organisation=request.user.organisationuser.organisation)
 
 class EventCampaignAdmin(admin.ModelAdmin):
     form = EventCampaignForm
