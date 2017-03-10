@@ -126,10 +126,10 @@ class CustomUserAdmin(UserAdmin):
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
-            return Event_campaign.objects.all()
+            return CustomUser.objects.all()
         elif hasattr(request.user, 'organisationuser'):
             return CustomUser.objects.filter(customuser__organisationuser__organisation=request.user.organisationuser.organisation)
-        return Event_campaign.objects.filter(customuser__venueuser__venue=request.user.venueuser.venue)
+        return CustomUser.objects.filter(customuser__venueuser__venue=request.user.venueuser.venue)
 
 admin.site.register(Event_campaign, EventCampaignAdmin)
 admin.site.register(Venue, VenueAdmin)
