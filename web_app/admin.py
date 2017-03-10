@@ -40,6 +40,10 @@ class OrganisationUserInline(admin.StackedInline):
     model = OrganisationUser
     extra = 1
 
+class VenueUserInline(admin.StackedInline):
+    model = VenueUser
+    extra = 1
+
 class OrganisationAdmin(admin.ModelAdmin):
     form = OrganisationForm
     fieldsets = (
@@ -59,7 +63,27 @@ class OrganisationAdmin(admin.ModelAdmin):
         qs = super(OrganisationAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(name=request.user.organisationuser.organisation.name)
+        return qs.filter(name=request.user.organisationuser.organisation)
+
+class VenueAdmin(admin.ModelAdmin):
+    form = VenueForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description')
+        }),
+    )
+
+    list_display = ('image_preview_small', 'name', 'address', 'organisation')
+    list_display_links = ('image_preview_small', 'name')
+    inlines = [VenueUserInline]
+    readonly_fields = ('image_preview_large',)
+    search_fields = ['name']
+    
+    def get_queryset(self, request):
+        qs = super(VenueAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(organisation=request.user.organisationuser.organisation | name=request.user.venueuser.venue)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
