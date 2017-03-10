@@ -56,10 +56,11 @@ class OrganisationAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
+        currentuser=request.user
         qs = super(OrganisationAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(name=request.user__organisation)
+        return qs.filter(name=currentuser__organisation)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
