@@ -59,7 +59,7 @@ class OrganisationAdmin(admin.ModelAdmin):
         qs = super(OrganisationAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(name=request.user.organisation.name)
+        return qs.filter(name=request.user.organisationadmin.organisation.name)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
