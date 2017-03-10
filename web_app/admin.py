@@ -59,7 +59,7 @@ class OrganisationAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        if request.user.is_superuser:
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Organisation.objects.all()
         return Organisation.objects.filter(name=request.user.organisationuser.organisation)
 
@@ -78,7 +78,7 @@ class VenueAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        if request.user.is_superuser:
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Venue.objects.all()
         elif hasattr(request.user, 'venueuser'):
             return Venue.objects.filter(name=request.user.venueuser.venue)
@@ -98,7 +98,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        if request.user.is_superuser:
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Event_campaign.objects.all()
         elif hasattr(request.user, 'organisationuser'):
             return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
@@ -123,6 +123,13 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'first_name', 'last_name')
     search_fields = ('username', 'first_name', 'last_name')
     ordering = ('username',)
+    
+    def get_queryset(self, request):
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            return Event_campaign.objects.all()
+        elif hasattr(request.user, 'organisationuser'):
+            return CustomUser.objects.filter(customuser__organisationuser.organisation=request.user.organisationuser.organisation)
+        return Event_campaign.objects.filter(customuser__venueuser.venue=request.user.venueuser.venue)
 
 admin.site.register(Event_campaign, EventCampaignAdmin)
 admin.site.register(Venue, VenueAdmin)
