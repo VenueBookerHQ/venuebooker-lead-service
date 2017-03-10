@@ -32,6 +32,7 @@ admin.site.register(Contact)
 admin.site.register(ContactResponse)
 admin.site.register(VenueUser)
 admin.site.register(OrganisationUser)
+admin.site.register(VenuebookerUser)
 
 class OrganisationUserInline(admin.StackedInline):
     model = OrganisationUser
