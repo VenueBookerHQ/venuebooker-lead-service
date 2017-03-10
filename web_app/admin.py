@@ -99,12 +99,11 @@ class EventCampaignAdmin(admin.ModelAdmin):
     search_fields = ['name']
     
     def get_queryset(self, request):
-        qs = super(EventCampiagnAdmin, self).get_queryset(request)
         if request.user.is_superuser:
-            return qs
+            return Event_campaign.objects.all()
         elif hasattr(request.user, 'organisationuser'):
-            return qs.filter(venue__organisation=request.user.organisationuser.organisation)
-        return qs.filter(venue=request.user.venueuser.venue)
+            return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
+        return Event_campaign.objects.filter(venue=request.user.venueuser.venue)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
