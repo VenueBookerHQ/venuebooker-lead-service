@@ -12,6 +12,7 @@ from .models import Contact
 from .models import ContactResponse
 from .models import VenueUser
 from .models import OrganisationUser
+from .models import VenuebookerUser
 
 
 from django.utils.safestring import mark_safe
