@@ -218,14 +218,14 @@ class VenueAdmin(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.organisation.name + " Venue Admin " + str(self.user.username)
+        return self.venue.name + " Venue Admin " + str(self.user.username)
 
 class VenueUser(models.Model):
     user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.organisation.name + " Venue User " + str(self.user.username)
+        return self.venue.name + " Venue User " + str(self.user.username)
 
 class OrganisationAdmin(models.Model):
     user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
