@@ -79,7 +79,22 @@ class Venue(models.Model):
 
     def get_absolute_url(self):
     	return reverse('venue_detail', kwargs={'pk': self.pk})
-	
+
+    def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
 
     def __str__(self):              
         return self.name
