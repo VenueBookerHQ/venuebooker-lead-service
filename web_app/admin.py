@@ -81,9 +81,10 @@ class VenueAdmin(admin.ModelAdmin):
         qs = super(VenueAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        elif hasattr(request.user, 'organisationuser'):
+        elif hasattr(request.user, 'venueuser'):
+            return qs.filter(name=request.user.venueuser.venue)
             return qs.filter(organisation=request.user.organisationuser.organisation)
-        return qs.filter(name=request.user.venueuser.venue)
+        return qs.filter(organisation=request.user.organisationuser.organisation)
 
 class EventCampaignAdmin(admin.ModelAdmin):
     form = EventCampaignForm

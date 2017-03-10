@@ -48,7 +48,7 @@ class OrganisationModelTest(TestCase):
 
     def test_should_fail_if_response_is_not_valid_match(self):
         organisation = Organisation.objects.all()[0]
-        self.assertEqual(str(organisation), str(organisation.id) + " " + "Hilton Hotels",
+        self.assertEqual(str(organisation), "Hilton Hotels",
                          "Organisation string representation does not match expected")
 
     #def test_image_preview_large_valid_logo(self):
