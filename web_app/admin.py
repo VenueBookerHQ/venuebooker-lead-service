@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.db.models import Q
 
 # Register your models here.
 from .models import Venue
@@ -83,7 +84,7 @@ class VenueAdmin(admin.ModelAdmin):
         qs = super(VenueAdmin, self).get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(organisation=request.user.organisationuser.organisation | name=request.user.venueuser.venue)
+        return qs.filter(Q(organisation=request.user.organisationuser.organisation) | Q(name=request.user.venueuser.venue))
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
