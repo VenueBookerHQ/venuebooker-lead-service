@@ -130,6 +130,7 @@ class RegisterView(View):
 
         return render(request, self.template_name, {'form' : form})
 
+#User Login View
 def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -143,6 +144,7 @@ def login_user(request):
             return render(request, 'web_app/login_form.html')
     return render(request, 'web_app/login_form.html')
 
+#User Logout View
 def logout_user(request):
     template_name = 'web_app/login_form.html'
     logout(request)
