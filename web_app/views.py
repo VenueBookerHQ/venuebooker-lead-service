@@ -10,6 +10,7 @@ from .models import *
 from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+import boto3
 
 # Create your views here.
 def index(request):
