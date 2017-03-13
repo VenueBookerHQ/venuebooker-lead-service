@@ -82,30 +82,20 @@
                     </div>
 
                     <div class="row">
+			<div class ="col-sm-12 col md-7">
+				<div class ="panel panel-default">
+					<div class ="panel-body">
+						<form class ="form-horizontal" action="" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							{% include 'web_app/form-template.html' %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
-                        <!-- {% for venue in venues %}
-                            <div class="col-sm-4">
-                                <div class="clearfix">
-                                    <div class="post-media clearfix">
-                                        <a href="blog-single.html"><img src="static/{{ venue.image }}" alt=""
-                                                                        class="img-responsive"></a>
-                                    </div><!-- end post-media -->
-
-                                 <!--   <div class="post-title clearfix">
-                                        <div class="pull-left">
-                                            <h5><a href="blog-single.html">{{ venue.type }}</a></h5>
-                                            <h6>{{ venue.places }} PLACES</h6>
-                                        </div>
-                                    </div><!-- end ost-title -->
-                                   <!-- <div class="post-content clearfix">
-{#                                        <p>{{ venue.description }}</p>#}
-                                    </div><!-- end post-content -->
-                              <!--  </div><!-- end post-wrapper -->
-                          <!--  </div><!-- end col --> -->
-                        <!--{% endfor %} -->
-
-
-                    <!--</div><!-- end row -->
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->

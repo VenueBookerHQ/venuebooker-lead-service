@@ -2,6 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
+
         <article class="parallax-slider">
             <div class="tp-banner-container">
                 <div id="banner3" class="tp-banner">
@@ -38,9 +39,9 @@
                         </li>
 
                         <li data-transition="slideup" data-slotamount="7" data-masterspeed="1000"
-                            data-thumb="uploads/home_slider_02.jpg" data-saveperformance="off" data-title="Parallax 3D">
+                            data-thumb="uploads/home_slider_01.jpg" data-saveperformance="off" data-title="Parallax 3D">
                             <img src="{% static 'images/dummy.png' %}" alt="greenbg"
-                                 data-lazyload="{% static 'uploads/home_slider_02.jpg' %}" data-bgposition="center top"
+                                 data-lazyload="{% static 'uploads/home_slider_01.jpg' %}" data-bgposition="center top"
                                  data-bgfit="cover" data-bgrepeat="no-repeat">
                             <div class="tp-caption slider-title tp-fade tp-resizeme rs-parallaxlevel-2"
                                  data-x="center"
@@ -76,36 +77,58 @@
             <div class="container">
                 <div class="top-destinations clearfix">
                     <div class="hotel-title text-center">
-                        <h3>PERFECT VENUES FOR ALL OCCASIONS</h3>
+                        <h3>EVENT CAMPAIGNS</h3>
                         <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
                         <hr>
                     </div>
 
                     <div class="row">
 
-                        <!-- {% for venue in venues %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="blog-single.html"><img src="static/{{ venue.image }}" alt=""
+                                        <a href="#"><img src="{{ event_campaign.image.url }}" alt=""
                                                                         class="img-responsive"></a>
                                     </div><!-- end post-media -->
 
-                                 <!--   <div class="post-title clearfix">
+                                    <div class="post-title clearfix">
                                         <div class="pull-left">
-                                            <h5><a href="blog-single.html">{{ venue.type }}</a></h5>
-                                            <h6>{{ venue.places }} PLACES</h6>
+				            <h4>{{ event_campaign.name }}</h4>
+                            <h5>{{ event_campaign.type }}</h5>
+                            <h5>{{ event_campaign.venue }}</h5>
+					    <br>
+					    <p>Details: {{ event_campaign.details }}</p>
+					    <p>Capacity: {{ event_campaign.capacity }}</p>
+                        <p>Cost per Person: {{ event_campaign.cost_per_capacity_unit }}</p>
+                        <p>Start Time: {{ event_campaign.startTime }}</p>
+                        <p>End Time: {{ event_campaign.endTime }}</p>
+                        <br>
+                        <form action="{% url 'event_campaign-update' event_campaign.pk %}" method="post">
+							{% csrf_token %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Update Event</button>
+							</div>
+						</form>
+                        <form action="{% url 'event_campaign-delete' event_campaign.pk %}" method="post">
+							{% csrf_token %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Delete Event</button>
+							</div>
+						</form>
+                        <form action="{% url 'enquiry-add' event_campaign.pk %}" method="post">
+							{% csrf_token %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-default">Make an Enquiry</button>
+							</div>
+						</form>
                                         </div>
                                     </div><!-- end ost-title -->
-                                   <!-- <div class="post-content clearfix">
-{#                                        <p>{{ venue.description }}</p>#}
+                                    <div class="post-content clearfix">
                                     </div><!-- end post-content -->
-                              <!--  </div><!-- end post-wrapper -->
-                          <!--  </div><!-- end col --> -->
-                        <!--{% endfor %} -->
+                                </div><!-- end post-wrapper -->
+                            </div><!-- end col -->
 
-
-                    <!--</div><!-- end row -->
+                    </div><!-- end row -->
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->
@@ -161,7 +184,7 @@
                             </div>
                             <div class="col-md-9 col-xs-9 col-sm-9">
                                 <h5>MORE BOOKINGS!</h5>
-                                <p>Venuebooker gives venue managers the ability to bring their service based sales skills online to generate event booking revenue. Getting their venue infront of customers through their smartphones. In summary Venuebooker connects your till to the internet </p>
+                                <p>Venuebooker gives venue managers the ability to bring their service based sales skills online to generate event booking revenue. Getting there venue infant of customers through there smartphones. In summary Venuebooker connects your till to the internet </p>
                             </div>
                         </div><!-- end service -->
                     </div><!-- end col -->
@@ -215,14 +238,14 @@
 
                     <div class="col-md-6 text-right">
                         <div class="social-footer">
-                            <a href="https://www.facebook.com/Venuebooker.info" title="Facebook"><i class="icon-facebook"></i></a>
-                            <a href="https://twitter.com/Venuebooker" title="Twitter"><i class="icon-twitter"></i></a>
-                            <a href="https://in.pinterest.com/v6606/" title="Pinterest"><i class="icon-pinterest"></i></a>
-                            <!--<a href="#" title="SU.PR"><i class="icon-stumbleupon"></i></a> -->
-                            <a href="https://www.instagram.com/venuebooker_/" title="Instagram"><i class="icon-instagrem"></i></a>
-                            <!--<a href="#" title="Dribbble"><i class="icon-dribbble"></i></a>
-                            <a href="#" title="Vimeo"><i class="icon-vimeo"></i></a> -->
-                            <a href="http://venuebookerblog.tumblr.com/" title="Tumblr"><i class="icon-tumblr"></i></a>
+                            <a href="#" title="Facebook"><i class="icon-facebook"></i></a>
+                            <a href="#" title="Twitter"><i class="icon-twitter"></i></a>
+                            <a href="#" title="Pinterest"><i class="icon-pinterest"></i></a>
+                            <a href="#" title="SU.PR"><i class="icon-stumbleupon"></i></a>
+                            <a href="#" title="Instagram"><i class="icon-instagrem"></i></a>
+                            <a href="#" title="Dribbble"><i class="icon-dribbble"></i></a>
+                            <a href="#" title="Vimeo"><i class="icon-vimeo"></i></a>
+                            <a href="#" title="Tumblr"><i class="icon-tumblr"></i></a>
                             <a href="#" title="RSS"><i class="icon-rss"></i></a>
                         </div><!-- end social-footer -->
                     </div><!-- end col -->
@@ -254,3 +277,4 @@
 
 
 {% endblock %}
+    

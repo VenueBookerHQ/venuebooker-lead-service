@@ -5,5 +5,4 @@ staticfiles
 db.sqlite3
 .idea
 activate
-hackathon
-hackathon-env
+venuebooker-env

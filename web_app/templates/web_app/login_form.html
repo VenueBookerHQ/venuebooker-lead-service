@@ -76,36 +76,54 @@
             <div class="container">
                 <div class="top-destinations clearfix">
                     <div class="hotel-title text-center">
-                        <h3>PERFECT VENUES FOR ALL OCCASIONS</h3>
-                        <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
+                        <h3>Login</h3>
                         <hr>
                     </div>
 
                     <div class="row">
+			<div class ="col-sm-12 col md-7">
+				<div class ="panel panel-default">
+					<div class ="panel-body">
+                        {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+						<form class ="form-horizontal" role="form" action="{% url 'login_user'%}" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="form-group">
+		                    <label class="control-label col-sm-2" for="id_username">Username</label>
+		                    <div class="col-sm-10">
+                                <input id="id_username" maxlength="30" name="username" type="text">
+                            </div>
+	                        </div>
+                            <div class="form-group">
+		                    <label class="control-label col-sm-2" for="id_password">Password</label>
+		                    <div class="col-sm-10">
+                                <input id="id_password" maxlength="30" name="password" type="password">
+                            </div>
+	                        </div>
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</form>
+                    </div>
+                    <div class="panel-footer">
+                        Don't have an account? <a href="{% url 'register' %}">Click here</a> to register.
+                        </br>
+                        <a href="{% url "social:begin" "google-oauth2" %}">
+                        <img src="{% static 'images/btn_google_signin_light_normal_web.png' %}" >
+                        </a>
+                        </br>
+                        <a href="{% url "social:begin" "facebook" %}">
+                        <img src="{% static 'images/facebook.png' %}" >
+                        </a>
+                        </br>
+                        <a href="{% url "social:begin" "twitter" %}">
+                        <img src="{% static 'images/twitter.png' %}" >
+                        </a>
+                    </div>
+				</div>
+			</div>
 
-                        <!-- {% for venue in venues %}
-                            <div class="col-sm-4">
-                                <div class="clearfix">
-                                    <div class="post-media clearfix">
-                                        <a href="blog-single.html"><img src="static/{{ venue.image }}" alt=""
-                                                                        class="img-responsive"></a>
-                                    </div><!-- end post-media -->
-
-                                 <!--   <div class="post-title clearfix">
-                                        <div class="pull-left">
-                                            <h5><a href="blog-single.html">{{ venue.type }}</a></h5>
-                                            <h6>{{ venue.places }} PLACES</h6>
-                                        </div>
-                                    </div><!-- end ost-title -->
-                                   <!-- <div class="post-content clearfix">
-{#                                        <p>{{ venue.description }}</p>#}
-                                    </div><!-- end post-content -->
-                              <!--  </div><!-- end post-wrapper -->
-                          <!--  </div><!-- end col --> -->
-                        <!--{% endfor %} -->
-
-
-                    <!--</div><!-- end row -->
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->

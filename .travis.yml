@@ -1,0 +1,42 @@
+#   A basic travis.yml boilerplate for Django projects
+#
+#   The set-up assumes a postgreSQL database.
+#
+#   Replace the following variables in the code:
+# * your_project_settings
+# * your_github_username
+# * your_repo
+
+language: python
+
+python:
+  - 3.5
+
+services: postgresql
+
+env:
+  global:
+  - PIP_USE_MIRRORS=true
+  - DATABASE_URL='postgres://admin:bcadminpass123@localhost:5432/venuebooker'
+  - DJANGO=1.9.2
+
+cache: pip
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+before_script:
+  - psql -c "CREATE DATABASE venuebooker;" -U postgres
+  - psql -d venuebooker -c "CREATE USER admin WITH PASSWORD 'bcadminpass123'"
+  - psql -d venuebooker -c "ALTER USER admin CREATEDB;"
+  - python manage.py collectstatic --noinput
+
+before_install:
+  - export DJANGO_SETTINGS_MODULE=base_site.settings
+  - export PYTHONPATH=$HOME/builds/GregorW14/venuebooker-api-service
+
+script:
+  - coverage run --source base_site,web_app manage.py test
+
+after_success:
+  - echo Uploading code coverage data...; coveralls
