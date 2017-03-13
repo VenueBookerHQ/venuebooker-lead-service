@@ -8,67 +8,12 @@ from django.contrib.auth.models import Group as Auth_Group
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import format_html
 import datetime
+from django.utils import timezone
 
 
 from django.contrib.auth.models import BaseUserManager
-
-
-
-class Organisation(models.Model):
-    name = models.TextField(max_length=200)
-    address = models.TextField(max_length=200)
-
-    def get_absolute_url(self):
-	    return reverse('organisation_detail', kwargs={'pk': self.pk})
-
-
-    def __str__(self):              
-        return self.name
-
-class Venue(models.Model):
-    name = models.TextField(max_length=200)
-    address = models.TextField(max_length=200)
-    socialmedialinks = ArrayField(models.TextField(max_length=200, blank=True))
-    description = models.TextField(max_length=200)
-    image = models.FileField()
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-    	return reverse('venue_detail', kwargs={'pk': self.pk})
-	
-
-    def __str__(self):              
-        return self.name
-
-
-class Event_type(models.Model):
-    name = models.TextField(max_length=40)
-    description = models.TextField(max_length=500)
-    active = models.BooleanField()
-    seasonal = models.BooleanField()
-
-    def __str__(self):              
-        return self.name
-
-class Event_campaign(models.Model):
-    type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
-    details = models.TextField(max_length=200)
-    name = models.TextField(max_length=200)
-    startTime = models.TimeField(blank=True)
-    endTime = models.TimeField(blank=True)
-    recurring = models.BooleanField()
-    image = models.FileField()
-    capacity = models.IntegerField()
-    cost_per_capacity_unit = models.FloatField()
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
-
-
-    def __str__(self):              
-        return self.name
 
 
 class Contact(models.Model):
@@ -80,6 +25,127 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.surname
+
+class Organisation(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(blank=True, default='default.jpg')
+    address = models.CharField(max_length=150)
+    primary_contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
+    description = models.TextField('description')
+
+    def get_absolute_url(self):
+	    return reverse('organisation_detail', kwargs={'pk': self.pk})
+
+
+    def __str__(self):              
+        return self.name
+
+    def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_large.short_description = 'Image Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_small.short_description = 'Image Preview'
+
+    def associated_user_accounts(self):
+        if not self.organisationuser_set.count():
+            return 'No Accounts'
+        return ','.join(str(item.user.id) + ': ' + item.user.username for item in self.organisationuser_set.all())
+
+    associated_user_accounts.short_description = 'User Accounts'    
+
+class Venue(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=150)
+    facebook_link = models.URLField('facebook_link', max_length=255, blank=True)
+    twitter_link = models.URLField('twitter_link', max_length=255, blank=True)
+    instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
+    description = models.TextField()
+    image = models.ImageField(blank=True, default='default.jpg')
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+    	return reverse('venue_detail', kwargs={'pk': self.pk})
+
+    def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_large.short_description = 'Image Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    def __str__(self):              
+        return self.name
+
+
+class Event_type(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField('description', blank=True)
+    active = models.BooleanField()
+    seasonal = models.BooleanField()
+
+    def __str__(self):              
+        return self.name
+
+class Event_campaign(models.Model):
+    name = models.CharField(max_length=50)
+    type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
+    details = models.TextField('details', blank=True)
+    startTime = models.TimeField(blank=True)
+    endTime = models.TimeField(blank=True)
+    recurring = models.BooleanField()
+    image = models.FileField()
+    capacity = models.IntegerField()
+    cost_per_capacity_unit = models.DecimalField('cost_per_capacity_unit', max_digits=10, decimal_places=2, blank=True, null=True)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
+
+    def image_preview_large(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="150" height="150"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    image_preview_large.short_description = 'Image Preview'
+
+    def image_preview_small(self):
+        if self.image:
+            return format_html(
+                '<img src="{}" width="50" height="50"/>',
+                self.image.url
+            )
+        return 'No Logo'
+
+    def __str__(self):              
+        return self.name
 
 class CustomUserManager(BaseUserManager):
 
@@ -122,7 +188,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True)
-    date_joined = models.DateTimeField(_('date joined'), default=datetime.datetime.now())
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
 
@@ -147,85 +213,27 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
 
-class VenueAdmin(Auth_Group):
 
+class VenueUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
+    def __str__(self):
+        return self.venue.name + " Venue User " + str(self.user.username)
 
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
-
-class VenueUser(Auth_Group):
-
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
-
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
-
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
-
-class OrganisationAdmin(Auth_Group):
-
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
-
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
-
-    def count_users_in_group(self):
-        return self.user_set.count()
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
     
-class OrganisationUser(Auth_Group):
-
+class OrganisationUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
 
-    def get_users_in_group(self):
-        return self.user_set.filter(is_active=1).order_by('first_name', 'last_name')
+    def __str__(self):
+        return self.organisation.name + " Organisation User " + str(self.user.username)
 
-    def count_users_in_group(self):
-        return self.user_set.count()
+class VenuebookerUser(models.Model):
+    user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
 
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        permissions = (
-             ("access_group_list", "Can access group list"),
-             ("access_group", "Can access group"),
-        )
-        ordering = ["name"]
+    def __str__(self):
+        return "Venuebooker User " + str(self.user.username)
 
 class Enquiry(models.Model):
     message = models.TextField()
@@ -233,6 +241,7 @@ class Enquiry(models.Model):
     date = models.DateField()
     event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    approved = models.BooleanField(default=False)
 
     def get_absolute_url(self):
 	    return reverse('index')
@@ -249,4 +258,13 @@ class Quote(models.Model):
 	    return reverse('index')
     def __str__(self):              
         return self.name
-    
+
+class ContactResponse(models.Model):
+    name = models.CharField('name', max_length=300)
+    email = models.EmailField('email', max_length=50)
+    phone = models.CharField('phone number', max_length=15, blank=True)
+    message = models.TextField('message')
+    timestamp = models.DateTimeField('timestamp', auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")

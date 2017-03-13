@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'admin_honeypot',
     'social_django',
+    'storages',
+    'letsencrypt',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -69,15 +71,17 @@ AUTH_USER_MODEL = 'web_app.CustomUser'
 SOCIAL_AUTH_USER_MODEL = 'web_app.CustomUser'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '745625103135-o9k6ma41dvpdaabqfh0rn1slenuligmp.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'bnen67ROpn42dCbFAKlDsnr-'
-SOCIAL_AUTH_FACEBOOK_KEY = '225699221227840'
-SOCIAL_AUTH_FACEBOOK_SECRET = '1f87ed4ce07c5a64f6a80f8fecf9f177'
-SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = 'venuebookerfb'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOG_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOG_SECRET')
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FB_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FB_SECRET')
+SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = os.environ.get('FB_NS')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_TWITTER_KEY = 'LSw5dz6JUVxZwKQrITbwCAYOi'
-SOCIAL_AUTH_TWITTER_SECRET = 'AGQJILmMKpbgDYX5nka3WN9p9Ritukhuf1Z0FGQGGEUsu2fCqF'
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TW_KEY')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TW_SECRET')
 LOGIN_REDIRECT_URL ="/index"
+
+
 
 ROOT_URLCONF = 'base_site.urls'
 
@@ -176,11 +180,24 @@ ALLOWED_HOSTS = ['*']
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_BUCKET')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_SES_REGION_NAME = 'eu-west-1'
+AWS_SES_REGION_ENDPOINT = 'email.eu-west-1.amazonaws.com'
+
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+MEDIAFILES_LOCATION = 'media'
+MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
 
 
 # Extra places for collectstatic to find static files.

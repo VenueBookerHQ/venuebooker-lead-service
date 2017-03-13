@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from web_app.models import ContactResponse
+from web_app.models import Organisation, Venue, Event_campaign
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -37,4 +39,24 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ("username","email")
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactResponse
+        fields = ['name', 'email', 'phone', 'message']
+
+class OrganisationForm(forms.ModelForm):
+    class Meta:
+        model = Organisation
+        fields = ['name', 'image', 'address', 'primary_contact', 'description']
+
+class VenueForm(forms.ModelForm):
+    class Meta:
+        model = Venue
+        fields = ['name', 'image', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation']
+
+class EventCampaignForm(forms.ModelForm):
+    class Meta:
+        model = Event_campaign
+        fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'image', 'capacity', 'cost_per_capacity_unit', 'venue']
 

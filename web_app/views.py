@@ -52,18 +52,18 @@ class DetailViewEvent(generic.DetailView):
 	template_name = 'event_campaign_detail.html'
 
 class ProfileView(generic.DetailView):
-	model = User
+	model = CustomUser
 	template_name = 'profile.html'
 
 
 class VenueCreate(CreateView):
 	model = Venue
-	fields = ['name', 'address', 'socialmedialinks', 'description', 'organisation', 'image']
+	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
 
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'address', 'socialmedialinks', 'description', 'image']
+	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 class VenueDelete(DeleteView):
     model = Venue
@@ -72,11 +72,11 @@ class VenueDelete(DeleteView):
 
 class OrganisationCreate(CreateView):
 	model = Organisation
-	fields = ['name', 'address']
+	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
 
 class OrganisationUpdate(UpdateView):
 	model = Organisation
-	fields = ['name', 'address']
+	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
 
 class OrganisationDelete(DeleteView):
     model = Organisation
@@ -97,7 +97,7 @@ class EventCampaignDelete(DeleteView):
 
 class EnquiryCreate(CreateView):
 	model = Enquiry
-	fields = ['message', 'attendeeNum', 'date', 'event_campaign', 'user']
+	fields = ['message', 'attendeeNum', 'date', 'event_campaign']
 
 class RegisterView(View):
     form_class = UserForm
@@ -152,8 +152,23 @@ def logout_user(request):
     return render(request, 'web_app/login_form.html', {'form' : form})
 
 
-#
-#def search
+class VenueDashView(generic.ListView):
+    template_name = 'venuedash.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def get_queryset(self):
+    	return Event_campaign.objects.filter(venue=request.venue.name)
+
+class OrganisationDashView(generic.ListView):
+    template_name = 'organisationdash.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def get_queryset(self):
+    	return Venue.objects.filter(organisation=request.organisation.name)
 
 
 
