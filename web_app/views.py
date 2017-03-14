@@ -53,11 +53,11 @@ class VenueDelete(DeleteView):
 
 class OrganisationCreate(CreateView):
 	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
+	fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationUpdate(UpdateView):
 	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
+	fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationDelete(DeleteView):
     model = Organisation

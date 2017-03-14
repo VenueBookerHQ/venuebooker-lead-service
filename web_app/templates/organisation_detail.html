@@ -26,6 +26,7 @@
                                         <div class="pull-left">
 					    <br>
 					    <p>{{ organisation.address }}</p>
+                        <p>{{ organisation.description }}</p>
                         <br>
                         <form action="{% url 'organisation-update' organisation.pk %}" method="post">
 							{% csrf_token %}
