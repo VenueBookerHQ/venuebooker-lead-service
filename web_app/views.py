@@ -45,6 +45,17 @@ class VenueCreate(CreateView):
 class VenueUpdate(UpdateView):
 	model = Venue
 	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+    
+    def get(self, request, **kwargs):
+        self.object = Venue.objects.get(id=self.request.id)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        context = self.get_context_data(object=self.object, form=form)
+        return self.render_to_response(context)
+
+    def get_object(self, queryset=None):
+        obj = Venue.objects.get(id=self.kwargs['id'])
+        return obj
 
 class VenueDelete(DeleteView):
     model = Venue
