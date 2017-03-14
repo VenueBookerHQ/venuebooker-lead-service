@@ -78,13 +78,16 @@ class EventCampaignDelete(DeleteView):
 class EnquiryCreate(CreateView):
     model = Enquiry
     fields = ['message', 'attendeeNum', 'date']
-    def get_success_url(self):
-        pass 
+    success_url = "/eventcampaigns"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.event_campaign = get_object_or_404(Event_campaign, pk=self.kwargs['pk'])
+        form.save()
         return super(EnquiryCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 class RegisterView(View):
     form_class = UserForm
