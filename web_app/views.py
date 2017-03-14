@@ -43,9 +43,9 @@ class VenueCreate(CreateView):
 
 
 class VenueUpdate(UpdateView):
-	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
-    
+    model = Venue
+    fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+
     def get(self, request, **kwargs):
         self.object = Venue.objects.get(id=self.request.id)
         form_class = self.get_form_class()
@@ -60,7 +60,6 @@ class VenueUpdate(UpdateView):
 class VenueDelete(DeleteView):
     model = Venue
     success_url = reverse_lazy('index')
-
 
 class OrganisationCreate(CreateView):
 	model = Organisation
