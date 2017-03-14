@@ -177,5 +177,5 @@ def event_list(request):
         "object_list": queryset,
         "title": "List",
     }
-    return render(request, "event_campaign_detail.html", context)
+    return render(request, "eventcampaigns.html", context)
 
