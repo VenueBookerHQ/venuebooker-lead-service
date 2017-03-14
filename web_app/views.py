@@ -176,7 +176,7 @@ def event_list(request):
     queryset_list = Event_campaign.objects.all()
     query = request.GET.get("search-query")
     if query:
-        queryset_list = queryset_list.filter(title__icontains=query)
+        queryset_list = queryset_list.filter(name__icontains=query)
     paginator = Paginator(queryset_list, 10)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
