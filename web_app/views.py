@@ -10,6 +10,7 @@ from .models import *
 from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 def index(request):
@@ -173,6 +174,19 @@ class OrganisationDashView(generic.ListView):
 
 def event_list(request):
     queryset = Event_campaign.objects.all()
+    query = request.GET.get("search-query")
+    if query:
+        queryset_list = queryset_list.filter(title__icontains=query)
+    paginator = Paginator(queryset_list, 10)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
     context = {
         "object_list": queryset,
         "title": "List",
