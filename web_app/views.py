@@ -50,15 +50,6 @@ class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html'
 
-def event_list(request):
-	queryset = Event_campaign.objects.all()
-
-    context = {
-        "object_list": queryset,
-        "title": "List",
-    }
-    return render(request, "event_campaign_detail.html", context)
-
 class ProfileView(generic.DetailView):
 	model = CustomUser
 	template_name = 'profile.html'
@@ -180,7 +171,11 @@ class OrganisationDashView(generic.ListView):
     def get_queryset(self):
     	return Venue.objects.filter(organisation=request.organisation.name)
 
-
-
-
+def event_list(request):
+	queryset = Event_campaign.objects.all()
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "event_campaign_detail.html", context)
 
