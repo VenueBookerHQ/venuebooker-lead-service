@@ -79,7 +79,7 @@ class EnquiryCreate(CreateView):
     model = Enquiry
     fields = ['message', 'attendeeNum', 'date']
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.pk
+        form.instance.user = self.request.user
         form.instance.event_campaign = get_object_or_404(Event_campaign, pk=self.kwargs['pk'])
         return super(EnquiryCreate, self).form_valid(form)
 
