@@ -33,7 +33,7 @@
                         <p>Start Time: {{ event_campaign.startTime }}</p>
                         <p>End Time: {{ event_campaign.endTime }}</p>
                         <br>
-                        <form action="{% url 'event_campaign-update' event_campaign.pk %}" method="post">
+                        <form action="{% url 'event_campaign-update' event_campaign.pk %}">
 							{% csrf_token %}
 							<div class="col-sm-offset-2 col-sm-10">
 								<button type="submit" class="btn btn-default">Update Event</button>
