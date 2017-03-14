@@ -52,9 +52,10 @@ class DetailViewEvent(generic.DetailView):
 
 def event_list(request):
 	queryset = Event_campaign.objects.all()
+
     context = {
         "object_list": queryset,
-        "title": "List"
+        "title": "List",
     }
     return render(request, "event_campaign_detail.html", context)
 
