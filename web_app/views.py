@@ -173,7 +173,7 @@ class OrganisationDashView(generic.ListView):
     	return Venue.objects.filter(organisation=request.organisation.name)
 
 def event_list(request):
-    queryset = Event_campaign.objects.all()
+    queryset_list = Event_campaign.objects.all()
     query = request.GET.get("search-query")
     if query:
         queryset_list = queryset_list.filter(title__icontains=query)
