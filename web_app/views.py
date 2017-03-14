@@ -19,37 +19,18 @@ def index(request):
 def contact(request):
     return render(request, 'contact.html', {})
 
-class VenueList(generic.ListView):
-    template_name = 'venues.html'
-
-    def get_queryset(self):
-    	return Venue.objects.all()
-
-class OrganisationList(generic.ListView):
-    template_name = 'organisations.html'
-
-    def get_queryset(self):
-    	return Organisation.objects.all()
-
-class EventCampaignList(generic.ListView):
-    template_name = 'eventcampaigns.html'
-
-    def get_queryset(self):
-    	return Event_campaign.objects.all()
-
 
 class DetailViewVenue(generic.DetailView):
 	model = Venue
 	template_name = 'venue_detail.html'
 
-class DetailViewOrganisation(generic.DetailView):
-	model = Organisation
-	template_name = 'organisation_detail.html'
-
- 
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
 	template_name = 'event_campaign_detail.html'
+
+class DetailViewOrganisation(generic.DetailView):
+	model = Organisation
+	template_name = 'organisation_detail.html'
 
 class ProfileView(generic.DetailView):
 	model = CustomUser
@@ -192,4 +173,46 @@ def event_list(request):
         "title": "List",
     }
     return render(request, "eventcampaigns.html", context)
+
+def venue_list(request):
+    queryset_list = Venue.objects.all()
+    query = request.GET.get("search-query")
+    if query:
+        queryset_list = queryset_list.filter(name__icontains=query)
+    paginator = Paginator(queryset_list, 10)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "venues.html", context)
+
+def organisation_list(request):
+    queryset_list = Organisation.objects.all()
+    query = request.GET.get("search-query")
+    if query:
+        queryset_list = queryset_list.filter(name__icontains=query)
+    paginator = Paginator(queryset_list, 10)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "organisations.html", context)
 

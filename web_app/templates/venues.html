@@ -79,6 +79,10 @@
                         <h3>PERFECT VENUES FOR ALL OCCASIONS</h3>
                         <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
                         <hr>
+                        <form method="GET" action="">
+                        <input type="text" name="search-query" placeholder="Search Venues"/>
+                        <input type="submit" value="Search"/>
+                        </form>
                     </div>
 
                     <div class="row">
@@ -93,7 +97,7 @@
 
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
-				            <h4><a href="{% url 'venue_detail' venue.pk %}">{{ venue.name }}</a></h4>
+				            <h4><a href="{% url 'venue_detail' venue.pk %}" {{ venue.name }} /></h4>
                                             <h5>{{ venue.type }}</h5>
                                         </div>
                                     </div><!-- end ost-title -->
@@ -105,6 +109,21 @@
 
                     </div><!-- end row -->
                 </div><!-- end related-hotels -->
+                <div class="pagination">
+                    <span class="step-links">
+                    {% if object_list.has_previous %}
+                        <a href="?page={{ object_list.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                     <span class="current">
+                        Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                     </span>
+
+                     {% if object_list.has_next %}
+                         <a href="?page={{ object_list.next_page_number }}">next</a>
+                     {% endif %}
+                     </span>
+                </div>
 
             </div><!-- end container -->
         </section><!-- end section -->
