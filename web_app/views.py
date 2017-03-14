@@ -78,6 +78,9 @@ class EventCampaignDelete(DeleteView):
 class EnquiryCreate(CreateView):
     model = Enquiry
     fields = ['message', 'attendeeNum', 'date']
+    def get_success_url(self):
+        pass 
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.event_campaign = get_object_or_404(Event_campaign, pk=self.kwargs['pk'])
