@@ -109,7 +109,10 @@
                             </div><!-- end col -->
                         {% endfor %}
 
-                <div class="pagination">
+
+                    </div><!-- end row -->
+                </div><!-- end related-hotels -->
+                 <div class="pagination">
                     <span class="step-links">
                     {% if object_list.has_previous %}
                         <a href="?page={{ object_list.previous_page_number }}">previous</a>
@@ -124,9 +127,6 @@
                      {% endif %}
                      </span>
                  </div>
-
-                    </div><!-- end row -->
-                </div><!-- end related-hotels -->
 
             </div><!-- end container -->
         </section><!-- end section -->
