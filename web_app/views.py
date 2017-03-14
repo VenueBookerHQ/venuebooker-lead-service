@@ -21,25 +21,25 @@ def contact(request):
 
 
 class DetailViewVenue(generic.DetailView):
-	model = Venue
-	template_name = 'venue_detail.html'
+    model = Venue
+    template_name = 'venue_detail.html'
 
 class DetailViewEvent(generic.DetailView):
-	model = Event_campaign
-	template_name = 'event_campaign_detail.html'
+    model = Event_campaign
+    template_name = 'event_campaign_detail.html'
 
 class DetailViewOrganisation(generic.DetailView):
-	model = Organisation
-	template_name = 'organisation_detail.html'
+    model = Organisation
+    template_name = 'organisation_detail.html'
 
 class ProfileView(generic.DetailView):
-	model = CustomUser
-	template_name = 'profile.html'
+    model = CustomUser
+    template_name = 'profile.html'
 
 
 class VenueCreate(CreateView):
-	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+    model = Venue
+    fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
 
 
 class VenueUpdate(UpdateView):
@@ -51,12 +51,12 @@ class VenueDelete(DeleteView):
     success_url = reverse_lazy('index')
 
 class OrganisationCreate(CreateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
+    model = Organisation
+    fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationUpdate(UpdateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
+    model = Organisation
+    fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationDelete(DeleteView):
     model = Organisation
@@ -64,12 +64,12 @@ class OrganisationDelete(DeleteView):
 
 
 class EventCampaignCreate(CreateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+    model = Event_campaign
+    fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
 class EventCampaignUpdate(UpdateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+    model = Event_campaign
+    fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
 class EventCampaignDelete(DeleteView):
     model = Event_campaign
@@ -144,7 +144,7 @@ class VenueDashView(generic.ListView):
         return render(request, self.template_name, {})
 
     def get_queryset(self):
-    	return Event_campaign.objects.filter(venue=request.venue.name)
+        return Event_campaign.objects.filter(venue=request.venue.name)
 
 class OrganisationDashView(generic.ListView):
     template_name = 'organisationdash.html'
@@ -153,7 +153,7 @@ class OrganisationDashView(generic.ListView):
         return render(request, self.template_name, {})
 
     def get_queryset(self):
-    	return Venue.objects.filter(organisation=request.organisation.name)
+        return Venue.objects.filter(organisation=request.organisation.name)
 
 def event_list(request):
     queryset_list = Event_campaign.objects.all()
