@@ -246,7 +246,7 @@ class Enquiry(models.Model):
     def get_absolute_url(self):
 	    return reverse('index')
     def __str__(self):              
-        return self.id
+        return "Enquiry " + str(self.id)
 
 class Quote(models.Model):
     description = models.TextField()
@@ -257,7 +257,7 @@ class Quote(models.Model):
     def get_absolute_url(self):
 	    return reverse('index')
     def __str__(self):              
-        return self.id
+        return "Quote " + str(self.id)
 
 class ContactResponse(models.Model):
     name = models.CharField('name', max_length=300)
