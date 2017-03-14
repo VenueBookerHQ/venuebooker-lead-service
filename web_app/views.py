@@ -54,7 +54,7 @@ class VenueUpdate(UpdateView):
         return self.render_to_response(context)
 
     def get_object(self, queryset=None):
-        obj = Venue.objects.get(id=self.kwargs['id'])
+        obj = Venue.objects.get(id=self.kwargs['pk'])
         return obj
 
 class VenueDelete(DeleteView):
