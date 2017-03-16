@@ -164,9 +164,9 @@ class OrganisationDashView(generic.ListView):
 
 def event_list(request):
     queryset_list = Event_campaign.objects.all()
-    query = request.GET.get("search-query")
+    query = request.GET.get("q")
     if query:
-        queryset_list = queryset_list.filter(name__icontains=query)
+        queryset_list = queryset_list.filter(Q(name__icontains=query) | Q(venue__name__icontains=query))
     paginator = Paginator(queryset_list, 10)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
@@ -185,7 +185,7 @@ def event_list(request):
 
 def venue_list(request):
     queryset_list = Venue.objects.all()
-    query = request.GET.get("search-query")
+    query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(name__icontains=query)
     paginator = Paginator(queryset_list, 10)
@@ -206,7 +206,7 @@ def venue_list(request):
 
 def organisation_list(request):
     queryset_list = Organisation.objects.all()
-    query = request.GET.get("search-query")
+    query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(name__icontains=query)
     paginator = Paginator(queryset_list, 10)
