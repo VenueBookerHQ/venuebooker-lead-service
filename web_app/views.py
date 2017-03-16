@@ -11,6 +11,7 @@ from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
