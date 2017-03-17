@@ -75,7 +75,7 @@ class Venue(models.Model):
     instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
     description = models.TextField()
     image = models.ImageField(blank=True, default='default.jpg')
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True)
 
     def get_absolute_url(self):
     	return reverse('venue_detail', kwargs={'pk': self.pk})
