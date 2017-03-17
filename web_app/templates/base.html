@@ -93,10 +93,14 @@
                                         <li><!-- class="dropdown" --> 
                                             <a href="/index">HOME</a>
                                         </li><!-- end yamm-fw -->
+                                        {% if not user.is_authenticated %}
                                         <li>
                                             <a href="/register">I AM A VENUE</a>
                                         </li>
-                                        {% if user.is_authenticated %}
+                                        {% elif user.is_authenticated %}
+                                        <li>
+                                            <a href="/venue/add">I AM A VENUE</a>
+                                        </li>
                                         <li>
                                             <a href="/organisations">ORGANISATIONS</a>
                                         </li>
