@@ -118,8 +118,6 @@ class RegisterView(View):
 
             user = authenticate(username=username, password=password)
             
-            g = Group.objects.get(name='VenueAdmin') 
-            g.user_set.add(your_user)
         
             if user is not None:
                 if request.method == 'POST':
