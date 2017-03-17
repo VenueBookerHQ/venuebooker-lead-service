@@ -20,6 +20,11 @@ def index(request):
 def contact(request):
     return render(request, 'contact.html', {})
 
+def terms(request):
+    return render(request, 'terms.html', {})
+
+def privacy(request):
+    return render(request, 'privacy.html', {})
 
 class DetailViewVenue(generic.DetailView):
     model = Venue
@@ -168,7 +173,7 @@ def event_list(request):
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(Q(name__icontains=query) | Q(venue__name__icontains=query))
-    paginator = Paginator(queryset_list, 10)
+    paginator = Paginator(queryset_list, 9)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
     try:
@@ -189,7 +194,7 @@ def venue_list(request):
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(name__icontains=query)
-    paginator = Paginator(queryset_list, 10)
+    paginator = Paginator(queryset_list, 9)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
     try:
@@ -210,7 +215,7 @@ def organisation_list(request):
     query = request.GET.get("q")
     if query:
         queryset_list = queryset_list.filter(name__icontains=query)
-    paginator = Paginator(queryset_list, 10)
+    paginator = Paginator(queryset_list, 9)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
     try:
