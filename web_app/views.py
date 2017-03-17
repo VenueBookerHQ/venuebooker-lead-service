@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.core.mail import send_mail, EmailMessage
 
 # Create your views here.
 def index(request):
@@ -111,6 +112,7 @@ class RegisterView(View):
             user = form.save(commit=False)
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            emailAddress = form.cleaned_data['email']
             user.set_password(password)
             user.save()
 
@@ -120,7 +122,19 @@ class RegisterView(View):
             g.user_set.add(your_user)
         
             if user is not None:
-                
+                if request.method == 'POST':
+                    try:
+                        subject = 'Veneubooker: Account Created'
+                        message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully'
+                        from_email = 'Venuebooker <noreply@venuebooker.com>'
+                        recipient_list = [emailAddress]
+                        email = EmailMessage(subject, message, from_email, recipient_list)
+                        email.send()
+                    except KeyError:
+                        return HttpResponse('Please fill in all fields')
+
+                    return HttpResponse('Email sent :)')
+       
                 if user.is_active:
                     auth_login(request, user)
                     return redirect('index')
