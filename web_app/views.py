@@ -124,7 +124,7 @@ class RegisterView(View):
                     try:
                         subject = 'Veneubooker: Account Created'
                         message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully'
-                        from_email = 'Venuebooker <noreply@venuebooker.com>'
+                        from_email = 'Venuebooker <gregwhyte14@gmail.com>'
                         recipient_list = [emailAddress]
                         email = EmailMessage(subject, message, from_email, recipient_list)
                         email.send()
