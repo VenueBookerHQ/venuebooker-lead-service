@@ -63,9 +63,9 @@ class EventCampaignForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EventCampaignForm, self).__init__(*args, **kwargs)
         if self.instance:
-            if self.request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            if self.request.user.is_superuser or hasattr(self.request.user, 'venuebookeruser'):
                 self.fields['venue'].queryset = Venue.objects.all()
-            elif hasattr(request.user, 'organisationuser'):
+            elif hasattr(self.request.user, 'organisationuser'):
                 self.fields['venue'].queryset = Venue.objects.filter(venue__organisation=self.request.user.organisationuser.organisation)
             else:
                 self.fields['venue'].queryset = Venue.objects.filter(venue=self.request.user.venueuser.venue)
