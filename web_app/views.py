@@ -96,6 +96,20 @@ class EnquiryCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
+class QuoteCreate(CreateView):
+    model = Quote
+    fields = ['description', 'cost']
+    success_url = "/eventcampaigns"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
+        form.save()
+        return super(QuoteCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
+
 class RegisterView(View):
     form_class = UserForm
     template_name = 'web_app/register_form.html'
@@ -123,8 +137,8 @@ class RegisterView(View):
                 if request.method == 'POST':
                     try:
                         subject = 'Veneubooker: Account Created'
-                        message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully'
-                        from_email = 'Venuebooker <noreply@venuebooker.com>'
+                        message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully \n Regards, \n The Venuebooker Team'
+                        from_email = 'Venuebooker <gregwhyte14@gmail.com>'
                         recipient_list = [emailAddress]
                         email = EmailMessage(subject, message, from_email, recipient_list)
                         email.send()

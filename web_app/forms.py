@@ -60,3 +60,13 @@ class EventCampaignForm(forms.ModelForm):
         model = Event_campaign
         fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'image', 'capacity', 'cost_per_capacity_unit', 'venue']
 
+class EnquiryForm(forms.ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = ['message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved']
+
+class QuoteForm(forms.ModelForm):
+    class Meta:
+        model = Quote
+        fields = ['description', 'cost', 'accepted', 'enquiry']
+

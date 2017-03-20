@@ -104,6 +104,44 @@ class EventCampaignAdmin(admin.ModelAdmin):
             return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
         return Event_campaign.objects.filter(venue=request.user.venueuser.venue)
 
+class EnquiryAdmin(admin.ModelAdmin):
+    form = EnquiryForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved')
+        }),
+    )
+
+    list_display = ('user', 'event_campaign', 'date', 'approved')
+    list_display_links = ('user',)
+    search_fields = ['user']
+    
+    def get_queryset(self, request):
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            return Enquiry.objects.all()
+        elif hasattr(request.user, 'organisationuser'):
+            return Enquiry.objects.filter(event_campaign__venue__organisation=request.user.organisationuser.organisation)
+        return Enquiry.objects.filter(event_campaign__venue=request.user.venueuser.venue)
+
+class QuoteAdmin(admin.ModelAdmin):
+    form = QuoteForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('description', 'cost', 'accepted', 'enquiry')
+        }),
+    )
+
+    list_display = ('enquiry', 'cost', 'accepted')
+    list_display_links = ('enquiry',)
+    search_fields = ['enquiry']
+    
+    def get_queryset(self, request):
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            return Quote.objects.all()
+        elif hasattr(request.user, 'organisationuser'):
+            return Quote.objects.filter(enquiry__event_campaign__venue__organisation=request.user.organisationuser.organisation)
+        return Quote.objects.filter(enquiry__event_campaign__venue=request.user.venueuser.venue)
+
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
