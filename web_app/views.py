@@ -131,11 +131,9 @@ class RegisterView(View):
                     except KeyError:
                         return HttpResponse('Please fill in all fields')
 
-                    return HttpResponse('Email sent :)')
-       
-                if user.is_active:
-                    auth_login(request, user)
-                    return redirect('index')
+                    if user.is_active:
+                        auth_login(request, user)
+                        return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
 
