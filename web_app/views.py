@@ -51,7 +51,7 @@ class VenueCreate(CreateView):
 
     def form_valid(self, form):
         if hasattr(request.user, 'organisationuser'):
-            form.instance.organisation = self.request.user.organisationuser.organisation)         
+            form.instance.organisation = self.request.user.organisationuser.organisation         
         form.save()
         return super(VenueCreate, self).form_valid(form)
 
