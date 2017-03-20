@@ -26,8 +26,6 @@ from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, Organisa
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
-admin.site.register(Enquiry)
-admin.site.register(Quote)
 admin.site.register(Event_type)
 admin.site.register(Contact)
 admin.site.register(ContactResponse)
@@ -169,6 +167,8 @@ class CustomUserAdmin(UserAdmin):
             return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
         return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+admin.site.register(Enquiry, EnquiryAdmin)
+admin.site.register(Quote, QuoteAdmin)
 admin.site.register(Event_campaign, EventCampaignAdmin)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Organisation, OrganisationAdmin)

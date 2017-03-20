@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from web_app.models import ContactResponse
-from web_app.models import Organisation, Venue, Event_campaign
+from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
