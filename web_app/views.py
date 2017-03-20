@@ -47,6 +47,16 @@ class ProfileView(generic.DetailView):
 class VenueCreate(CreateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+    success_url = "/venues"
+
+    def form_valid(self, form):
+        if hasattr(request.user, 'organisationuser'):
+            form.instance.organisation = self.request.user.organisationuser.organisation)         
+        form.save()
+        return super(VenueCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 
 class VenueUpdate(UpdateView):

@@ -65,7 +65,7 @@ class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
         ('Basic Details', {
-            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description')
         }),
     )
 
@@ -74,6 +74,11 @@ class VenueAdmin(admin.ModelAdmin):
     inlines = [VenueUserInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
+
+    def save_model(self, request, obj, form, change):
+        if not obj.organisation.id:
+            obj.organisation = self.request.user.organisationuser.organisation
+            obj.save()
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
