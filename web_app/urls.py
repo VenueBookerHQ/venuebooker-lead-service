@@ -28,6 +28,4 @@ urlpatterns = [
     url(r'^eventcampaigns/update/(?P<pk>[0-9]+)/$', views.EventCampaignUpdate.as_view(), name='event_campaign-update'), 
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/delete/$', views.EventCampaignDelete.as_view(), name='event_campaign-delete'),
     url(r'^profile/(?P<pk>[0-9]+)/$', views.ProfileView.as_view(), name='profile'),
-    url(r'^venuedash/(?P<pk>[0-9]+)/$', views.VenueDashView.as_view(), name='venue_dash'),
-    url(r'^organisationdash/(?P<pk>[0-9]+)/$', views.OrganisationDashView.as_view(), name='organisation_dash'),
 ]

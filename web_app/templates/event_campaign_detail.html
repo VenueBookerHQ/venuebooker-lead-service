@@ -26,25 +26,14 @@
                                         <div class="pull-left">
                             <h5>{{ event_campaign.type }}</h5>
                             <h5>{{ event_campaign.venue }}</h5>
-					    <br>
+					    </br>
 					    <p>Details: {{ event_campaign.details }}</p>
 					    <p>Capacity: {{ event_campaign.capacity }}</p>
                         <p>Cost per Person: {{ event_campaign.cost_per_capacity_unit }}</p>
                         <p>Start Time: {{ event_campaign.startTime }}</p>
                         <p>End Time: {{ event_campaign.endTime }}</p>
-                        <br>
-                        <form action="{% url 'event_campaign-update' event_campaign.pk %}">
-							{% csrf_token %}
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Update Event</button>
-							</div>
-						</form>
-                        <form action="{% url 'event_campaign-delete' event_campaign.pk %}" method="post">
-							{% csrf_token %}
-							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">Delete Event</button>
-							</div>
-						</form>
+                        </br>
+                        </br>
                         <form action="{% url 'enquiry-add' event_campaign.pk %}" method="post">
 							{% csrf_token %}
 							<div class="col-sm-offset-2 col-sm-10">
