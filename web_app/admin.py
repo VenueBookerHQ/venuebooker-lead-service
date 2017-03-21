@@ -26,7 +26,7 @@ from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, Organisa
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
-admin.site.register(Event_type)
+ admin.site.register(Event_type)
 admin.site.register(Contact)
 admin.site.register(ContactResponse)
 admin.site.register(VenueUser)
@@ -36,7 +36,7 @@ admin.site.register(VenuebookerUser)
 class OrganisationUserInline(admin.StackedInline):
     model = OrganisationUser
     extra = 1
-
+,
 class VenueUserInline(admin.StackedInline):
     model = VenueUser
     extra = 1
@@ -65,7 +65,7 @@ class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
         ('Basic Details', {
-            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description')
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
         }),
     )
 
