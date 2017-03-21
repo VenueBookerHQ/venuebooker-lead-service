@@ -107,7 +107,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
         elif hasattr(request.user, 'organisationuser'):
             form.venue.queryset = Venue.objects.filter(organisation=request.user.organisationuser.organisation)
         else:
-            form.venue.queryset = Venue.objects.filter(name=request.user.venueuser.venue)
+            form.venue.initial = request.user.venueuser.venue
 
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
