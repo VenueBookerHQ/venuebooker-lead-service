@@ -191,11 +191,11 @@ def event_list(request):
     if query:
         queryset_list = queryset_list.filter(Q(name__icontains=query) | Q(venue__name__icontains=query))
     if minCost and maxCost:
-        queryset_list = queryset_list.filter(cost_per_capacity_unit.gte = minCost, cost_per_capacity_unit.lte = maxCost)
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
     elif minCost and not maxCost:
-        queryset_list = queryset_list.filter(cost_per_capacity_unit.gte = minCost)
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost)
     elif maxCost and not minCost:
-        queryset_list = queryset_list.filter(cost_per_capacity_unit.lte = maxCost)
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__lte = maxCost)
     paginator = Paginator(queryset_list, 9)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
