@@ -51,7 +51,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 
     list_display = ('image_preview_small', 'name', 'address', 'primary_contact',
                      'associated_user_accounts')
-    list_display_links = ('image_preview_small', 'name')
+        list_display_links = ('image_preview_small', 'name')
     inlines = [OrganisationUserInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
@@ -61,6 +61,7 @@ class OrganisationAdmin(admin.ModelAdmin):
             return Organisation.objects.all()
         return Organisation.objects.filter(name=request.user.organisationuser.organisation)
 
+    
 class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
@@ -76,6 +77,7 @@ class VenueAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
     def save_model(self, request, obj, form, change):
+        super(VenueAdmin, self).save_model(request, obj, form, change)
         if not obj.organisation:
             obj.organisation = request.user.organisationuser.organisation
             obj.save()
