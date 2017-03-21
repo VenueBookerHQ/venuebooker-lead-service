@@ -105,7 +105,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
         if hasattr(request.user, 'organisationuser'):
             form.venue.queryset = Venue.objects.filter(organisation=request.user.organisationuser.organisation)
         elif hasattr(request.user, 'venueuser'):
-            form.venue.initial = request.user.venueuser.venue
+            form.venue.queryset = Venue.objects.all()
         else:
             form.venue.queryset = Venue.objects.all()
 
