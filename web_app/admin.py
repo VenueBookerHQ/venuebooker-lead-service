@@ -76,8 +76,8 @@ class VenueAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
     def save_model(self, request, obj, form, change):
-        if not obj.organisation.id:
-            obj.organisation = self.request.user.organisationuser.organisation
+        if not obj.organisation:
+            obj.organisation = request.user.organisationuser.organisation
             obj.save()
     
     def get_queryset(self, request):
