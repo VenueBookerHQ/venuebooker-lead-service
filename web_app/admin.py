@@ -104,6 +104,8 @@ class EventCampaignAdmin(admin.ModelAdmin):
         form = super(EventCampaignAdmin, self).get_form(request, obj, **kwargs)
         if hasattr(request.user, 'organisationuser'):
             form.base_fields['venue'].queryset = Venue.objects.filter(organisation=request.user.organisationuser.organisation)
+        elif hasattr(request.user, 'venueuser'):
+            form.base_fields['venue'].queryset = Venue.objects.filter(name=request.user.venueuser.venue)
         else:
             form.base_fields['venue'].queryset = Venue.objects.all()
         return form
