@@ -100,6 +100,15 @@ class EventCampaignAdmin(admin.ModelAdmin):
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
     
+    def get_form(self, request, **kwargs):
+        form = super(EventCampaignAdmin, self).get_form(request, **kwargs)
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            form.fields['venue'].queryset = Venue.objects.all()
+        elif hasattr(self.request.user, 'organisationuser'):
+            form.fields['venue'].queryset = Venue.objects.filter(venue__organisation=request.user.organisationuser.organisation)
+        else:
+            form.fields['venue'].queryset = Venue.objects.filter(venue=request.user.venueuser.venue)
+
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Event_campaign.objects.all()
