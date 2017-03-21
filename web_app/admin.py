@@ -36,7 +36,7 @@ admin.site.register(VenuebookerUser)
 class OrganisationUserInline(admin.StackedInline):
     model = OrganisationUser
     extra = 1
-,
+
 class VenueUserInline(admin.StackedInline):
     model = VenueUser
     extra = 1
