@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'', include('web_app.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url('', include('social_django.urls', namespace='social')),
-    url(r'^\.well-known/', include('letsencrypt.urls')),
+    #url(r'^\.well-known/', include('letsencrypt.urls')),
 
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'admin_honeypot',
     'social_django',
     'storages',
-    'letsencrypt',
     'django_ses',
 )
 

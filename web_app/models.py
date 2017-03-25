@@ -118,7 +118,7 @@ class Event_campaign(models.Model):
     startTime = models.TimeField(blank=True)
     endTime = models.TimeField(blank=True)
     recurring = models.BooleanField()
-    image = models.FileField()
+    image = models.ImageField(blank=True)
     capacity = models.IntegerField()
     cost_per_capacity_unit = models.DecimalField('cost_per_capacity_unit', max_digits=10, decimal_places=2, blank=True, null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True)
@@ -190,7 +190,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(null=True, blank=True)
 
     objects = CustomUserManager()
 
