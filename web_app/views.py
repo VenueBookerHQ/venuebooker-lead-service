@@ -11,6 +11,9 @@ from .forms import UserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 import boto3
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from django.core.mail import send_mail, EmailMessage
 
 # Create your views here.
 def index(request):
@@ -19,64 +22,59 @@ def index(request):
 def contact(request):
     return render(request, 'contact.html', {})
 
-class VenueList(generic.ListView):
-    template_name = 'venues.html'
+def terms(request):
+    return render(request, 'terms.html', {})
 
-    def get_queryset(self):
-    	return Venue.objects.all()
-
-class OrganisationList(generic.ListView):
-    template_name = 'organisations.html'
-
-    def get_queryset(self):
-    	return Organisation.objects.all()
-
-class EventCampaignList(generic.ListView):
-    template_name = 'eventcampaigns.html'
-
-    def get_queryset(self):
-    	return Event_campaign.objects.all()
-
+def privacy(request):
+    return render(request, 'privacy.html', {})
 
 class DetailViewVenue(generic.DetailView):
-	model = Venue
-	template_name = 'venue_detail.html'
+    model = Venue
+    template_name = 'venue_detail.html'
+
+class DetailViewEvent(generic.DetailView):
+    model = Event_campaign
+    template_name = 'event_campaign_detail.html'
 
 class DetailViewOrganisation(generic.DetailView):
-	model = Organisation
-	template_name = 'organisation_detail.html'
-
- 
-class DetailViewEvent(generic.DetailView):
-	model = Event_campaign
-	template_name = 'event_campaign_detail.html'
+    model = Organisation
+    template_name = 'organisation_detail.html'
 
 class ProfileView(generic.DetailView):
-	model = CustomUser
-	template_name = 'profile.html'
+    model = CustomUser
+    template_name = 'profile.html'
 
 
 class VenueCreate(CreateView):
-	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+    model = Venue
+    fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+    success_url = "/venues"
+
+    def form_valid(self, form):
+        if hasattr(request.user, 'organisationuser'):
+            form.instance.organisation = self.request.user.organisationuser.organisation         
+        form.save()
+        return super(VenueCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 
 class VenueUpdate(UpdateView):
-	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+    model = Venue
+    fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 class VenueDelete(DeleteView):
     model = Venue
     success_url = reverse_lazy('index')
 
-
 class OrganisationCreate(CreateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
+    model = Organisation
+    fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationUpdate(UpdateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'decription']
+    model = Organisation
+    fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
 class OrganisationDelete(DeleteView):
     model = Organisation
@@ -84,20 +82,44 @@ class OrganisationDelete(DeleteView):
 
 
 class EventCampaignCreate(CreateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+    model = Event_campaign
+    fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
 class EventCampaignUpdate(UpdateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
+    model = Event_campaign
+    fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
 class EventCampaignDelete(DeleteView):
     model = Event_campaign
     success_url = reverse_lazy('index')
 
 class EnquiryCreate(CreateView):
-	model = Enquiry
-	fields = ['message', 'attendeeNum', 'date', 'event_campaign']
+    model = Enquiry
+    fields = ['message', 'attendeeNum', 'date']
+    success_url = "/eventcampaigns"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.event_campaign = get_object_or_404(Event_campaign, pk=self.kwargs['pk'])
+        form.save()
+        return super(EnquiryCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
+
+class QuoteCreate(CreateView):
+    model = Quote
+    fields = ['description', 'cost']
+    success_url = "/eventcampaigns"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
+        form.save()
+        return super(QuoteCreate, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 class RegisterView(View):
     form_class = UserForm
@@ -115,22 +137,32 @@ class RegisterView(View):
             user = form.save(commit=False)
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            emailAddress = form.cleaned_data['email']
             user.set_password(password)
             user.save()
 
             user = authenticate(username=username, password=password)
             
-            g = Group.objects.get(name='VenueAdmin') 
-            g.user_set.add(your_user)
         
             if user is not None:
-                
-                if user.is_active:
-                    auth_login(request, user)
-                    return redirect('index')
+                if request.method == 'POST':
+                    try:
+                        subject = 'Veneubooker: Account Created'
+                        message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully \n Regards, \n The Venuebooker Team'
+                        from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+                        recipient_list = [emailAddress]
+                        email = EmailMessage(subject, message, from_email, recipient_list)
+                        email.send()
+                    except KeyError:
+                        return HttpResponse('Please fill in all fields')
+
+                    if user.is_active:
+                        auth_login(request, user)
+                        return redirect('index')
 
         return render(request, self.template_name, {'form' : form})
 
+#User Login View
 def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -144,6 +176,7 @@ def login_user(request):
             return render(request, 'web_app/login_form.html')
     return render(request, 'web_app/login_form.html')
 
+#User Logout View
 def logout_user(request):
     template_name = 'web_app/login_form.html'
     logout(request)
@@ -151,26 +184,82 @@ def logout_user(request):
 
     return render(request, 'web_app/login_form.html', {'form' : form})
 
+def event_list(request):
+    queryset_list = Event_campaign.objects.all()
+    query = request.GET.get("q")
+    minCost = request.GET.get("min")
+    maxCost = request.GET.get("max")
+    minCap = request.GET.get("capmin")
+    maxCap = request.GET.get("capmax")
+    if query:
+        queryset_list = queryset_list.filter(Q(name__icontains=query) | Q(venue__name__icontains=query))
+    if minCost and maxCost:
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
+    elif minCost and not maxCost:
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost)
+    elif maxCost and not minCost:
+        queryset_list = queryset_list.filter(cost_per_capacity_unit__lte = maxCost)
+    if minCap and maxCap:
+        queryset_list = queryset_list.filter(capacity__gte = minCap, capacity__lte = maxCap)
+    elif minCap and not maxCap:
+        queryset_list = queryset_list.filter(capacity__gte = minCap)
+    elif maxCap and not minCap:
+        queryset_list = queryset_list.filter(capacity__lte = maxCap)
+    paginator = Paginator(queryset_list, 9)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
 
-class VenueDashView(generic.ListView):
-    template_name = 'venuedash.html'
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "eventcampaigns.html", context)
 
-    def get(self, request):
-        return render(request, self.template_name, {})
+def venue_list(request):
+    queryset_list = Venue.objects.all()
+    query = request.GET.get("q")
+    if query:
+        queryset_list = queryset_list.filter(name__icontains=query)
+    paginator = Paginator(queryset_list, 9)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
 
-    def get_queryset(self):
-    	return Event_campaign.objects.filter(venue=request.venue.name)
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "venues.html", context)
 
-class OrganisationDashView(generic.ListView):
-    template_name = 'organisationdash.html'
+def organisation_list(request):
+    queryset_list = Organisation.objects.all()
+    query = request.GET.get("q")
+    if query:
+        queryset_list = queryset_list.filter(name__icontains=query)
+    paginator = Paginator(queryset_list, 9)
+    page_request_var = "page"
+    page = request.GET.get(page_request_var)
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
 
-    def get(self, request):
-        return render(request, self.template_name, {})
-
-    def get_queryset(self):
-    	return Venue.objects.filter(organisation=request.organisation.name)
-
-
-
-
+    context = {
+        "object_list": queryset,
+        "title": "List",
+    }
+    return render(request, "organisations.html", context)
 

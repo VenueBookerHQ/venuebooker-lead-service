@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from web_app.models import ContactResponse
-from web_app.models import Organisation, Venue, Event_campaign
+from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -10,8 +10,8 @@ class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 	
 	class Meta:
-		model = User
-		fields = ['username', 'email', 'password']
+		model = CustomUser
+		fields = ['username', 'email', 'first_name', 'last_name', 'contact', 'avatar', 'password']
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -59,4 +59,14 @@ class EventCampaignForm(forms.ModelForm):
     class Meta:
         model = Event_campaign
         fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'image', 'capacity', 'cost_per_capacity_unit', 'venue']
+
+class EnquiryForm(forms.ModelForm):
+    class Meta:
+        model = Enquiry
+        fields = ['message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved']
+
+class QuoteForm(forms.ModelForm):
+    class Meta:
+        model = Quote
+        fields = ['description', 'cost', 'accepted', 'enquiry']
 

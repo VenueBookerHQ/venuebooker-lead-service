@@ -75,7 +75,7 @@ class Venue(models.Model):
     instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
     description = models.TextField()
     image = models.ImageField(blank=True, default='default.jpg')
-    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
     	return reverse('venue_detail', kwargs={'pk': self.pk})
@@ -121,7 +121,7 @@ class Event_campaign(models.Model):
     image = models.FileField()
     capacity = models.IntegerField()
     cost_per_capacity_unit = models.DecimalField('cost_per_capacity_unit', max_digits=10, decimal_places=2, blank=True, null=True)
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True)
 
     def get_absolute_url(self):
 	    return reverse('event_campaign_detail', kwargs={'pk': self.pk})
@@ -246,7 +246,7 @@ class Enquiry(models.Model):
     def get_absolute_url(self):
 	    return reverse('index')
     def __str__(self):              
-        return self.name
+        return "Enquiry " + str(self.id)
 
 class Quote(models.Model):
     description = models.TextField()
@@ -257,7 +257,7 @@ class Quote(models.Model):
     def get_absolute_url(self):
 	    return reverse('index')
     def __str__(self):              
-        return self.name
+        return "Quote " + str(self.id)
 
 class ContactResponse(models.Model):
     name = models.CharField('name', max_length=300)

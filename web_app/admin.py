@@ -21,13 +21,11 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 
-admin.site.register(Enquiry)
-admin.site.register(Quote)
 admin.site.register(Event_type)
 admin.site.register(Contact)
 admin.site.register(ContactResponse)
@@ -63,6 +61,7 @@ class OrganisationAdmin(admin.ModelAdmin):
             return Organisation.objects.all()
         return Organisation.objects.filter(name=request.user.organisationuser.organisation)
 
+    
 class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
@@ -76,6 +75,11 @@ class VenueAdmin(admin.ModelAdmin):
     inlines = [VenueUserInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
+
+    def save_model(self, request, obj, form, change):
+        if not obj.organisation:
+            obj.organisation = request.user.organisationuser.organisation
+        super(VenueAdmin, self).save_model(request, obj, form, change)
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
@@ -97,12 +101,60 @@ class EventCampaignAdmin(admin.ModelAdmin):
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
     
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(EventCampaignAdmin, self).get_form(request, obj, **kwargs)
+        if hasattr(request.user, 'organisationuser'):
+            form.base_fields['venue'].queryset = Venue.objects.filter(organisation=request.user.organisationuser.organisation)
+        elif hasattr(request.user, 'venueuser'):
+            form.base_fields['venue'].queryset = Venue.objects.filter(name=request.user.venueuser.venue)
+        else:
+            form.base_fields['venue'].queryset = Venue.objects.all()
+        return form
+
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Event_campaign.objects.all()
         elif hasattr(request.user, 'organisationuser'):
             return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
         return Event_campaign.objects.filter(venue=request.user.venueuser.venue)
+
+class EnquiryAdmin(admin.ModelAdmin):
+    form = EnquiryForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved')
+        }),
+    )
+
+    list_display = ('user', 'event_campaign', 'date', 'approved')
+    list_display_links = ('user',)
+    search_fields = ['user']
+    
+    def get_queryset(self, request):
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            return Enquiry.objects.all()
+        elif hasattr(request.user, 'organisationuser'):
+            return Enquiry.objects.filter(event_campaign__venue__organisation=request.user.organisationuser.organisation)
+        return Enquiry.objects.filter(event_campaign__venue=request.user.venueuser.venue)
+
+class QuoteAdmin(admin.ModelAdmin):
+    form = QuoteForm
+    fieldsets = (
+        ('Basic Details', {
+            'fields': ('description', 'cost', 'accepted', 'enquiry')
+        }),
+    )
+
+    list_display = ('enquiry', 'cost', 'accepted')
+    list_display_links = ('enquiry',)
+    search_fields = ['enquiry']
+    
+    def get_queryset(self, request):
+        if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+            return Quote.objects.all()
+        elif hasattr(request.user, 'organisationuser'):
+            return Quote.objects.filter(enquiry__event_campaign__venue__organisation=request.user.organisationuser.organisation)
+        return Quote.objects.filter(enquiry__event_campaign__venue=request.user.venueuser.venue)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
@@ -131,6 +183,8 @@ class CustomUserAdmin(UserAdmin):
             return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
         return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+admin.site.register(Enquiry, EnquiryAdmin)
+admin.site.register(Quote, QuoteAdmin)
 admin.site.register(Event_campaign, EventCampaignAdmin)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Organisation, OrganisationAdmin)
