@@ -44,6 +44,9 @@ class ProfileView(generic.DetailView):
     model = CustomUser
     template_name = 'profile.html'
 
+class ProfileUpdate(UpdateView):
+    model = CustomUser
+    fields = ['email', 'first_name', 'last_name', 'avatar', 'password']
 
 class VenueCreate(CreateView):
     model = Venue
