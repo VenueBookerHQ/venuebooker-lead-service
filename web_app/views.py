@@ -48,6 +48,9 @@ class ProfileUpdate(UpdateView):
     model = CustomUser
     fields = ['email', 'first_name', 'last_name', 'avatar']
 
+    def get_success_url(self):
+        return reverse('profile', kwargs={'pk':self.kwargs['pk']})
+
 class VenueCreate(CreateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
