@@ -78,14 +78,16 @@
                                 <th>Message</th>
                                 <th>Cost</th>
                             </tr>
-                        {% for quote in user.enquiry.quote_set.all %} 
+                        {% for enquiry in user.enquiry_set.all %} 
+                           {% if enquiry.quote %}
                             <tr>
-                                <td>{{ quote.enquiry.event_campaign }}</td>
-                                <td>{{ quote.enquiry.date }}</td>
-                                <td>{{ quote.enquiry.attendeeNum }}</td>
-                                <td>{{ quote.description }}</td>
-                                <td>{{ quote.cost }}</td>
+                                <td>{{ enquiry.event_campaign }}</td>
+                                <td>{{ enquiry.date }}</td>
+                                <td>{{ enquiry.attendeeNum }}</td>
+                                <td>{{ enquiry.quote.description }}</td>
+                                <td>{{ enquiry.quote.cost }}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
                         </table>
                       </div>
