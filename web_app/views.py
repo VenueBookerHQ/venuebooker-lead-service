@@ -128,18 +128,19 @@ class QuoteCreate(CreateView):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 class RegisterView(View):
-    form_classes = [UserForm, ContactForm]
+    form_class1 = UserForm
+    form_class2 = ContactForm
     template_name = 'web_app/register_form.html'
 
     def get(self, request):
-        user_form = self.UserForm(None)
-        contact_form = self.ContactForm(None)
+        user_form = self.form_class1(None)
+        contact_form = self.form_class2(None)
         return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
     def post(self, request):
         #form = self.form_class(request.POST)
-        user_form = self.UserForm(request.POST)
-        contact_form = self.ContactForm(request.POST)
+        user_form = self.form_class1(request.POST)
+        contact_form = self.formclass2(request.POST)
 
         if all([user_form.is_valid(), contact_form.is_valid()]):
         
