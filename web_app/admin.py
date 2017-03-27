@@ -53,6 +53,11 @@ class VenueUserInline(admin.StackedInline):
     model = VenueUser
     extra = 1
 
+class ContactInline(admin.StackedInline):
+    model = Contact
+    max_num = 1
+    extra = 0
+
 class OrganisationAdmin(admin.ModelAdmin):
     form = OrganisationForm
     fieldsets = (
@@ -171,7 +176,7 @@ class QuoteAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'password')}),
+        (None, {'fields': ('username', 'email', 'avatar', 'password')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
@@ -179,7 +184,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2')}
+            'fields': ('username', 'email', 'avatar', 'password1', 'password2')}
         ),
     )
     form = CustomUserChangeForm
@@ -187,6 +192,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username',)
     search_fields = ('username',)
     ordering = ('username',)
+    inlines = [ContactInline]
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
