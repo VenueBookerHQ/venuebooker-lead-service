@@ -33,11 +33,59 @@
 				</div> 
 			</form> 
                                         </div>
-                                    </div><!-- end ost-title -->
+                                    </div><!-- end post-title -->
                                     <div class="post-content clearfix">
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
+
+                    </div><!-- end row -->
+                <div class="row">
+
+                   <div class="col-sm-4">
+                      <div class="clearfix">
+                        <table>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Number of Attendees</th>
+                                <th>Message</th>
+                            </tr>
+                        {% for enquiry in user.enquiry_set.all %} 
+                            <tr>
+                                <td>{{ enquiry.event_campaign }}</td>
+                                <td>{{ enquiry.date }}</td>
+                                <td>{{ enquiry.attendeeNum }}</td>
+                                <td>{{ enquiry.message }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                      </div>
+                  </div><!-- end col -->
+                <div class="row">
+
+                   <div class="col-sm-4">
+                      <div class="clearfix">
+                        <table>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Number of Attendees</th>
+                                <th>Message</th>
+                                <th>Cost</th>
+                            </tr>
+                        {% for quote in user.enquiry.quote_set.all %} 
+                            <tr>
+                                <td>{{ quote.enquiry.event_campaign }}</td>
+                                <td>{{ quote.enquiry.date }}</td>
+                                <td>{{ quote.enquiry.attendeeNum }}</td>
+                                <td>{{ quote.description }}</td>
+                                <td>{{ quote.cost }}</td>
+                            </tr>
+                        {% endfor %}
+                        </table>
+                      </div>
+                  </div><!-- end col -->
 
                     </div><!-- end row -->
                 </div><!-- end related-hotels -->
