@@ -38,6 +38,9 @@
                         <p>End Time: {{ event_campaign.endTime }}</p>
                         </br>
                         </br>
+                        {% for image in event_campaign.eventimage_set.all %} 
+                            <img src="{{ image.image.url }}" />
+                        {% endfor %}
                         <form action="{% url 'enquiry-add' event_campaign.pk %}" method="post">
 							{% csrf_token %}
 							<div class="col-sm-offset-2 col-sm-10">
