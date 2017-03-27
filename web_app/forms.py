@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
 	
 	class Meta:
 		model = CustomUser
-		fields = ['username', 'email', 'avatar', 'password']
+		fields = ['username', 'avatar', 'password']
 
 class CustomUserCreationForm(UserCreationForm):
     """

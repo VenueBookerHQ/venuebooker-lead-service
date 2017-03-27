@@ -46,7 +46,7 @@ class ProfileView(generic.DetailView):
 
 class ProfileUpdate(UpdateView):
     model = CustomUser
-    fields = ['email', 'first_name', 'last_name', 'avatar']
+    fields = ['email', 'avatar']
 
     def get_success_url(self):
         return reverse('profile', kwargs={'pk':self.kwargs['pk']})
@@ -142,6 +142,7 @@ def register(request):
             username = user_form.cleaned_data['username']
             password = user_form.cleaned_data['password']
             emailAddress = contact_form.cleaned_data['email']
+            user.email = emailAddress
             user.set_password(password)
             contact.save()
             user.save()
