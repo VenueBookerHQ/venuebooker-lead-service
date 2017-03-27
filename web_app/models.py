@@ -268,3 +268,11 @@ class ContactResponse(models.Model):
 
     def __str__(self):
         return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+
+class VenueImage(models.Model):
+    image = models.ImageField(blank=True)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+
+class EventImage(models.Model):
+    image = models.ImageField(blank=True)
+    event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
