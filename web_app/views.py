@@ -127,20 +127,13 @@ class QuoteCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-class RegisterView(View):
-    form_class1 = UserForm
-    form_class2 = ContactForm
+def register(request):
     template_name = 'web_app/register_form.html'
 
-    def get(self, request):
-        user_form = self.form_class1(None)
-        contact_form = self.form_class2(None)
-        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
-
-    def post(self, request):
+    if request.method == 'POST':
         #form = self.form_class(request.POST)
-        user_form = self.form_class1(request.POST)
-        contact_form = self.formclass2(request.POST)
+        user_form = UserForm(request.POST)
+        contact_form = ContactForm(request.POST)
 
         if all([user_form.is_valid(), contact_form.is_valid()]):
 
@@ -172,6 +165,11 @@ class RegisterView(View):
                         auth_login(request, user)
                         return redirect('index')
 
+        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+
+    else:
+        user_form = UserForm(None)
+        contact_form = ContactForm(None)
         return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 #User Login View
