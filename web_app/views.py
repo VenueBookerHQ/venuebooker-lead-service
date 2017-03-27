@@ -132,7 +132,8 @@ class RegisterView(View):
     template_name = 'web_app/register_form.html'
 
     def get(self, request):
-        form = self.form_classes(None)
+        user_form = UserForm(request.POST, instance=request.user)
+        contact_form = ContactForm(request.POST, instancel=request.user.contact)
         return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
     def post(self, request):
