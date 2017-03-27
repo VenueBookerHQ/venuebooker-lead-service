@@ -172,7 +172,6 @@ class QuoteAdmin(admin.ModelAdmin):
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
@@ -185,8 +184,8 @@ class CustomUserAdmin(UserAdmin):
     )
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ('username', 'first_name', 'last_name')
-    search_fields = ('username', 'first_name', 'last_name')
+    list_display = ('username',)
+    search_fields = ('username',)
     ordering = ('username',)
     
     def get_queryset(self, request):
