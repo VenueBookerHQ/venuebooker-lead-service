@@ -128,22 +128,25 @@ class QuoteCreate(CreateView):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 class RegisterView(View):
-    form_class = UserForm
+    form_classes = [UserForm, ContactForm]
     template_name = 'web_app/register_form.html'
 
     def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form' : form})
+        form = self.form_classes(None)
+        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        #form = self.form_class(request.POST)
+        user_form = UserForm(request.POST, instance=request.user)
+        contact_form = ContactForm(request.POST, instancel=request.user.contact)
 
-        if form.is_valid():
+        if all([user_form.is_valid(), contact_form.is_valid()]):
         
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            emailAddress = form.cleaned_data['email']
+            user = user_form.save(commit=False)
+            contact = contact_form.save()
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password']
+            emailAddress = contact_form.cleaned_data['email']
             user.set_password(password)
             user.save()
 
@@ -166,7 +169,7 @@ class RegisterView(View):
                         auth_login(request, user)
                         return redirect('index')
 
-        return render(request, self.template_name, {'form' : form})
+        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 #User Login View
 def login_user(request):

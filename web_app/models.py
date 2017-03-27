@@ -18,7 +18,7 @@ from django.contrib.auth.models import BaseUserManager
 
 class Contact(models.Model):
     first_name = models.CharField('first name', max_length=30)
-    surname = models.CharField('surname', max_length=30)
+    last_name = models.CharField('last name', max_length=30)
     telephone = models.CharField('telephone', max_length=15, blank=True)
     mobile = models.CharField('mobile', max_length=15, blank=True)
     email = models.EmailField('email', max_length=50)
@@ -179,8 +179,6 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=40, unique=True)
     email = models.EmailField('email', max_length=50)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
         help_text=_('Designates whether the user can log into this admin '
                     'site.'))

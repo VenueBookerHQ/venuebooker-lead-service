@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from web_app.models import ContactResponse
-from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote
+from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote, Contact
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -11,7 +11,7 @@ class UserForm(forms.ModelForm):
 	
 	class Meta:
 		model = CustomUser
-		fields = ['username', 'email', 'first_name', 'last_name', 'contact', 'avatar', 'password']
+		fields = ['username', 'email', 'avatar', 'password']
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -42,8 +42,8 @@ class CustomUserChangeForm(UserChangeForm):
 
 class ContactForm(forms.ModelForm):
     class Meta:
-        model = ContactResponse
-        fields = ['name', 'email', 'phone', 'message']
+        model = Contact
+        fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
 
 class OrganisationForm(forms.ModelForm):
     class Meta:
