@@ -165,12 +165,12 @@ def register(request):
                         auth_login(request, user)
                         return redirect('index')
 
-        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+        return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
     else:
         user_form = UserForm(None)
         contact_form = ContactForm(None)
-        return render(request, self.template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+        return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 #User Login View
 def login_user(request):
