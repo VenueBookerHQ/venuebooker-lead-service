@@ -13,6 +13,8 @@ from .models import ContactResponse
 from .models import VenueUser
 from .models import OrganisationUser
 from .models import VenuebookerUser
+from .models import EventImage
+from .models import VenueImage
 
 
 from django.utils.safestring import mark_safe
@@ -32,6 +34,16 @@ admin.site.register(ContactResponse)
 admin.site.register(VenueUser)
 admin.site.register(OrganisationUser)
 admin.site.register(VenuebookerUser)
+
+class EventImageInline(admin.StackedInline):
+    model = EventImage
+    max_num = 10
+    extra = 0
+
+class VenueImageInline(admin.StackedInline):
+    model = VenueImage
+    max_num = 10
+    extra = 0
 
 class OrganisationUserInline(admin.StackedInline):
     model = OrganisationUser
@@ -72,7 +84,7 @@ class VenueAdmin(admin.ModelAdmin):
 
     list_display = ('image_preview_small', 'name', 'address', 'organisation')
     list_display_links = ('image_preview_small', 'name')
-    inlines = [VenueUserInline]
+    inlines = [VenueUserInline, VenueImageInline]
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
 
@@ -100,6 +112,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
     list_display_links = ('image_preview_small', 'name')
     readonly_fields = ('image_preview_large',)
     search_fields = ['name']
+    inlines = [EventImageInline]
     
     def get_form(self, request, obj=None, **kwargs):
         form = super(EventCampaignAdmin, self).get_form(request, obj, **kwargs)
@@ -183,6 +196,8 @@ class CustomUserAdmin(UserAdmin):
             return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
         return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+admin.site.register(EventImage)
+admin.site.register(VenueImage)
 admin.site.register(Enquiry, EnquiryAdmin)
 admin.site.register(Quote, QuoteAdmin)
 admin.site.register(Event_campaign, EventCampaignAdmin)

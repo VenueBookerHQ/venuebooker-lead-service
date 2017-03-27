@@ -35,6 +35,9 @@
                         <a href="{{ venue.twitter_link }}">Twitter</a>
                         <a href="{{ venue.instagram_link }}">Instagram</a>
                         <br>
+                        {% for image in venue.venueimage_set.all %} 
+                            <img src="{{ image.image.url }}" />
+                        {% endfor %}
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
