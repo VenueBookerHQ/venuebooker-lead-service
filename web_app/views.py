@@ -143,13 +143,14 @@ class RegisterView(View):
         contact_form = self.formclass2(request.POST)
 
         if all([user_form.is_valid(), contact_form.is_valid()]):
-        
+
+            contact = contact_form.save(commit=False)
             user = user_form.save(commit=False)
-            contact = contact_form.save()
             username = user_form.cleaned_data['username']
             password = user_form.cleaned_data['password']
             emailAddress = contact_form.cleaned_data['email']
             user.set_password(password)
+            contact.save()
             user.save()
 
             user = authenticate(username=username, password=password)
