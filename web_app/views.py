@@ -14,6 +14,7 @@ import boto3
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMessage
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
