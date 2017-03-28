@@ -80,6 +80,7 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TW_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TW_SECRET')
 LOGIN_REDIRECT_URL ="/index"
+LOGIN_URL ="/login"
 
 
 

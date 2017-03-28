@@ -181,9 +181,9 @@ def register(request):
         return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 #User Login View
-def login_user(request):
+def login(request):
     if request.user.is_authenticated: 
-        return HttpResponseRedirect('/profile/')
+        return HttpResponseRedirect('/index')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -197,7 +197,7 @@ def login_user(request):
     return render(request, 'web_app/login_form.html')
 
 #User Logout View
-def logout_user(request):
+def logout(request):
     template_name = 'web_app/login_form.html'
     logout(request)
     form = UserForm(request.POST or None)
