@@ -143,9 +143,11 @@ def register(request):
             password = user_form.cleaned_data['password']
             emailAddress = contact_form.cleaned_data['email']
             user.email = emailAddress
+            user.avatar = user_form.cleaned_data['avatar']
             user.set_password(password)
-            contact.save()
             user.save()
+            contact.user = user
+            contact.save()
 
             user = authenticate(username=username, password=password)
             
