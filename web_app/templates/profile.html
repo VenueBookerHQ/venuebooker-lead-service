@@ -79,15 +79,15 @@
                                 <th>Cost</th>
                             </tr>
                         {% for enquiry in user.enquiry_set.all %} 
-                           {% if enquiry.quote %}
+                           {% for quote in enquiry.quote_set.all %}
                             <tr>
                                 <td>{{ enquiry.event_campaign }}</td>
                                 <td>{{ enquiry.date }}</td>
                                 <td>{{ enquiry.attendeeNum }}</td>
-                                <td>{{ enquiry.quote.description }}</td>
-                                <td>{{ enquiry.quote.cost }}</td>
+                                <td>{{ quote.description }}</td>
+                                <td>{{ quote.cost }}</td>
                             </tr>
-                            {% endif %}
+                            {% endfor %}
                         {% endfor %}
                         </table>
                       </div>
