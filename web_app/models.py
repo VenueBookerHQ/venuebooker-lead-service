@@ -15,6 +15,16 @@ from django.utils import timezone
 
 from django.contrib.auth.models import BaseUserManager
 
+class Contact(models.Model):
+    first_name = models.CharField('first name', max_length=30)
+    last_name = models.CharField('last name', max_length=30)
+    telephone = models.CharField('telephone', max_length=15, blank=True)
+    mobile = models.CharField('mobile', max_length=15, blank=True)
+    email = models.EmailField('email', max_length=50)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 class CustomUserManager(BaseUserManager):
 
     def _create_user(self, username, email, password,
@@ -56,6 +66,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
     is_active = models.BooleanField(_('active'), default=True)
     avatar = models.ImageField(null=True, blank=True)
+    contact = models.ForeignKey(Contact, on_delete=models.CASCADE, null=True)
 
     objects = CustomUserManager()
 
@@ -76,17 +87,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         "Returns the short name for the user."
         return self.username
-
-class Contact(models.Model):
-    first_name = models.CharField('first name', max_length=30)
-    last_name = models.CharField('last name', max_length=30)
-    telephone = models.CharField('telephone', max_length=15, blank=True)
-    mobile = models.CharField('mobile', max_length=15, blank=True)
-    email = models.EmailField('email', max_length=50)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-
-    def __str__(self):
-        return self.first_name + " " + self.last_name
 
 
 class Organisation(models.Model):

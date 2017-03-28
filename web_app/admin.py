@@ -53,10 +53,6 @@ class VenueUserInline(admin.StackedInline):
     model = VenueUser
     extra = 1
 
-class ContactInline(admin.StackedInline):
-    model = Contact
-    max_num = 1
-    extra = 0
 
 class OrganisationAdmin(admin.ModelAdmin):
     form = OrganisationForm
@@ -192,7 +188,6 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('username',)
     search_fields = ('username',)
     ordering = ('username',)
-    inlines = [ContactInline]
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
