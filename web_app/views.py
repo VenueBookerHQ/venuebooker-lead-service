@@ -29,27 +29,24 @@ def terms(request):
 def privacy(request):
     return render(request, 'privacy.html', {})
 
-@login_required(login_url='login')
 class DetailViewVenue(generic.DetailView):
     model = Venue
     template_name = 'venue_detail.html'
 
-@login_required(login_url='login')
 class DetailViewEvent(generic.DetailView):
     model = Event_campaign
     template_name = 'event_campaign_detail.html'
 
-@login_required(login_url='login')
 class DetailViewOrganisation(generic.DetailView):
     model = Organisation
     template_name = 'organisation_detail.html'
 
-@login_required(login_url='login')
+
 class ProfileView(generic.DetailView):
     model = CustomUser
     template_name = 'profile.html'
 
-@login_required(login_url='login')
+
 class ProfileUpdate(UpdateView):
     model = CustomUser
     fields = ['email', 'avatar']
@@ -57,7 +54,6 @@ class ProfileUpdate(UpdateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'pk':self.kwargs['pk']})
 
-@login_required(login_url='login')
 class VenueCreate(CreateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
@@ -72,32 +68,27 @@ class VenueCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-@login_required(login_url='login')
 class VenueUpdate(UpdateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
-@login_required(login_url='login')
+
 class VenueDelete(DeleteView):
     model = Venue
     success_url = reverse_lazy('index')
 
-@login_required(login_url='login')
 class OrganisationCreate(CreateView):
     model = Organisation
     fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
-@login_required(login_url='login')
 class OrganisationUpdate(UpdateView):
     model = Organisation
     fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
-@login_required(login_url='login')
 class OrganisationDelete(DeleteView):
     model = Organisation
     success_url = reverse_lazy('index')
 
-@login_required(login_url='login')
 class EventCampaignCreate(CreateView):
     model = Event_campaign
     fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
@@ -106,12 +97,10 @@ class EventCampaignUpdate(UpdateView):
     model = Event_campaign
     fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
-@login_required(login_url='login')
 class EventCampaignDelete(DeleteView):
     model = Event_campaign
     success_url = reverse_lazy('index')
 
-@login_required(login_url='login')
 class EnquiryCreate(CreateView):
     model = Enquiry
     fields = ['message', 'attendeeNum', 'date']
@@ -126,7 +115,6 @@ class EnquiryCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-@login_required(login_url='login')
 class QuoteCreate(CreateView):
     model = Quote
     fields = ['description', 'cost']
