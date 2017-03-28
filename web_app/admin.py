@@ -172,7 +172,7 @@ class QuoteAdmin(admin.ModelAdmin):
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('username', 'email', 'avatar', 'password')}),
+        (None, {'fields': ('username', 'email', 'avatar', 'contact', 'password')}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login',)}),
