@@ -22,7 +22,7 @@
 				{% if user.avatar %}
                             		<a href="#"><img src="{{ user.avatar.url }}" alt="" class="img-responsive"></a>
 				{% endif %}
-                            <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                            <h4>{{ user.contact.first_name }} {{ user.contact.last_name }}</h4>
 				            <p><i>{{ user.username }}</i></p>
                             <p>{{ user.email }}</p>
 					    <br>
