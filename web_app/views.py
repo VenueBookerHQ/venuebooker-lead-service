@@ -133,8 +133,6 @@ class QuoteCreate(CreateView):
 def register(request):
     template_name = 'web_app/register_form.html'
     
-    if request.user.is_authenticated: 
-        return HttpResponseRedirect('/profile/')
 
     if request.method == 'POST':
         #form = self.form_class(request.POST)
@@ -183,8 +181,6 @@ def register(request):
 
 #User Login View
 def login(request):
-    if request.user.is_authenticated: 
-        return HttpResponseRedirect('/index')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
