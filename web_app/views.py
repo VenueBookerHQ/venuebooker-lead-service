@@ -132,7 +132,7 @@ def register(request):
 
     if request.method == 'POST':
         #form = self.form_class(request.POST)
-        user_form = UserForm(request.POST)
+        user_form = UserForm(request.POST, request.FILES)
         contact_form = ContactForm(request.POST)
 
         if all([user_form.is_valid(), contact_form.is_valid()]):
