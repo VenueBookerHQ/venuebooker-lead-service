@@ -28,22 +28,27 @@ def terms(request):
 def privacy(request):
     return render(request, 'privacy.html', {})
 
+@login_required(login_url='login')
 class DetailViewVenue(generic.DetailView):
     model = Venue
     template_name = 'venue_detail.html'
 
+@login_required(login_url='login')
 class DetailViewEvent(generic.DetailView):
     model = Event_campaign
     template_name = 'event_campaign_detail.html'
 
+@login_required(login_url='login')
 class DetailViewOrganisation(generic.DetailView):
     model = Organisation
     template_name = 'organisation_detail.html'
 
+@login_required(login_url='login')
 class ProfileView(generic.DetailView):
     model = CustomUser
     template_name = 'profile.html'
 
+@login_required(login_url='login')
 class ProfileUpdate(UpdateView):
     model = CustomUser
     fields = ['email', 'avatar']
@@ -51,6 +56,7 @@ class ProfileUpdate(UpdateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'pk':self.kwargs['pk']})
 
+@login_required(login_url='login')
 class VenueCreate(CreateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
@@ -65,28 +71,32 @@ class VenueCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-
+@login_required(login_url='login')
 class VenueUpdate(UpdateView):
     model = Venue
     fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
+@login_required(login_url='login')
 class VenueDelete(DeleteView):
     model = Venue
     success_url = reverse_lazy('index')
 
+@login_required(login_url='login')
 class OrganisationCreate(CreateView):
     model = Organisation
     fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
+@login_required(login_url='login')
 class OrganisationUpdate(UpdateView):
     model = Organisation
     fields = ['name', 'image', 'address', 'primary_contact', 'description']
 
+@login_required(login_url='login')
 class OrganisationDelete(DeleteView):
     model = Organisation
     success_url = reverse_lazy('index')
 
-
+@login_required(login_url='login')
 class EventCampaignCreate(CreateView):
     model = Event_campaign
     fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
@@ -95,10 +105,12 @@ class EventCampaignUpdate(UpdateView):
     model = Event_campaign
     fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
 
+@login_required(login_url='login')
 class EventCampaignDelete(DeleteView):
     model = Event_campaign
     success_url = reverse_lazy('index')
 
+@login_required(login_url='login')
 class EnquiryCreate(CreateView):
     model = Enquiry
     fields = ['message', 'attendeeNum', 'date']
@@ -113,6 +125,7 @@ class EnquiryCreate(CreateView):
     def get_success_url(self):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
+@login_required(login_url='login')
 class QuoteCreate(CreateView):
     model = Quote
     fields = ['description', 'cost']
@@ -129,6 +142,9 @@ class QuoteCreate(CreateView):
 
 def register(request):
     template_name = 'web_app/register_form.html'
+    
+    if request.user.is_authenticated: 
+        return HttpResponseRedirect('/profile/')
 
     if request.method == 'POST':
         #form = self.form_class(request.POST)
@@ -177,6 +193,8 @@ def register(request):
 
 #User Login View
 def login_user(request):
+    if request.user.is_authenticated: 
+        return HttpResponseRedirect('/profile/')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -197,6 +215,7 @@ def logout_user(request):
 
     return render(request, 'web_app/login_form.html', {'form' : form})
 
+@login_required(login_url='login')
 def event_list(request):
     queryset_list = Event_campaign.objects.all()
     query = request.GET.get("q")
@@ -234,6 +253,7 @@ def event_list(request):
     }
     return render(request, "eventcampaigns.html", context)
 
+@login_required(login_url='login')
 def venue_list(request):
     queryset_list = Venue.objects.all()
     query = request.GET.get("q")
@@ -255,6 +275,7 @@ def venue_list(request):
     }
     return render(request, "venues.html", context)
 
+@login_required(login_url='login')
 def organisation_list(request):
     queryset_list = Organisation.objects.all()
     query = request.GET.get("q")
