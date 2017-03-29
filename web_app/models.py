@@ -79,7 +79,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         """
-        Returns the first_name plus the last_name, with a space in between.
+        Returns the username and email, with a space in between.
         """
         full_name = '%s %s' % (self.username, self.email)
         return full_name.strip()

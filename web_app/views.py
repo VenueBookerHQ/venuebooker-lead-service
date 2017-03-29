@@ -194,7 +194,8 @@ def login(request):
     return render(request, 'web_app/login_form.html')
 
 #User Logout View
-def logout(request):
+@login_required(login_url='login')
+def logout_user(request):
     template_name = 'web_app/login_form.html'
     logout(request)
     form = UserForm(request.POST or None)
