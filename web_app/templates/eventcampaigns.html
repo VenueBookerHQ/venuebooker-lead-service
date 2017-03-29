@@ -3,13 +3,13 @@
 
 {% block content %}
 <script>
-$("#button-submit").click(function(){
+$("button-submit").click(function(){
     $("input").each(function(){
         if($(this).val() == '') {
             $(this).remove();
         }
     });
-    $("#form_search").submit();
+    $("form_search").submit();
 });
 </script>
         <section class="section clearfix">
