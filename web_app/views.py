@@ -26,7 +26,7 @@ def contact(request):
     
 
     if request.method == 'POST':
-        contactresponse_form = ContactResponseForm(request.POST)
+        form = ContactResponseForm(request.POST)
 
         if form.is_valid():
 
