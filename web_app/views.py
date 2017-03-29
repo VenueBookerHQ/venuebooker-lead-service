@@ -37,7 +37,7 @@ def contact(request):
             vbemail = "gregwhyte14@gmail.com"
             message = form.cleaned_data['message']
             contactresponse.save()
-            timestamp = contactresponse.timestamp
+            timestamp = contactresponse.timestamp.strftime('%H:%M %d-%m-%Y')
                  
             if request.method == 'POST':
                 try:
