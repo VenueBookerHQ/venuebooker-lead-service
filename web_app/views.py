@@ -42,7 +42,7 @@ def contact(request):
             if request.method == 'POST':
                 try:
                     subject = 'Contact Form Response'
-                    message = 'You have recieved a contact form response from ' + name + ' at ' + timestamp + '\n\nThe message reads: \n' + message + '\nThis person may be responded to by:' + '\nPhone: '+ phone +'\nEmail: ' + emailAddress + '\nVenuebooker Admin'
+                    message = 'You have recieved a contact form response from:\n' + name + ' at ' + timestamp + '\n\nThe message reads: \n\n' + message + '\n\nThis person may be responded to by:' + '\n\n\nPhone: '+ phone +'\nEmail: ' + emailAddress + '\n\nVenuebooker Admin'
                     from_email = 'Venuebooker Contact Response <gregwhyte14@gmail.com>'
                     recipient_list = [vbemail]
                     email = EmailMessage(subject, message, from_email, recipient_list)
