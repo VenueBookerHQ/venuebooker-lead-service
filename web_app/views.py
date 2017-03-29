@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm
+from .forms import UserForm, ContactForm, ContactResponseForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 import boto3
@@ -22,7 +22,41 @@ def index(request):
     return render(request, 'index.html', {})
 
 def contact(request):
-    return render(request, 'contact.html', {})
+    template_name = 'contact.html'
+    
+
+    if request.method == 'POST':
+        contactresponse_form = ContactResponseForm(request.POST)
+
+        if form.is_valid():
+
+            contactresponse = form.save(commit=False)
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            emailAddress = form.cleaned_data['email']
+            vbemail = "gregwhyte14@gmail.com"
+            message = form.cleaned_data['message']
+            cr = contactresponse.save()
+            timestamp = cr.timestamp
+                 
+            if request.method == 'POST':
+                try:
+                    subject = 'Contact Form Response'
+                    message = 'You have recieved a contact form response from ' + name + ' at ' + timestamp + '\n\nThe message reads: \n' + message + '\nThis person may be responded to by:' + '\nPhone: '+ phone +'\nEmail: ' + email + '\nVenuebooker Admin'
+                    from_email = 'Venuebooker Contact Response <gregwhyte14@gmail.com>'
+                    recipient_list = [vbemail]
+                    email = EmailMessage(subject, message, from_email, recipient_list)
+                    email.send()
+                except KeyError:
+                    return HttpResponse('Please fill in all fields')
+
+            return redirect('index')
+
+        return render(request, template_name, {})
+
+    else:
+        contactresponse_form = ContactResponseForm(None)
+        return render(request, template_name, {})
 
 def terms(request):
     return render(request, 'terms.html', {})

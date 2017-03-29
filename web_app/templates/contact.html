@@ -38,7 +38,8 @@
                         <h5>Contact Form</h5>
                         <div id="contact_form" class="contact_form">
                             <div id="message"></div>
-                            <form id="contactform" class="row" ng-submit="processForm()">
+                            <form class ="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                                 <div class="col-md-12">
                                     <input type="text" name="name" ng-model="name" id="name" class="form-control"
                                            placeholder="Name *">
@@ -47,11 +48,16 @@
 
                                 <div class="col-md-12">
                                     <input type="email" ng-model="email" class="form-control" placeholder="Email *"
-                                           ng-model="email" name="emailid"/>
+                                           ng-model="email" name="email"/>
                                     <div id="email_error" class="arrow_box" ng-show="emailError">{{ emailError }}</div>
                                 </div>
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="comments" id="comments" rows="8" placeholder="Messages goes here.." ng-model="message"></textarea>
+                                    <input type="text" ng-model="phone" class="form-control" placeholder="Phone"
+                                           ng-model="phone" name="phone"/>
+                                    <div id="email_error" class="arrow_box" ng-show="phoneError">{{ phoneError }}</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" name="message" id="message" rows="8" placeholder="Messages goes here.." ng-model="message"></textarea>
 
                                     <div id="message_error" class="arrow_box" ng-show="messageError">{{ messageError }}</div>
 

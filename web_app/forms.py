@@ -45,6 +45,11 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
 
+class ContactResponseForm(forms.ModelForm):
+    class Meta:
+        model = ContactResponse
+        fields = ['name', 'email', 'phone', 'message']
+
 class OrganisationForm(forms.ModelForm):
     class Meta:
         model = Organisation
