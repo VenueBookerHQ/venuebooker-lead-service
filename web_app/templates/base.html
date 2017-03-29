@@ -55,12 +55,16 @@
                         <!-- <li><i class="icon-telephone5"></i> 028-3833-1122</li> -->
                     </ul><!-- end list-style -->
                 </div><!-- end left -->
-                <div class="pull-right">
+                <div class="pull-left">
                     <ul class="topbar-social list-inline">
                         <li><a href="https://twitter.com/Venuebooker"><i class="icon-twitter"></i></a></li>
                         <li><a href="https://www.facebook.com/Venuebooker.info"><i class="icon-facebook"></i></a></li>
                         <li><a href="https://www.linkedin.com/company/2749848"><i class="icon-linkedin"></i></a></li>
                         <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-instagrem"></i></a></li>
+                    </ul><!-- end list-style -->
+                </div><!-- end right -->
+                <div class="pull-right">
+                    <ul class="topbar-social list-inline">
                         {% if user.is_authenticated %}
                         <li><a href="/profile/{{ user.pk }}">{{ user.username }}</a></li>
                         <li><a href="/logout">LOGOUT</a></li>
