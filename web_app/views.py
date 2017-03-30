@@ -338,3 +338,19 @@ def organisation_list(request):
     }
     return render(request, "organisations.html", context)
 
+def QuoteAccept(View):
+    if request.method == "POST":
+        quoteNum = self.kwargs['pk']
+        Quote.objects.filter(pk=quoteNum).update(accepted=True)
+    else:
+        return render(request, 'profile.html')
+    return render(request, 'profile.html')
+
+class QuoteDecline(View):
+    if request.method == "POST":
+        quoteNum = self.kwargs['pk']
+        Quote.objects.filter(pk=quoteNum).update(accepted=False)
+    else:
+        return render(request, 'profile.html')
+    return render(request, 'profile.html')
+
