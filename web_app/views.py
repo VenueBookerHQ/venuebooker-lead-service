@@ -338,7 +338,7 @@ def organisation_list(request):
     }
     return render(request, "organisations.html", context)
 
-def QuoteAccept(View):
+class QuoteAccept(View):
     def post(self, request):
         quoteNum = self.kwargs['pk']
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
