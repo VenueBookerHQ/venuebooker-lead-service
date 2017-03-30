@@ -58,6 +58,21 @@ def contact(request):
         contactresponse_form = ContactResponseForm(None)
         return render(request, template_name, {})
 
+def newsletter(request):
+    emailAddress = request.POST['email']
+    try:
+        subject = 'Subscribed to Venuebooker Newsletter'
+        message = 'Thank you for subscribing to the Venuebooker newsletter!\n\nRegards,\n\nThe Venuebooker Team'
+        from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+        recipient_list = [emailAddress]
+        email = EmailMessage(subject, message, from_email, recipient_list)
+        email.send()
+    except KeyError:
+        return HttpResponse('Please fill in all fields')
+
+    next = request.POST.get('next', '/')
+    return HttpResponseRedirect(next)
+
 def terms(request):
     return render(request, 'terms.html', {})
 

@@ -159,10 +159,11 @@
                             </div><!-- end title -->
                             <div class="newsletterwidget">
                                 <p>Subscribe to our newsletter to receive news & updates. We promise not to spam you!</p>
-                                <form id="newsletter" class="form-inline">
+                                <form class="form-inline" id="newsletter" role="form" action="{% url 'newsletter'%}?next={{ request.path|urlencode }}" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-radius"
+                                        <input type="text" name="email" class="form-control border-radius"
                                                placeholder="Your email here">
+                                        <input type="hidden" name="next" value="{{ request.GET.next }}">
                                     </div>
                                     <button type="submit" class="btn btn-primary btn-lg border-radius">Send</button>
                                 </form>
