@@ -86,6 +86,8 @@
                                 <td>{{ enquiry.attendeeNum }}</td>
                                 <td>{{ quote.description }}</td>
                                 <td>{{ quote.cost }}</td>
+                                <td><form method="post" action=""><button type="submit" class="btn btn-success">Accept</button></form></td>
+                                <td><form method="post" action=""><button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you wish to DECLINE this quote?')">Decline</button></form></td>
                             </tr>
                             {% endfor %}
                         {% endfor %}
