@@ -71,7 +71,9 @@ def newsletter(request):
         return HttpResponse('Please fill in all fields')
 
     next = request.POST.get('next', '/')
-    return HttpResponseRedirect(next)
+    if not is_safe_url(next):
+        next = '/index'
+    return redirect(next)
 
 def terms(request):
     return render(request, 'terms.html', {})
