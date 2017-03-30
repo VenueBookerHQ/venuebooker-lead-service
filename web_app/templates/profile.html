@@ -77,6 +77,7 @@
                                 <th>Number of Attendees</th>
                                 <th>Message</th>
                                 <th>Cost</th>
+                                <th>Status</th>
                             </tr>
                         {% for enquiry in user.enquiry_set.all %} 
                            {% for quote in enquiry.quote_set.all %}
@@ -86,8 +87,7 @@
                                 <td>{{ enquiry.attendeeNum }}</td>
                                 <td>{{ quote.description }}</td>
                                 <td>{{ quote.cost }}</td>
-                                <td><form method="post" action=""><button type="submit" class="btn btn-success">Accept</button></form></td>
-                                <td><form method="post" action=""><button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you wish to DECLINE this quote?')">Decline</button></form></td>
+                                <td><form method="post" action="">{% csrf_token %}<button type="submit" class="btn btn-success">Accept</button></form><form method="post" action="">{% csrf_token %}<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you wish to DECLINE this quote?')">Decline</button></form></td>
                             </tr>
                             {% endfor %}
                         {% endfor %}
