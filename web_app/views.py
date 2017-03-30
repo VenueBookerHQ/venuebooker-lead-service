@@ -353,4 +353,3 @@ class QuoteDecline(View):
     else:
         return render(request, 'profile.html')
     return render(request, 'profile.html')
-
