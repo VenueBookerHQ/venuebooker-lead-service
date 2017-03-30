@@ -50,7 +50,7 @@ def contact(request):
                     email.send()
                 except KeyError:
                     return HttpResponse('Please fill in all fields')
-
+                   
             return redirect('index')
 
         return render(request, template_name, {})
@@ -70,10 +70,12 @@ def newsletter(request):
         email.send()
     except KeyError:
         return HttpResponse('Please fill in all fields')
+    except Exception as e:
+        return redirect('index')
 
-    next = request.POST.get('next', '/')
+    next = request.POST.get('next')
     if not is_safe_url(next):
-        next = '/index'
+        next = 'index'
     return redirect(next)
 
 def terms(request):
