@@ -339,13 +339,13 @@ def organisation_list(request):
     return render(request, "organisations.html", context)
 
 class QuoteAccept(View):
-    def post(self, request):
-        quoteNum = self.kwargs['pk']
+    def post(self, request, pk):
+        quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
         return render(request, 'profile.html')
 
 class QuoteDecline(View):
-    def post(self, request):
-        quoteNum = self.kwargs['pk']
+    def post(self, request, pk):
+        quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=False)
         return render(request, 'profile.html')
