@@ -254,7 +254,7 @@ class Quote(models.Model):
     def get_absolute_url(self):
 	    return reverse('index')
     def __str__(self):              
-        return "Quote for" + self.enquiry
+        return "Quote for" + str(self.enquiry)
 
 class ContactResponse(models.Model):
     name = models.CharField('name', max_length=300)
