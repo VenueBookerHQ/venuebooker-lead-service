@@ -16,6 +16,7 @@ from django.db.models import Q
 from django.core.mail import send_mail, EmailMessage
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.utils.http import is_safe_url
 
 # Create your views here.
 def index(request):
