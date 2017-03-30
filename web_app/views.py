@@ -342,10 +342,12 @@ class QuoteAccept(View):
     def post(self, request, pk):
         quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
-        return HttpResponseRedirect(reverse('profile', args[request.user.id]))
+        url = reverse('profile', kwargs={'pk': request.user.id})
+        return HttpResponseRedirect(url)
 
 class QuoteDecline(View):
     def post(self, request, pk):
         quoteNum = pk
         Quote.objects.filter(pk=quoteNum).delete()
-        return HttpResponseRedirect(reverse('profile', args[request.user.id]))
+        url = reverse('profile', kwargs={'pk': request.user.id})
+        return HttpResponseRedirect(url)
