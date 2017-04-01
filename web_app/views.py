@@ -25,6 +25,8 @@ def index(request):
 
 def contact(request):
     template_name = 'contact.html'
+    template_html = 'email.html'
+    template_text = 'email.txt'
     
 
     if request.method == 'POST':
@@ -46,8 +48,15 @@ def contact(request):
                     subject = 'Contact Form Response'
                     message = 'You have recieved a contact form response from:\n' + name + ' at ' + timestamp + '\n\nThe message reads: \n\n' + message + '\n\nThis person may be responded to by:' + '\n\n\nPhone: '+ phone +'\nEmail: ' + emailAddress + '\n\nVenuebooker Admin'
                     from_email = 'Venuebooker Contact Response <gregwhyte14@gmail.com>'
-                    recipient_list = [vbemail]
-                    email = EmailMessage(subject, message, from_email, recipient_list)
+                    to = emailAddress
+                    text = get_template(template_text)
+                    html = get_template(template_html)
+                    d = Context({'email': to })
+                    text_content = text.render(d)
+                    html_content = html.render(d)
+
+                    email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                    email.attach_alternative(html_content, "text/html")                        
                     email.send()
                 except KeyError:
                     return HttpResponse('Please fill in all fields')
