@@ -1,8 +1,8 @@
-===================  Newsletter - 1 ======================
+===================  Venuebooker =========================
 ==========================================================
-Thank you for subscribing to the Venuebooker newsletter!
+Hi {{ name }}
 
-{{ email }}
+You have recieved a Quote from {{ venue }} for the enquiry you made
 
 Regards,
 

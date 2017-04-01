@@ -71,12 +71,10 @@ def contact(request):
         return render(request, template_name, {})
 
 def newsletter(request):
-    template_html = 'email.html'
-    template_text = 'email.txt'
+    template_html = 'static/emails/newsletter.html'
+    template_text = 'static/emails/newsletter.txt'
     emailAddress = request.POST['email']
     try:
-        subject = 'Subscribed to Venuebooker Newsletter'
-        message = 'Thank you for subscribing to the Venuebooker newsletter!\n\nRegards,\n\nThe Venuebooker Team'
         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
         to = emailAddress
         text = get_template(template_text)
@@ -221,8 +219,8 @@ class QuoteCreate(CreateView):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 def register(request):
-    template_html = 'email.html'
-    template_text = 'email.txt'
+    template_html = 'static/emails/register.html'
+    template_text = 'static/emails/register.txt'
     template_name = 'web_app/register_form.html'
     
 
@@ -251,8 +249,6 @@ def register(request):
             if user is not None:
                 if request.method == 'POST':
                     try:
-                        subject = 'Veneubooker: Account Created'
-                        message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully \n Regards, \n The Venuebooker Team'
                         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
                         to = emailAddress
                         text = get_template(template_text)
