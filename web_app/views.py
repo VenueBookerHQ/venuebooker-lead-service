@@ -213,7 +213,7 @@ class QuoteCreate(CreateView):
             email = EmailMultiAlternatives(subject, text_content, from_email, [to])
             email.attach_alternative(html_content, "text/html")                        
             email.send()
-        except Exception e:
+        except Exception as e:
             return redirect('index')
         return super(QuoteCreate, self).form_valid(form)
 
