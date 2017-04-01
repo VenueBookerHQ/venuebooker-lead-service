@@ -196,9 +196,25 @@ class QuoteCreate(CreateView):
     success_url = "/eventcampaigns"
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.instance.enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
+        enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
+        form.instance.enquiry = enquiry
         form.save()
+        try:
+            subject = 'Quote Recieved'
+            message = 'Hello ' + username + '\nYou have recieved a quote for the enquiry you made \n Regards, \n The Venuebooker Team'
+            from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+            to = emailAddress
+            text = get_template(template_text)
+            html = get_template(template_html)
+            d = {'username': username }
+            text_content = text.render(d)
+            html_content = html.render(d)
+
+            email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            email.attach_alternative(html_content, "text/html")                        
+            email.send()
+        except Exception e:
+            return redirect('index')
         return super(QuoteCreate, self).form_valid(form)
 
     def get_success_url(self):
