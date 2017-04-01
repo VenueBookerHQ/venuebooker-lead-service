@@ -13,7 +13,7 @@ from django.contrib.auth.models import Group
 import boto3
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
@@ -60,13 +60,22 @@ def contact(request):
         return render(request, template_name, {})
 
 def newsletter(request):
+    template_html = 'email.html'
+    template_text = 'email.txt'
     emailAddress = request.POST['email']
     try:
         subject = 'Subscribed to Venuebooker Newsletter'
         message = 'Thank you for subscribing to the Venuebooker newsletter!\n\nRegards,\n\nThe Venuebooker Team'
         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
-        recipient_list = [emailAddress]
-        email = EmailMessage(subject, message, from_email, recipient_list)
+        to = emailAddress
+        text = get_template(template_text)
+        html = get_template(template_html)
+        d = {'email': to }
+        text_content = text.render(d)
+        html_content = html.render(d)
+
+        email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        email.attach_alternative(html_content, "text/html")                        
         email.send()
     except KeyError:
         return HttpResponse('Please fill in all fields')
@@ -185,6 +194,8 @@ class QuoteCreate(CreateView):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 def register(request):
+    template_html = 'email.html'
+    template_text = 'email.txt'
     template_name = 'web_app/register_form.html'
     
 
@@ -216,8 +227,15 @@ def register(request):
                         subject = 'Veneubooker: Account Created'
                         message = 'Hello ' + username + '\nYour Account at Venuebooker.com has been created successfully \n Regards, \n The Venuebooker Team'
                         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
-                        recipient_list = [emailAddress]
-                        email = EmailMessage(subject, message, from_email, recipient_list)
+                        to = emailAddress
+                        text = get_template(template_text)
+                        html = get_template(template_html)
+                        d = {'username': username }
+                        text_content = text.render(d)
+                        html_content = html.render(d)
+
+                        email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                        email.attach_alternative(html_content, "text/html")                        
                         email.send()
                     except KeyError:
                         return HttpResponse('Please fill in all fields')
