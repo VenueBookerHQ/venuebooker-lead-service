@@ -75,6 +75,7 @@ def newsletter(request):
     template_text = 'emails/newsletter.txt'
     emailAddress = request.POST['email']
     try:
+        subject = 'Subscribed to Veneubooker Newsletter'
         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
         to = emailAddress
         text = get_template(template_text)
@@ -84,7 +85,9 @@ def newsletter(request):
         html_content = html.render(d)
 
         email = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        email.attach_alternative(html_content, "text/html")                        
+        email.attach_alternative(html_content, "text/html") 
+        email.content_subtype = 'html'    
+        email.mixed_subtype = 'related'                         
         email.send()
     except KeyError:
         return HttpResponse('Please fill in all fields')
@@ -209,7 +212,9 @@ class QuoteCreate(CreateView):
             html_content = html.render(d)
 
             email = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            email.attach_alternative(html_content, "text/html")                        
+            email.attach_alternative(html_content, "text/html")  
+            email.content_subtype = 'html'    
+            email.mixed_subtype = 'related'                       
             email.send()
         except Exception as e:
             return redirect('index')
@@ -249,6 +254,7 @@ def register(request):
             if user is not None:
                 if request.method == 'POST':
                     try:
+                        subject = 'Registered to Veneubooker'
                         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
                         to = emailAddress
                         text = get_template(template_text)
