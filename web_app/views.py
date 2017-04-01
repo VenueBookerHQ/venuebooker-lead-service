@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
 from django.template import *
+from django.template.loader import get_template
 
 # Create your views here.
 def index(request):
