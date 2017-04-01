@@ -71,8 +71,8 @@ def contact(request):
         return render(request, template_name, {})
 
 def newsletter(request):
-    template_html = 'static/emails/newsletter.html'
-    template_text = 'static/emails/newsletter.txt'
+    template_html = 'emails/newsletter.html'
+    template_text = 'emails/newsletter.txt'
     emailAddress = request.POST['email']
     try:
         from_email = 'Venuebooker <gregwhyte14@gmail.com>'
@@ -219,8 +219,8 @@ class QuoteCreate(CreateView):
         return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 def register(request):
-    template_html = 'static/emails/register.html'
-    template_text = 'static/emails/register.txt'
+    template_html = 'emails/register.html'
+    template_text = 'emails/register.txt'
     template_name = 'web_app/register_form.html'
     
 
