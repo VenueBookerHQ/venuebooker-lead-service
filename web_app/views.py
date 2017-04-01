@@ -17,6 +17,7 @@ from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
+from django.template import *
 
 # Create your views here.
 def index(request):
@@ -70,7 +71,7 @@ def newsletter(request):
         to = emailAddress
         text = get_template(template_text)
         html = get_template(template_html)
-        d = {'email': to }
+        d = Context({'email': to })
         text_content = text.render(d)
         html_content = html.render(d)
 
