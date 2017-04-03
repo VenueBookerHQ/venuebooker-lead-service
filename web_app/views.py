@@ -208,7 +208,7 @@ class QuoteCreate(CreateView):
             to = emailAddress
             text = get_template(template_text)
             html = get_template(template_html)
-            d = {'username': username }
+            d = Context({'username': username })
             text_content = text.render(d)
             html_content = html.render(d)
 
