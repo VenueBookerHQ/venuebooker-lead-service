@@ -178,8 +178,8 @@ class QuoteAdmin(admin.ModelAdmin):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
             return Quote.objects.all()
         elif hasattr(request.user, 'organisationuser'):
-            return Quote.objects.filter(enquiry__event_campaign__venue__organisation=request.user.organisationuser.organisation)
-        return Quote.objects.filter(enquiry__event_campaign__venue=request.user.venueuser.venue)
+            return Quote.objects.filter(enquiry__event_campaign__venue__organisation=request.user.organisationuser.organisation, enquiry__approved=True)
+        return Quote.objects.filter(enquiry__event_campaign__venue=request.user.venueuser.venue, enquiry__approved=True)
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
