@@ -79,7 +79,7 @@ class VenueAdmin(admin.ModelAdmin):
     form = VenueForm
     fieldsets = (
         ('Basic Details', {
-            'fields': ('name', ('image', 'image_preview_large'), 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
+            'fields': ('name', ('image', 'image_preview_large'), 'address', 'quoteImage', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
         }),
     )
 

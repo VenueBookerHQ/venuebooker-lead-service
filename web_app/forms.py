@@ -58,7 +58,7 @@ class OrganisationForm(forms.ModelForm):
 class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
-        fields = ['name', 'image', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation']
+        fields = ['name', 'image', 'address', 'quoteImage', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation']
 
 class EventCampaignForm(forms.ModelForm):
     class Meta:
