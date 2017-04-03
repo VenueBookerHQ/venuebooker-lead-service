@@ -13,11 +13,7 @@
 <h1>Quote Received!</h1>
 
 <a href="venuebooker-app.herokuapp.com">
-{% if venue_image %}
 <img src="{{ venue_image.url }}" style="width: 80%; margin:0 auto;">
-{% else %}
-<img src="http://venuebooker-app.herokuapp.com/static/images/vblogo.jpg" style="width: 80%; margin:0 auto;">
-{% endif %}
 </a>
 
 <p>Hi {{ username }}!<p>
