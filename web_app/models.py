@@ -256,29 +256,30 @@ class Quote(models.Model):
     enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        template_html = 'emails/quote.html'
-        template_text = 'emails/quote.txt'
-        try:
-            subject = 'Quote Recieved'
-            from_email = 'Venuebooker <gregwhyte14@gmail.com>'
-            to = enquiry.user.email
-            username = enquiry.user.username
-            venue = enquiry.event_campaign.venue
-            venue_image = enquiry.event_campaign.venue.quoteImage
-            text = get_template(template_text)
-            html = get_template(template_html)
-            d = Context({'username': username, 'venue': venue, 'image': venue_image})
-            text_content = text.render(d)
-            html_content = html.render(d)
-
-            email = EmailMultiAlternatives(subject, text_content, from_email, [to])
-            email.attach_alternative(html_content, "text/html")  
-            email.content_subtype = 'html'    
-            email.mixed_subtype = 'related'                       
-            email.send()
-        except Exception as e:
-            pass
         super(Quote, self).save(*args, **kwargs)
+        if self.id:
+            template_html = 'emails/quote.html'
+            template_text = 'emails/quote.txt'
+            try:
+                subject = 'Quote Recieved'
+                from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+                to = enquiry.user.email
+                username = self.enquiry.user.username
+                venue = self.enquiry.event_campaign.venue
+                venue_image = self.enquiry.event_campaign.venue.quoteImage
+                text = get_template(template_text)
+                html = get_template(template_html)
+                d = Context({'username': username, 'venue': venue, 'image': venue_image})
+                text_content = text.render(d)
+                html_content = html.render(d)
+
+                email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+                email.attach_alternative(html_content, "text/html")  
+                email.content_subtype = 'html'    
+                email.mixed_subtype = 'related'                       
+                email.send()
+            except Exception as e:
+                pass
 
     def get_absolute_url(self):
 	    return reverse('index')
