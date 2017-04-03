@@ -262,7 +262,7 @@ class Quote(models.Model):
     def __str__(self):              
         return "Quote for " + str(self.enquiry)
 
-@reciever(post_save, sender=Quote)
+@receiver(post_save, sender=Quote)
 def send_quote_email(sender, **kwargs):
     quote = kwargs.get('instance')
     template_html = 'emails/quote.html'
