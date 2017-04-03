@@ -274,7 +274,7 @@ class Quote(models.Model):
             email.mixed_subtype = 'related'                       
             email.send()
         except Exception as e:
-            return redirect('index')
+            pass
         super(Quote, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
