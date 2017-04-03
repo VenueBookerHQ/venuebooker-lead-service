@@ -143,7 +143,7 @@ class Venue(models.Model):
     instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
     description = models.TextField()
     image = models.ImageField(blank=True, default='default.jpg')
-    quoteImage = models.ImageField(blank=True, default='default.jpg')
+    quoteImage = models.ImageField(blank=True, default='/static/images/vblog.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
