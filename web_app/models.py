@@ -261,10 +261,10 @@ class Quote(models.Model):
         try:
             subject = 'Quote Recieved'
             from_email = 'Venuebooker <gregwhyte14@gmail.com>'
-            to = enquiry__user__email
-            username = enquiry__user__username
-            venue = enquiry__event_campaign__venue
-            venue_image = enquiry__event_campaign__venue__quoteImage
+            to = enquiry.user.email
+            username = enquiry.user.username
+            venue = enquiry.event_campaign.venue
+            venue_image = enquiry.event_campaign.venue.quoteImage
             text = get_template(template_text)
             html = get_template(template_html)
             d = {'username': username, 'venue': venue, 'image': venue_image}
