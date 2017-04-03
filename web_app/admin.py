@@ -143,7 +143,6 @@ class EnquiryAdmin(admin.ModelAdmin):
     list_display = ('user', 'event_campaign', 'date', 'approved')
     list_display_links = ('user',)
     search_fields = ['user']
-    readonly_fields = ('message', 'attendeeNum', 'date', 'event_campaign', 'user',)
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):

@@ -254,7 +254,7 @@ class Enquiry(models.Model):
 class Quote(models.Model):
     description = models.TextField()
     cost = models.FloatField()
-    accepted = models.BooleanField()
+    accepted = models.BooleanField(default=False)
     enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
