@@ -138,6 +138,7 @@ class Venue(models.Model):
     instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
     description = models.TextField()
     image = models.ImageField(blank=True, default='default.jpg')
+    quoteImage = models.ImageField(blank=True, default='default.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
@@ -250,6 +251,31 @@ class Quote(models.Model):
     cost = models.FloatField()
     accepted = models.BooleanField()
     enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        template_html = 'emails/quote.html'
+        template_text = 'emails/quote.txt'
+        try:
+            subject = 'Quote Recieved'
+            from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+            to = enquiry__user__email
+            username = enquiry__user__username
+            venue = enquiry__event_campaign__venue
+            venue_image = enquiry__event_campaign__venue__quoteImage
+            text = get_template(template_text)
+            html = get_template(template_html)
+            d = {'username': username, 'venue': venue, 'image': venue_image}
+            text_content = text.render(d)
+            html_content = html.render(d)
+
+            email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            email.attach_alternative(html_content, "text/html")  
+            email.content_subtype = 'html'    
+            email.mixed_subtype = 'related'                       
+            email.send()
+        except Exception as e:
+            return redirect('index')
+        super(Quote, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
 	    return reverse('index')
