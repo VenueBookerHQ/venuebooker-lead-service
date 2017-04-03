@@ -267,7 +267,7 @@ class Quote(models.Model):
             venue_image = enquiry.event_campaign.venue.quoteImage
             text = get_template(template_text)
             html = get_template(template_html)
-            d = {'username': username, 'venue': venue, 'image': venue_image}
+            d = Context({'username': username, 'venue': venue, 'image': venue_image})
             text_content = text.render(d)
             html_content = html.render(d)
 
