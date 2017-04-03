@@ -11,6 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
 import datetime
 from django.utils import timezone
+from django.template import *
+from django.template.loader import get_template
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 
 
 from django.contrib.auth.models import BaseUserManager
