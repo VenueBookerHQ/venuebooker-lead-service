@@ -143,6 +143,7 @@ class EnquiryAdmin(admin.ModelAdmin):
     list_display = ('user', 'event_campaign', 'date', 'approved')
     list_display_links = ('user',)
     search_fields = ['user']
+    readonly_fields = ('message', 'attendeeNum', 'date', 'event_campaign', 'user',)
     
     def get_queryset(self, request):
         if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
@@ -167,9 +168,9 @@ class QuoteAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super(QuoteAdmin, self).get_form(request, obj, **kwargs)
         if hasattr(request.user, 'organisationuser'):
-            form.base_fields['enquiry'].queryset = Enquiry.objects.filter(event_campaign__venue__organisation=request.user.organisationuser.organisation)
+            form.base_fields['enquiry'].queryset = Enquiry.objects.filter(event_campaign__venue__organisation=request.user.organisationuser.organisation, approved=True)
         elif hasattr(request.user, 'venueuser'):
-            form.base_fields['enquiry'].queryset = Enquiry.objects.filter(event_campaign__venue=request.user.venueuser.venue)
+            form.base_fields['enquiry'].queryset = Enquiry.objects.filter(event_campaign__venue=request.user.venueuser.venue, approved=True)
         else:
             form.base_fields['enquiry'].queryset = Enquiry.objects.all()
         return form
