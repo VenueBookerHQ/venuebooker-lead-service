@@ -411,7 +411,7 @@ class QuoteAccept(View):
             email.mixed_subtype = 'related'                       
             email.send()
         except Exception as e:
-            return HttpResponseRedirect('index')
+            return HttpResponseRedirect('/index')
         url = reverse('profile', kwargs={'pk': request.user.id})
         return HttpResponseRedirect(url)
 
