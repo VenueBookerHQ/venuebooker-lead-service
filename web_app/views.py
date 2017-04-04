@@ -390,6 +390,26 @@ class QuoteAccept(View):
     def post(self, request, pk):
         quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
+        quote =  Quote.objects.get(pk=quoteNum)
+        try:
+            subject = 'Quote Accepted'
+            from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+            to = quote.enquiry.event_campaign.venue.organisation.primary_contact.email
+            name = quote.enquiry.event_campaign.venue.organisation.primary_contact
+            user = quote.enquiry.user.username
+            text = get_template(template_text)
+            html = get_template(template_html)
+            d = Context({'user': user, 'name': name})
+            text_content = text.render(d)
+            html_content = html.render(d)
+
+            email = EmailMultiAlternatives(subject, text_content, from_email, [to])
+            email.attach_alternative(html_content, "text/html")  
+            email.content_subtype = 'html'    
+            email.mixed_subtype = 'related'                       
+            email.send()
+        except Exception as e:
+            return HttpResponseRedirect('index')
         url = reverse('profile', kwargs={'pk': request.user.id})
         return HttpResponseRedirect(url)
 
