@@ -388,6 +388,8 @@ def organisation_list(request):
 
 class QuoteAccept(View):
     def post(self, request, pk):
+        template_html = 'emails/quote_accepted.html'
+        template_text = 'emails/quote_accepted.txt'
         quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
         quote = Quote.objects.get(pk=quoteNum)
