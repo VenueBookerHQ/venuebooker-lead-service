@@ -2,7 +2,7 @@
 ==========================================================
 Hi {{ name }}
 
-The quote you sent to {{ username }} has been accepted!
+The quote you sent to {{ user }} has been accepted!
 
 We appreciate your continued business with Venuebooker
 

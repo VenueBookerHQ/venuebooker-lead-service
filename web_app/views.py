@@ -390,7 +390,7 @@ class QuoteAccept(View):
     def post(self, request, pk):
         quoteNum = pk
         Quote.objects.filter(pk=quoteNum).update(accepted=True)
-        quote =  Quote.objects.get(pk=quoteNum)
+        quote = Quote.objects.get(pk=quoteNum)
         try:
             subject = 'Quote Accepted'
             from_email = 'Venuebooker <gregwhyte14@gmail.com>'
