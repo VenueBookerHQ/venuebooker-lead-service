@@ -313,10 +313,10 @@ def change_password(request):
 		if form.is_valid():
 			user = form.save()
 			update_session_auth_hash(request, user)
-			messages.success(request, 'Your password was successfully changed!', extra_tags='alert')
+			messages.success(request, 'Your password was successfully changed!')
 			return redirect('profile', pk=request.user.id)
 		else:
-			messages.error(request, 'Please correct the error shown', extra_tags='alert')
+			messages.error(request, 'Please correct the error')
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'web_app/change_password.html', {'form': form})
