@@ -7,18 +7,21 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm, ContactResponseForm
+from .forms import UserForm, ContactForm, ContactResponseForm, ChangePasswordForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.contrib.auth.forms import PasswordChangeForm
 import boto3
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.utils.http import is_safe_url
 from django.template import *
 from django.template.loader import get_template
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 def index(request):
@@ -303,6 +306,21 @@ def logout_user(request):
     form = UserForm(request.POST or None)
 
     return render(request, 'web_app/login_form.html', {'form' : form})
+
+def change_password(request):
+	if request == "POST":
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)
+			messages.success(request, 'Your password was successfully changed!')
+			return redirect('profile')
+		else:
+            messages.error(request, 'Please correct the error shown')
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'web_app/change_password.html', {'form': form})
+
 
 @login_required(login_url='login')
 def event_list(request):
