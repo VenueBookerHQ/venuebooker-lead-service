@@ -308,7 +308,7 @@ def logout_user(request):
     return render(request, 'web_app/login_form.html', {'form' : form})
 
 def change_password(request):
-	if request == "POST":
+	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
 		if form.is_valid():
 			user = form.save()
