@@ -316,11 +316,10 @@ def change_password(request):
 			messages.success(request, 'Your password was successfully changed!')
 			return redirect('profile')
 		else:
-            messages.error(request, 'Please correct the error shown')
+			messages.error(request, 'Please correct the error shown')
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'web_app/change_password.html', {'form': form})
-
 
 @login_required(login_url='login')
 def event_list(request):
