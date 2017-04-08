@@ -138,12 +138,12 @@ class Organisation(models.Model):
 class Venue(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=150)
-    facebook_link = models.URLField('facebook_link', max_length=255, blank=True)
-    twitter_link = models.URLField('twitter_link', max_length=255, blank=True)
-    instagram_link = models.URLField('instagram_link', max_length=255, blank=True)
+    facebook_link = models.URLField(max_length=255, blank=True)
+    twitter_link = models.URLField(max_length=255, blank=True)
+    instagram_link = models.URLField(max_length=255, blank=True)
     description = models.TextField()
     image = models.ImageField(blank=True, default='default.jpg')
-    quoteImage = models.ImageField(blank=True, default='/static/images/vblogo.jpg')
+    quoteImage = models.ImageField('Image for Quote Emails', blank=True, default='/static/images/vblogo.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True)
 
     def get_absolute_url(self):
@@ -240,7 +240,7 @@ class VenuebookerUser(models.Model):
 
 class Enquiry(models.Model):
     message = models.TextField()
-    attendeeNum = models.IntegerField()
+    attendeeNum = models.IntegerField('Number of Attendees')
     date = models.DateField()
     event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
