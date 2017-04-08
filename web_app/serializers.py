@@ -33,3 +33,18 @@ class Event_campaignSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event_campaign
         fields = ('name', 'type', 'details', 'startTime', 'endTime', 'capacity', 'cost_per_capacity_unit', 'venue')
+
+class EnquirySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Enquiry
+        fields = ('message', 'attendeeNum', 'date', 'startTime', 'event_campaign', 'user', 'approved')
+
+class QuoteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Quote
+        fields = ('description', 'cost', 'accepted', 'enquiry')
+
+class Event_typeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Event_type
+        fields = ('name', 'description', 'active', 'seasonal')

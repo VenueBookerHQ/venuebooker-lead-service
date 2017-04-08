@@ -17,10 +17,13 @@ admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'contacts', ContactViewSet)
-router.register(r'organisation', OrganisationViewSet)
+router.register(r'organisations', OrganisationViewSet)
 router.register(r'eventcampaigns', Event_campaignViewSet)
 router.register(r'venues', VenueViewSet)
-router.register(r'contactresponse', ContactResponseViewSet)
+router.register(r'contactresponses', ContactResponseViewSet)
+router.register(r'enquiries', EnquiryViewSet)
+router.register(r'quotes', QuoteViewSet)
+router.register(r'event_types', Event_typeViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),

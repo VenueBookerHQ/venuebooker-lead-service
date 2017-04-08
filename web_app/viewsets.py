@@ -36,4 +36,19 @@ class ContactResponseViewSet(viewsets.ModelViewSet):
     queryset = ContactResponse.objects.all()
     serializer_class = ContactResponseSerializer
 
+class QuoteViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Quote.objects.all()
+    serializer_class = QuoteSerializer
+
+class EnquiryViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Enquiry.objects.all()
+    serializer_class = EnquirySerializer
+
+class Event_typeViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Event_type.objects.all()
+    serializer_class = Event_typeSerializer
+
 

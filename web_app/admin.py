@@ -27,6 +27,7 @@ from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, Organisa
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
+admin.AdminSite.site_title = "Site Administration"
 
 admin.site.register(Event_type)
 admin.site.register(Contact)
