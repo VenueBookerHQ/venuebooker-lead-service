@@ -37,7 +37,7 @@ class Event_campaignSerializer(serializers.HyperlinkedModelSerializer):
 class EnquirySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Enquiry
-        fields = ('message', 'attendeeNum', 'date', 'startTime', 'event_campaign', 'user', 'approved')
+        fields = ('message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved')
 
 class QuoteSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
