@@ -47,7 +47,7 @@ def contact(request):
 			name = form.cleaned_data['name']
 			phone = form.cleaned_data['phone']
 			emailAddress = form.cleaned_data['email']
-			vbemail = "gregwhyte14@gmail.com"
+			vbemail = "contact@venuebooker.com"
 			message = form.cleaned_data['message']
 			contactresponse.save()
 			timestamp = contactresponse.timestamp.strftime('%H:%M %d-%m-%Y')
@@ -55,7 +55,7 @@ def contact(request):
 			if request.method == 'POST':
 				try:
 					subject = 'Contact Form Response'
-					from_email = 'Venuebooker Contact Response <gregwhyte14@gmail.com>'
+					from_email = 'Venuebooker Contact Response <contact@venuebooker.com>'
 					to = vbemail
 					text = get_template(template_text)
 					html = get_template(template_html)
@@ -85,7 +85,7 @@ def newsletter(request):
 	emailAddress = request.POST['email']
 	try:
 		subject = 'Subscribed to Veneubooker Newsletter'
-		from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+		from_email = 'Venuebooker <noreply@venuebooker.com>'
 		to = emailAddress
 		text = get_template(template_text)
 		html = get_template(template_html)
@@ -216,9 +216,8 @@ class QuoteCreate(CreateView):
 		form.instance.enquiry = enquiry
 		form.save()
 		try:
-			subject = 'Quote Recieved'
-			message = 'Hello ' + username + '\nYou have recieved a quote for the enquiry you made \n Regards, \n The Venuebooker Team'
-			from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+			subject = 'Quote Received'
+			from_email = 'Venuebooker <noreply@venuebooker.com>'
 			to = emailAddress
 			text = get_template(template_text)
 			html = get_template(template_html)
@@ -269,7 +268,7 @@ def register(request):
 			if user is not None:
 				if request.method == 'POST':
 					try:
-						subject = 'Registered to Veneubooker'
+						subject = 'Registered to Venuebooker'
 						from_email = 'Venuebooker <gregwhyte14@gmail.com>'
 						to = emailAddress
 						text = get_template(template_text)
@@ -404,7 +403,7 @@ class QuoteAccept(View):
 		quote = Quote.objects.get(pk=quoteNum)
 		try:
 			subject = 'Quote Accepted'
-			from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+			from_email = 'Venuebooker <noreply@venuebooker.com>'
 			to = quote.enquiry.event_campaign.venue.organisation.primary_contact.email
 			name = quote.enquiry.event_campaign.venue.organisation.primary_contact
 			user = quote.enquiry.user.username

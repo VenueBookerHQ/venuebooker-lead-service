@@ -270,7 +270,7 @@ def send_quote_email(sender, **kwargs):
 	template_text = 'emails/quote.txt'
 	try:
 		subject = 'Quote Received'
-		from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+		from_email = 'Venuebooker <noreply@venuebooker.com>'
 		to = quote.enquiry.user.email
 		username = quote.enquiry.user.username
 		venue = quote.enquiry.event_campaign.venue
