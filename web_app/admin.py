@@ -82,12 +82,15 @@ class VenueAdmin(admin.ModelAdmin):
 		('Basic Details', {
 			'fields': ('name', ('image', 'image_preview_large'), 'address', 'quoteImage', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
 		}),
-		('Venue Approval', {'fields': ('approved',)}),
+		
 	)
+	user_fields = ['name','image','address','quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
+	admin_fields = ['approved']
 	def get_form(self, request, obj=None, **kwargs):
-		self.exclude = []
-		if not request.user.is_superuser and not hasattr(request.user, 'venuebookeruser'):
-			self.exclude.append('Venue Approval')
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			self.fields = self.user_fields + self.admin_fields
+		else:
+			self.fields = self.user_fields
 		return super(VenueAdmin, self).get_form(request, obj, **kwargs)
 
 	list_display = ('image_preview_small', 'name', 'address', 'organisation')
