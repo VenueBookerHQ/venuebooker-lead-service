@@ -13,6 +13,7 @@
                         <hr>
                         <form method="GET" id="form_search" action="">
                         <select name="q" placeholder="Search Event Types"/>
+						<option selected="selected" value="">All</option>
 						{% for event_type in type_list %}
 						<option value="{{ event_type.name }}">{{ event_type.name }}</option>
 						{% endfor %}
