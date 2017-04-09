@@ -35,10 +35,6 @@
                         <a href="{{ venue.twitter_link }}">Twitter</a>
                         <a href="{{ venue.instagram_link }}">Instagram</a>
                         <br>
-                        <h5><u>Images</u></h5>
-                        {% for image in venue.venueimage_set.all %} 
-                            <img src="{{ image.image.url }}" alt="" class="img-thumbnail" width="100%" height="300" />
-                        {% endfor %}
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
@@ -47,14 +43,29 @@
                             </div><!-- end col -->
 
                     </div><!-- end row -->
+					<br>
+					<br>
+					<div class="row">
+					<h5><u>Images</u></h5>
+                        {% for image in venue.venueimage_set.all %} 
+						<div class="col-sm-4">
+							<div class="clearfix">
+                                    <div class="post-media clearfix">
+                            <img src="{{ image.image.url }}" alt="" class="img-thumbnail" width="100%" height="300" />
+								</div>
+								</div>
+						</div>
+                        {% endfor %}
+					</div>
+					<br>
+					<br>
 				    <div class="row">
-
+						<h3>Event campaigns at {{ venue.name }}</h3>
                         {% for event_campaign in event_list %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
-                                        <a href="{% url 'event_campaign_detail' event_campaign.pk %}"><img src="{{ event_campaign.image.url }}" alt=""
-                                                                        class="img-rounded" width="100%" height="300"></a>
+                                        <a href="{% url 'event_campaign_detail' event_campaign.pk %}"><img src="{{ event_campaign.image.url }}" alt=""class="img-rounded" width="100%" height="300"></a>
                                     </div><!-- end post-media -->
 
                                     <div class="post-title clearfix">
