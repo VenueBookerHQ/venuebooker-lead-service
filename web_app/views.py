@@ -332,17 +332,17 @@ def event_list(request):
 	maxCap = request.GET.get("capmax")
 	if query:
 		queryset_list = queryset_list.filter(type__name=query)
-	if minCost and maxCost:
+	if minCost and maxCost isinstance(minCost, float) and isinstance(maxCost, float):
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
-	elif minCost and not maxCost:
+	elif minCost and not maxCost and isinstance(minCost, float):
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost)
-	elif maxCost and not minCost:
+	elif maxCost and not minCost and isinstance(maxCost, float):
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__lte = maxCost)
-	if minCap and maxCap:
+	if minCap and maxCap and isinstance(minCap, int) and isinstance(maxCap, int):
 		queryset_list = queryset_list.filter(capacity__gte = minCap, capacity__lte = maxCap)
-	elif minCap and not maxCap:
+	elif minCap and not maxCap and isinstance(minCap, int):
 		queryset_list = queryset_list.filter(capacity__gte = minCap)
-	elif maxCap and not minCap:
+	elif maxCap and not minCap and isinstance(maxCap, int):
 		queryset_list = queryset_list.filter(capacity__lte = maxCap)
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
