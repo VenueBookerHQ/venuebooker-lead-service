@@ -109,9 +109,15 @@ def terms(request):
 def privacy(request):
 	return render(request, 'privacy.html', {})
 
-class DetailViewVenue(generic.DetailView):
-	model = Venue
-	template_name = 'venue_detail.html'
+def venue_view(request, pk):
+	venuepk = pk
+	venueObj = Venue.objects.get(pk=venuepk)
+	eventqueryset = Event_campaign.objects.filter(venue=venueObj.name)
+	context = {
+		"venue": venueObj,
+		"event_list": eventqueryset,
+	}
+	return render(request, "venue_detail.html", context)
 
 class DetailViewEvent(generic.DetailView):
 	model = Event_campaign
