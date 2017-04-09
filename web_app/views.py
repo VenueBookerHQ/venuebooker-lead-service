@@ -112,7 +112,7 @@ def privacy(request):
 def venue_view(request, pk):
 	venuepk = pk
 	venueObj = Venue.objects.get(pk=venuepk)
-	eventqueryset = Event_campaign.objects.filter(venue=venueObj.name)
+	eventqueryset = Event_campaign.objects.filter(venue=venueObj)
 	context = {
 		"venue": venueObj,
 		"event_list": eventqueryset,
