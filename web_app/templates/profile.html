@@ -34,6 +34,12 @@
 				            <p><i>{{ user.username }}</i></p>
                             <p>{{ user.email }}</p>
 						</div>
+					</div>
+                    </div><!-- end post-title -->
+                    </div><!-- end post-wrapper -->
+			<div class="col-sm-4">
+                <div class="clearfix">
+                 <div class="post-title clearfix">
 				<div class="pull-right">
 			<form action="{% url 'profile-update' user.pk %}"> 
 				{% csrf_token %} 
