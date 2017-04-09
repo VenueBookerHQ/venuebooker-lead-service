@@ -332,7 +332,7 @@ def event_list(request):
 	maxCap = request.GET.get("capmax")
 	if query:
 		queryset_list = queryset_list.filter(type__name=query)
-	if minCost and maxCost isinstance(minCost, float) and isinstance(maxCost, float):
+	if minCost and maxCost and isinstance(minCost, float) and isinstance(maxCost, float):
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
 	elif minCost and not maxCost and isinstance(minCost, float):
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost)
