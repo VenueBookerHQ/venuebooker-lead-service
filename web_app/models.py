@@ -242,7 +242,7 @@ class VenuebookerUser(models.Model):
 class Enquiry(models.Model):
 	message = models.TextField()
 	attendeeNum = models.IntegerField('Number of Attendees')
-	date = models.DateField(blank=False, default=datetime.now().strftime("%d.%m.%Y"))
+	date = models.DateField(blank=False, default=datetime.now().strftime("%d-%m-%Y"))
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
 	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 	approved = models.BooleanField(default=False)
