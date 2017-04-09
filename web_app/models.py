@@ -145,6 +145,7 @@ class Venue(models.Model):
     image = models.ImageField(blank=True, default='default.jpg')
     quoteImage = models.ImageField('Image for Quote Emails', blank=True, default='/static/images/vblogo.jpg')
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE, null=True, blank=True)
+	approved = models.BooleanField(default=False)
 
     def get_absolute_url(self):
     	return reverse('venue_detail', kwargs={'pk': self.pk})
@@ -189,7 +190,7 @@ class Event_campaign(models.Model):
     recurring = models.BooleanField()
     image = models.ImageField(blank=True)
     capacity = models.IntegerField()
-    cost_per_capacity_unit = models.DecimalField('cost_per_capacity_unit', max_digits=10, decimal_places=2, blank=True, null=True)
+    cost_per_capacity_unit = models.DecimalField('Cost per person', max_digits=10, decimal_places=2, blank=True, null=True)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True)
 
     def get_absolute_url(self):

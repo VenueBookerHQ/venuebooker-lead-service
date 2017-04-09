@@ -329,7 +329,7 @@ def change_password(request):
 
 @login_required(login_url='login')
 def event_list(request):
-	queryset_list = Event_campaign.objects.all()
+	queryset_list = Event_campaign.objects.filter(venue__approved=True)
 	typeset = Event_type.objects.all()
 	query = request.GET.get("q")
 	minCost = request.GET.get("min")
@@ -369,7 +369,7 @@ def event_list(request):
 
 @login_required(login_url='login')
 def venue_list(request):
-	queryset_list = Venue.objects.all()
+	queryset_list = Venue.objects.filter(approved=True)
 	query = request.GET.get("q")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
