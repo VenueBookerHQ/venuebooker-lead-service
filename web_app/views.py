@@ -324,13 +324,14 @@ def change_password(request):
 @login_required(login_url='login')
 def event_list(request):
     queryset_list = Event_campaign.objects.all()
+	typeset = Event_type.objects.all()
     query = request.GET.get("q")
     minCost = request.GET.get("min")
     maxCost = request.GET.get("max")
     minCap = request.GET.get("capmin")
     maxCap = request.GET.get("capmax")
     if query:
-        queryset_list = queryset_list.filter(Q(name__icontains=query) | Q(venue__name__icontains=query))
+        queryset_list = queryset_list.filter(type=query)
     if minCost and maxCost:
         queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
     elif minCost and not maxCost:
@@ -355,6 +356,7 @@ def event_list(request):
 
     context = {
         "object_list": queryset,
+		"type_list": typeset,
         "title": "List",
     }
     return render(request, "eventcampaigns.html", context)

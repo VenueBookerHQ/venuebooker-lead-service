@@ -12,7 +12,13 @@
                         <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
                         <hr>
                         <form method="GET" id="form_search" action="">
-                        <input type="text" name="q" placeholder="Search Event Campaigns"/> <input type="text" name="min" placeholder="Min Cost"/> <input type="text" name="max" placeholder="Max Cost"/>
+                        <select name="q" placeholder="Search Event Types"/>
+						{% for event_type in type_list %}
+						<option value="{{ event_type.name }}">{{ event_type.name }}</option>
+						{% endfor %}
+						</select>
+						<input type="text" name="min" placeholder="Min Cost"/> 
+						<input type="text" name="max" placeholder="Max Cost"/>
                         <input type="text" name="capmin" placeholder="Min Capacity"/> <input type="text" name="capmax" placeholder="Max Capacity"/>
                         </br>                        
                         <input id="button_submit" type="submit" value="Search"/>
