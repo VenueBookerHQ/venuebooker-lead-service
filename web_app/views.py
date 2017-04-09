@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
 from .forms import UserForm, ContactForm, ContactResponseForm
@@ -26,6 +26,11 @@ from django.contrib.auth import update_session_auth_hash
 # Create your views here.
 def index(request):
 	return render(request, 'index.html', {})
+
+def handler404(request):
+	response = render_to_response('404.html', {}, context_instance=RequestContext(request))
+	response.status_code = 404
+	return response
 
 def contact(request):
 	template_name = 'contact.html'
