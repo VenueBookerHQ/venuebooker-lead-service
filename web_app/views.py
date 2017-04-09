@@ -323,9 +323,9 @@ def change_password(request):
 
 @login_required(login_url='login')
 def event_list(request):
-    queryset_list = Event_campaign.objects.all()
+	queryset_list = Event_campaign.objects.all()
 	typeset = Event_type.objects.all()
-    query = request.GET.get("q")
+	query = request.GET.get("q")
     minCost = request.GET.get("min")
     maxCost = request.GET.get("max")
     minCap = request.GET.get("capmin")
@@ -383,27 +383,6 @@ def venue_list(request):
     }
     return render(request, "venues.html", context)
 
-@login_required(login_url='login')
-def organisation_list(request):
-    queryset_list = Organisation.objects.all()
-    query = request.GET.get("q")
-    if query:
-        queryset_list = queryset_list.filter(name__icontains=query)
-    paginator = Paginator(queryset_list, 9)
-    page_request_var = "page"
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        queryset = paginator.page(1)
-    except EmptyPage:
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        "object_list": queryset,
-        "title": "List",
-    }
-    return render(request, "organisations.html", context)
 
 class QuoteAccept(View):
     def post(self, request, pk):
