@@ -9,7 +9,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import format_html
-import datetime
+from datetime import datetime
 from django.utils import timezone
 from django.template import *
 from django.template.loader import get_template
@@ -242,7 +242,7 @@ class VenuebookerUser(models.Model):
 class Enquiry(models.Model):
 	message = models.TextField()
 	attendeeNum = models.IntegerField('Number of Attendees')
-	date = models.DateField()
+	date = models.DateField(blank=False, default=datetime.now().strftime("%d.%m.%Y"))
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
 	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 	approved = models.BooleanField(default=False)
