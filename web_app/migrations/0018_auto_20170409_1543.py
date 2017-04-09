@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='enquiry',
             name='date',
-            field=models.DateField(default='09-04-2017'),
+            field=models.DateField(default='2017-09-04'),
         ),
     ]
