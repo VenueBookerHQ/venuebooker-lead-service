@@ -82,7 +82,7 @@ class VenueAdmin(admin.ModelAdmin):
 		('Basic Details', {
 			'fields': ('name', ('image', 'image_preview_large'), 'address', 'quoteImage', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
 		}),
-		('Venue Approval', {'fields': ('approval',)}),
+		('Venue Approval', {'fields': ('approved',)}),
 	)
 	def get_form(self, request, obj=None, **kwargs):
 		self.exclude = []
