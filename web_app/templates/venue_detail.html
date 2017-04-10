@@ -2,16 +2,18 @@
 {% load staticfiles %}
 
 {% block content %}
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>{{ venue.name }}</h3>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
         <section class="section clearfix">
             <div class="container">
                 <div class="top-destinations clearfix">
-                    <div class="hotel-title text-center">
-                        </br>
-                        </br>
-                        <h3>{{ venue.name }}</h3>
-                        <p></p>
-                        <hr>
-                    </div>
 
                     <div class="row">
 
