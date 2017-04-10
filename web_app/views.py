@@ -377,7 +377,7 @@ def venue_list(request):
 	query = request.GET.get("q")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
-	paginator = Paginator(queryset_list, 9)
+	paginator = Paginator(queryset_list, 3)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
 	try:
