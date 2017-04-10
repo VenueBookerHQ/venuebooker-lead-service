@@ -19,7 +19,7 @@
 
                     <div class="row">
 
-                        {% for venue in object_list %}
+                        {% for venue in object_list|slice:"3" %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
