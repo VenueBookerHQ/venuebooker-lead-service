@@ -170,6 +170,9 @@ class Venue(models.Model):
 
 	def __str__(self):			  
 		return self.name
+	class Meta:
+		verbose_name = 'My Venue'
+		verbose_name_plural = 'My Venues'
 
 
 class Event_type(models.Model):
@@ -216,6 +219,9 @@ class Event_campaign(models.Model):
 
 	def __str__(self):			  
 		return self.name
+	class Meta:
+		verbose_name = 'My Event Campaign'
+		verbose_name_plural = 'My Event Campaigns'
 
 
 class VenueUser(models.Model):
@@ -224,6 +230,9 @@ class VenueUser(models.Model):
 
 	def __str__(self):
 		return self.venue.name + " Venue User " + str(self.user.username)
+	class Meta:
+		verbose_name = 'My Venue User'
+		verbose_name_plural = 'My Venue Users'
 
 	
 class OrganisationUser(models.Model):
@@ -232,6 +241,9 @@ class OrganisationUser(models.Model):
 
 	def __str__(self):
 		return self.organisation.name + " Organisation User " + str(self.user.username)
+	class Meta:
+		verbose_name = 'My Organisation User'
+		verbose_name_plural = 'My Organisation Users'
 
 class VenuebookerUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
@@ -251,6 +263,9 @@ class Enquiry(models.Model):
 		return reverse('index')
 	def __str__(self):			  
 		return str(self.user) + " " + str(self.date)
+	class Meta:
+		verbose_name = 'My Enquiry'
+		verbose_name_plural = 'My Enquiries'
 
 class Quote(models.Model):
 	description = models.TextField()
@@ -262,6 +277,9 @@ class Quote(models.Model):
 		return reverse('index')
 	def __str__(self):			  
 		return "Quote for " + str(self.enquiry)
+	class Meta:
+		verbose_name = 'My Quote'
+		verbose_name_plural = 'My Quotes'
 
 @receiver(post_save, sender=Quote)
 def send_quote_email(sender, **kwargs):
@@ -298,11 +316,23 @@ class ContactResponse(models.Model):
 
 	def __str__(self):
 		return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+	class Meta:
+		verbose_name = 'My Contact Form Response'
+		verbose_name_plural = 'My Contact Form Responses'
 
 class VenueImage(models.Model):
 	image = models.ImageField(blank=True)
 	venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
+	class Meta:
+		verbose_name = 'My Venue Image'
+		verbose_name_plural = 'My Venue\'s Images'
+
+
 class EventImage(models.Model):
 	image = models.ImageField(blank=True)
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
+
+	class Meta:
+		verbose_name = 'My Event Campaign Image'
+		verbose_name_plural = 'My Event Campaign\'s Images'

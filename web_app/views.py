@@ -269,7 +269,7 @@ def register(request):
 				if request.method == 'POST':
 					try:
 						subject = 'Registered to Venuebooker'
-						from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+						from_email = 'Venuebooker <noreply@venuebooker.com>'
 						to = emailAddress
 						text = get_template(template_text)
 						html = get_template(template_html)
