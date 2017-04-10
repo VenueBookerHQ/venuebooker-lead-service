@@ -245,6 +245,14 @@ class VenueUser(models.Model):
 		verbose_name = 'Venue User'
 		verbose_name_plural = 'My Venue Users'
 
+@receiver(post_save, sender=VenueUser)
+def make_VenueUser_staff(sender, **kwargs):
+	venueuser = kwargs.get('instance')
+	user = venueuser.user
+	user.is_staff=True
+	user.save()
+
+
 	
 class OrganisationUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
@@ -254,7 +262,14 @@ class OrganisationUser(models.Model):
 		return self.organisation.name + " Organisation User " + str(self.user.username)
 	class Meta:
 		verbose_name = 'Organisation User'
-		verbose_name_plural = 'My Organisation Users'
+		verbose_name_plural = 'My Organisation Users' 
+
+@receiver(post_save, sender=OrganisationUser)
+def make_OrgUser_staff(sender, **kwargs):
+	orguser = kwargs.get('instance')
+	user = orguser.user
+	user.is_staff=True
+	user.save()
 
 class VenuebookerUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
@@ -265,7 +280,7 @@ class VenuebookerUser(models.Model):
 class Enquiry(models.Model):
 	message = models.TextField()
 	attendeeNum = models.IntegerField('Number of Attendees')
-	date = models.DateField(blank=False, default=datetime.now().strftime("%Y-%m-%d"))
+	date = models.DateField(blank=False, default=datetime.now)
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
 	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 	approved = models.BooleanField(default=False)
