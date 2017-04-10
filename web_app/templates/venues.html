@@ -16,10 +16,10 @@
                         <input type="submit" value="Search"/>
                         </form>
                     </div>
-
+					{% for venue in object_list %}
                     <div class="row">
 
-                        {% for venue in object_list|slice:"3" %}
+                            {% if forloop.first %}<div class="row">{% endif %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
@@ -36,9 +36,15 @@
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
-                        {% endfor %}
 
-                    </div><!-- end row -->
+					    {% if forloop.counter|divisibleby: 3 %}
+						</div>
+						<div class="row">
+						{% endif %}
+   					    {% if forloop.last %}
+						</div>
+						{% endif %}
+					{% endfor %}
                 </div><!-- end related-hotels -->
                 <div class="pagination">
                     <span class="step-links">
