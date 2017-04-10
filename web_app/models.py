@@ -140,8 +140,8 @@ class Organisation(models.Model):
 	associated_user_accounts.short_description = 'User Accounts'
 
 	class Meta:
-		verbose_name = 'Event Campaign Image'
-		verbose_name_plural = 'My Event Campaign\'s Images'	
+		verbose_name = 'Organisation'
+		verbose_name_plural = 'My Organisations'	
 
 class Venue(models.Model):
 	name = models.CharField(max_length=50)
