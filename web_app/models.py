@@ -93,6 +93,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		"Returns the short name for the user."
 		return self.username
 
+	class Meta:
+		verbose_name = 'User Account'
+		verbose_name_plural = 'My User Accounts'
+
 
 class Organisation(models.Model):
 	name = models.CharField(max_length=50)
@@ -133,7 +137,11 @@ class Organisation(models.Model):
 			return 'No Accounts'
 		return ','.join(str(item.user.id) + ': ' + item.user.username for item in self.organisationuser_set.all())
 
-	associated_user_accounts.short_description = 'User Accounts'	
+	associated_user_accounts.short_description = 'User Accounts'
+
+	class Meta:
+		verbose_name = 'Event Campaign Image'
+		verbose_name_plural = 'My Event Campaign\'s Images'	
 
 class Venue(models.Model):
 	name = models.CharField(max_length=50)
@@ -171,7 +179,7 @@ class Venue(models.Model):
 	def __str__(self):			  
 		return self.name
 	class Meta:
-		verbose_name = 'My Venue'
+		verbose_name = 'Venue'
 		verbose_name_plural = 'My Venues'
 
 
@@ -183,6 +191,9 @@ class Event_type(models.Model):
 
 	def __str__(self):			  
 		return self.name
+	class Meta:
+		verbose_name = 'Event Type'
+		verbose_name_plural = 'My Event Types'
 
 class Event_campaign(models.Model):
 	name = models.CharField(max_length=50)
@@ -220,7 +231,7 @@ class Event_campaign(models.Model):
 	def __str__(self):			  
 		return self.name
 	class Meta:
-		verbose_name = 'My Event Campaign'
+		verbose_name = 'Event Campaign'
 		verbose_name_plural = 'My Event Campaigns'
 
 
@@ -231,7 +242,7 @@ class VenueUser(models.Model):
 	def __str__(self):
 		return self.venue.name + " Venue User " + str(self.user.username)
 	class Meta:
-		verbose_name = 'My Venue User'
+		verbose_name = 'Venue User'
 		verbose_name_plural = 'My Venue Users'
 
 	
@@ -242,7 +253,7 @@ class OrganisationUser(models.Model):
 	def __str__(self):
 		return self.organisation.name + " Organisation User " + str(self.user.username)
 	class Meta:
-		verbose_name = 'My Organisation User'
+		verbose_name = 'Organisation User'
 		verbose_name_plural = 'My Organisation Users'
 
 class VenuebookerUser(models.Model):
@@ -264,7 +275,7 @@ class Enquiry(models.Model):
 	def __str__(self):			  
 		return str(self.user) + " " + str(self.date)
 	class Meta:
-		verbose_name = 'My Enquiry'
+		verbose_name = 'Enquiry'
 		verbose_name_plural = 'My Enquiries'
 
 class Quote(models.Model):
@@ -278,7 +289,7 @@ class Quote(models.Model):
 	def __str__(self):			  
 		return "Quote for " + str(self.enquiry)
 	class Meta:
-		verbose_name = 'My Quote'
+		verbose_name = 'Quote'
 		verbose_name_plural = 'My Quotes'
 
 @receiver(post_save, sender=Quote)
@@ -317,7 +328,7 @@ class ContactResponse(models.Model):
 	def __str__(self):
 		return str(self.id) + " " + self.timestamp.strftime("%Y-%m-%d %H:%M:%S")
 	class Meta:
-		verbose_name = 'My Contact Form Response'
+		verbose_name = 'Contact Form Response'
 		verbose_name_plural = 'My Contact Form Responses'
 
 class VenueImage(models.Model):
@@ -325,7 +336,7 @@ class VenueImage(models.Model):
 	venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
 
 	class Meta:
-		verbose_name = 'My Venue Image'
+		verbose_name = 'Venue Image'
 		verbose_name_plural = 'My Venue\'s Images'
 
 
@@ -334,5 +345,5 @@ class EventImage(models.Model):
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
 
 	class Meta:
-		verbose_name = 'My Event Campaign Image'
+		verbose_name = 'Event Campaign Image'
 		verbose_name_plural = 'My Event Campaign\'s Images'
