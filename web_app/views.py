@@ -238,6 +238,8 @@ class QuoteCreate(CreateView):
 		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 def register(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/index')
 	template_html = 'emails/register.html'
 	template_text = 'emails/register.txt'
 	template_name = 'web_app/register_form.html'
@@ -296,6 +298,8 @@ def register(request):
 
 #User Login View
 def login(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/index')
 	if request.method == "POST":
 		username = request.POST['username']
 		password = request.POST['password']
