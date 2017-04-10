@@ -1640,7 +1640,6 @@ i {
 }
 .sidebar {
     padding: 20px;
-    background: url(images/menu.png) no-repeat bottom center #ffffff;
 	border-left:1px solid rgba(50, 50, 50, 0.1);
 }
 .sidebar li {
