@@ -15,7 +15,9 @@
         </div><!-- end row -->
     </div><!-- end container -->
 </section><!-- end section -->
-
+        <section class="section clearfix">
+            <div class="container">
+                <div class="top-destinations clearfix">
                     <div class="row">
 
                             <div class="col-sm-4">
@@ -36,7 +38,7 @@
 					    </br>
 					    <p>Details: {{ event_campaign.details }}</p>
 					    <p>Capacity: {{ event_campaign.capacity }}</p>
-                        <p>Cost per Person: {{ event_campaign.cost_per_capacity_unit }}</p>
+                        <p>Cost per Person: £{{ event_campaign.cost_per_capacity_unit }}</p>
                         <p>Start Time: {{ event_campaign.startTime }}</p>
                         <p>End Time: {{ event_campaign.endTime }}</p>
                         </br>

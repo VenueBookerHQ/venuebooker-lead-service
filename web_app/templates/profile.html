@@ -109,7 +109,7 @@
                                 <td>{{ enquiry.date }}</td>
                                 <td>{{ enquiry.attendeeNum }}</td>
                                 <td>{{ quote.description }}</td>
-                                <td>{{ quote.cost }}</td>
+                                <td>£{{ quote.cost }}</td>
                                 {% if not quote.accepted %}
                                 <td><form method="post" action="{% url 'quote-accept' quote.pk %}">{% csrf_token %}<button type="submit" class="btn btn-success">Accept </button></form><form method="post" action="{% url 'quote-decline' quote.pk %}">{% csrf_token %}<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you wish to DECLINE this quote?')">Decline</button></form></td>
                                 {% else %}
