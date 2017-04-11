@@ -211,6 +211,39 @@ class CustomUserAdmin(UserAdmin):
 			return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
 		return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+class VenueUserAdmin(admin.ModelAdmin):
+	form = VenueUserForm
+	user_fields = ['user','position','venue']
+
+
+	list_display = ('user', 'postion', 'venue')
+	list_display_links = ('user')
+	search_fields = ['user']
+
+	
+	def get_queryset(self, request):
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			return VenueUser.objects.all()
+		elif hasattr(request.user, 'venueuser'):
+			return VenueUser.objects.filter(venue=request.user.venueuser.venue)
+		return VenueUser.objects.filter(venue__organisation=request.user.organisationuser.organisation)
+
+class OrganisationUserAdmin(admin.ModelAdmin):
+	form = OrganisationUserForm
+	user_fields = ['user','position','organisation']
+
+
+	list_display = ('user', 'postion', 'organisation')
+	list_display_links = ('user')
+	search_fields = ['user']
+
+	
+	def get_queryset(self, request):
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			return OrganisationUser.objects.all()
+		else:
+			return OrganisationUser.objects.filter(organisation=request.user.organisationuser.organisation)
+
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
 admin.site.register(Enquiry, EnquiryAdmin)

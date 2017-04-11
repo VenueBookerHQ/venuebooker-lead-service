@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from web_app.models import ContactResponse
-from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote, Contact
+from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote, Contact, OrganisationUser, VenueUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
@@ -74,4 +74,14 @@ class QuoteForm(forms.ModelForm):
     class Meta:
         model = Quote
         fields = ['description', 'cost', 'accepted', 'enquiry']
+
+class OrganisationUserForm(forms.ModelForm):
+	class Meta:
+		model = OrganisationUser
+		fields = ['user','position','organisation']
+
+class VenueUserForm(forms.ModelForm):
+	class Meta:
+		model = VenueUser
+		fields = ['user','position','venue']
 
