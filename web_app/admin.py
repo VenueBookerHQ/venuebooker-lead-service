@@ -30,7 +30,6 @@ admin.AdminSite.site_title = "Venuebooker Site Admin"
 admin.AdminSite.site_title = "Site Administration"
 
 admin.site.register(Event_type)
-admin.site.register(Contact)
 admin.site.register(ContactResponse)
 admin.site.register(VenuebookerUser)
 
@@ -242,8 +241,17 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 		else:
 			return OrganisationUser.objects.filter(organisation=request.user.organisationuser.organisation)
 
+class ContactAdmin(admin.ModelAdmin):
+	form = ContactForm
+	user_fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
+	list_display = ('first_name', 'last_name', 'email', 'telephone', 'mobile')
+	list_display_links = ('first_name', 'last_name')
+	search_fields = ['first_name', 'last_name', 'email']
+
+
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
+admin.site.register(Contact, ContactAdmin)
 admin.site.register(VenueUser, VenueUserAdmin)
 admin.site.register(OrganisationUser, OrganisationUserAdmin)
 admin.site.register(Enquiry, EnquiryAdmin)
