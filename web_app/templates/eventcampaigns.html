@@ -2,15 +2,24 @@
 {% load staticfiles %}
 
 {% block content %}
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+				<br>
+				<br>
+				<br>
+				<br>
+                <h3>Event Campaigns</h3>
+				<p>Our expert venue booking service is free and always matches a venue's best prices.</p>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
         <section class="section clearfix">
             <div class="container">
                 <div class="top-destinations clearfix">
                     <div class="hotel-title text-center">
-                        </br>
-                        </br>
-                        <h3>EVENT CAMPAIGNS</h3>
-                        <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
-                        <hr>
                         <form method="GET" id="form_search" action="">
                         <select name="q" placeholder="Search Event Types"/>
 						<option selected="selected" value="">All</option>
@@ -26,9 +35,10 @@
                         </form>
                     </div>
 
-                    <div class="row">
+				{% for event_campaign in object_list %}
+                {% if forloop.first %}<div class="row">{% endif %}
 
-                        {% for event_campaign in object_list %}
+                        
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
@@ -45,14 +55,18 @@
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
 					                      <p>Capacity: {{ event_campaign.capacity }}</p>
-                                          <p>Cost per person: {{ event_campaign.cost_per_capacity_unit }}</p>
+                                          <p>Cost per person: £{{ event_campaign.cost_per_capacity_unit }}</p>
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
-                        {% endfor %}
-
-
-                    </div><!-- end row -->
+                        {% if forloop.counter|divisibleby:3 %}
+						</div>
+						<div class="row">
+						{% endif %}
+   					    {% if forloop.last %}
+						</div>
+						{% endif %}
+					{% endfor %}
                 </div><!-- end related-hotels -->
                  <div class="pagination">
                     <span class="step-links">

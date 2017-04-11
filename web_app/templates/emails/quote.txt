@@ -2,7 +2,7 @@
 ==========================================================
 Hi {{ name }}
 
-You have recieved a Quote from {{ venue }} for the enquiry you made
+You have received a Quote from {{ venue }} for the enquiry you made
 
 Regards,
 

@@ -2,16 +2,22 @@
 {% load staticfiles %}
 
 {% block content %}
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+				<br>
+				<br>
+				<br>
+				<br>
+                <h3>{{ venue.name }}</h3>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
         <section class="section clearfix">
             <div class="container">
                 <div class="top-destinations clearfix">
-                    <div class="hotel-title text-center">
-                        </br>
-                        </br>
-                        <h3>{{ venue.name }}</h3>
-                        <p></p>
-                        <hr>
-                    </div>
 
                     <div class="row">
 
@@ -28,7 +34,10 @@
                                 <div class="clearfix">
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
+							<h5>Venue Type: {{ venue.get_type_display }}</h5>
                             <h4>Address: {{ venue.address }}</a></h4>
+						    <h5>City: {{ venue.city }}</a></h5>
+							<h5>Country: {{ venue.get_country_display }}</h5>
 					    <br>
 					    <p>{{ venue.description }}</p>
                         <a href="{{ venue.facebook_link }}">Facebook</a>
@@ -46,7 +55,8 @@
 					<br>
 					<br>
 					<div class="row">
-					<h5><u>Images</u></h5>
+					<h3>Images</h3>
+						{% if venue.venueimage_set.all %}
                         {% for image in venue.venueimage_set.all %} 
 						<div class="col-sm-4">
 							<div class="clearfix">
@@ -55,12 +65,22 @@
 								</div>
 								</div>
 						</div>
+							{% if forloop.counter|divisibleby:3 %}
+							</div>
+							<div class="row">
+							{% endif %}
+   					    	{% if forloop.last %}
+							</div>
+							{% endif %}
                         {% endfor %}
-					</div>
+						{% else %}
+						<p>{{ venue.name }} has no Images yet</p>
+						{% endif %}
 					<br>
 					<br>
 				    <div class="row">
 						<h3>Event campaigns at {{ venue.name }}</h3>
+						{% if event_list %}
                         {% for event_campaign in event_list %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
@@ -81,10 +101,20 @@
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
+							{% if forloop.counter|divisibleby:3 %}
+							</div>
+							<div class="row">
+							{% endif %}
+   					    	{% if forloop.last %}
+							</div>
+							{% endif %}
                         {% endfor %}
+						{% else %}
+						<p>{{ venue.name }} has no Event Campaigns yet</p>
+						{% endif %}
 
 
-                    </div><!-- end row -->
+                   
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->

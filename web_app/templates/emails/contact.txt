@@ -1,6 +1,6 @@
 ===================  Venuebooker =========================
 ==========================================================
-You have recieved a contact form response from: {{ name }} at  {{ timestamp }} The message reads: {{ message }} This person may be responded to by:  Phone: {{ phone }}  Email: {{ emailAddress }}
+You have received a contact form response from: {{ name }} at  {{ timestamp }} The message reads: {{ message }} This person may be responded to by:  Phone: {{ phone }}  Email: {{ emailAddress }}
 
 Regards,
 

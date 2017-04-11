@@ -2,24 +2,32 @@
 {% load staticfiles %}
 
 {% block content %}
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+				<br>
+				<br>
+				<br>
+				<br>
+                 <h3>VENUES</h3>
+                 <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
         <section class="section clearfix">
             <div class="container">
                 <div class="top-destinations clearfix">
                     <div class="hotel-title text-center">
-                        </br>
-                        </br>
-                        <h3>VENUES</h3>
-                        <p>Our expert venue booking service is free and always matches a venue's best prices.</p>
-                        <hr>
                         <form method="GET" action="">
                         <input type="text" name="q" placeholder="Search Venues"/>
                         <input type="submit" value="Search"/>
                         </form>
                     </div>
-
-                    <div class="row">
-
-                        {% for venue in object_list %}
+					{% for venue in object_list %}
+					{% if forloop.first %}<div class="row">{% endif %}
+	
                             <div class="col-sm-4">
                                 <div class="clearfix">
                                     <div class="post-media clearfix">
@@ -29,16 +37,23 @@
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
 				            <h4><a href="{% url 'venue_detail' venue.pk %}"> {{ venue.name }} </a></h4>
-                                            <h5>{{ venue.type }}</h5>
+                                            <h5>{{ venue.city }}</h5>
+											<h5>Type: {{ venue.get_type_display }}</h5>
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
-                        {% endfor %}
 
-                    </div><!-- end row -->
+					    {% if forloop.counter|divisibleby:3 %}
+						</div>
+						<div class="row">
+						{% endif %}
+   					    {% if forloop.last %}
+						</div>
+						{% endif %}
+					{% endfor %}
                 </div><!-- end related-hotels -->
                 <div class="pagination">
                     <span class="step-links">

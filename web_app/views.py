@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
 from .forms import UserForm, ContactForm, ContactResponseForm
@@ -26,6 +26,14 @@ from django.contrib.auth import update_session_auth_hash
 def index(request):
 	return render(request, 'index.html', {})
 
+def venue_signup_info(request):
+	return render(request, 'venue_signup.html', {})
+
+def handler404(request):
+	response = render_to_response('404.html', {}, context_instance=RequestContext(request))
+	response.status_code = 404
+	return response
+
 def contact(request):
 	template_name = 'contact.html'
 	template_html = 'emails/contact.html'
@@ -41,7 +49,7 @@ def contact(request):
 			name = form.cleaned_data['name']
 			phone = form.cleaned_data['phone']
 			emailAddress = form.cleaned_data['email']
-			vbemail = "gregwhyte14@gmail.com"
+			vbemail = "contact@venuebooker.com"
 			message = form.cleaned_data['message']
 			contactresponse.save()
 			timestamp = contactresponse.timestamp.strftime('%H:%M %d-%m-%Y')
@@ -49,7 +57,7 @@ def contact(request):
 			if request.method == 'POST':
 				try:
 					subject = 'Contact Form Response'
-					from_email = 'Venuebooker Contact Response <gregwhyte14@gmail.com>'
+					from_email = 'Venuebooker Contact Response <contact@venuebooker.com>'
 					to = vbemail
 					text = get_template(template_text)
 					html = get_template(template_html)
@@ -79,7 +87,7 @@ def newsletter(request):
 	emailAddress = request.POST['email']
 	try:
 		subject = 'Subscribed to Veneubooker Newsletter'
-		from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+		from_email = 'Venuebooker <noreply@venuebooker.com>'
 		to = emailAddress
 		text = get_template(template_text)
 		html = get_template(template_html)
@@ -141,7 +149,7 @@ class ProfileUpdate(UpdateView):
 
 class VenueCreate(CreateView):
 	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
 	success_url = "/venues"
 
 	def form_valid(self, form):
@@ -155,7 +163,7 @@ class VenueCreate(CreateView):
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 
 class VenueDelete(DeleteView):
@@ -210,9 +218,8 @@ class QuoteCreate(CreateView):
 		form.instance.enquiry = enquiry
 		form.save()
 		try:
-			subject = 'Quote Recieved'
-			message = 'Hello ' + username + '\nYou have recieved a quote for the enquiry you made \n Regards, \n The Venuebooker Team'
-			from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+			subject = 'Quote Received'
+			from_email = 'Venuebooker <noreply@venuebooker.com>'
 			to = emailAddress
 			text = get_template(template_text)
 			html = get_template(template_html)
@@ -233,6 +240,8 @@ class QuoteCreate(CreateView):
 		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
 def register(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/index')
 	template_html = 'emails/register.html'
 	template_text = 'emails/register.txt'
 	template_name = 'web_app/register_form.html'
@@ -263,8 +272,8 @@ def register(request):
 			if user is not None:
 				if request.method == 'POST':
 					try:
-						subject = 'Registered to Veneubooker'
-						from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+						subject = 'Registered to Venuebooker'
+						from_email = 'Venuebooker <noreply@venuebooker.com>'
 						to = emailAddress
 						text = get_template(template_text)
 						html = get_template(template_html)
@@ -291,6 +300,8 @@ def register(request):
 
 #User Login View
 def login(request):
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/index')
 	if request.method == "POST":
 		username = request.POST['username']
 		password = request.POST['password']
@@ -298,6 +309,9 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth_login(request, user)
+			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser') or user.is_superuser:
+				return HttpResponseRedirect('/admin')
+			else:
 				return render(request, 'index.html')
 		else:
 			return render(request, 'web_app/login_form.html')
@@ -337,18 +351,21 @@ def event_list(request):
 	maxCap = request.GET.get("capmax")
 	if query:
 		queryset_list = queryset_list.filter(type__name=query)
-	if minCost and maxCost and isinstance(minCost, float) and isinstance(maxCost, float):
+
+	if minCost and maxCost:
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost, cost_per_capacity_unit__lte = maxCost)
-	elif minCost and not maxCost and isinstance(minCost, float):
+	elif minCost and not maxCost:
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__gte = minCost)
-	elif maxCost and not minCost and isinstance(maxCost, float):
+	elif maxCost and not minCost:
 		queryset_list = queryset_list.filter(cost_per_capacity_unit__lte = maxCost)
-	if minCap and maxCap and isinstance(minCap, int) and isinstance(maxCap, int):
+
+	if minCap and maxCap:
 		queryset_list = queryset_list.filter(capacity__gte = minCap, capacity__lte = maxCap)
-	elif minCap and not maxCap and isinstance(minCap, int):
+	elif minCap and not maxCap:
 		queryset_list = queryset_list.filter(capacity__gte = minCap)
-	elif maxCap and not minCap and isinstance(maxCap, int):
+	elif maxCap and not minCap:
 		queryset_list = queryset_list.filter(capacity__lte = maxCap)
+
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
@@ -398,7 +415,7 @@ class QuoteAccept(View):
 		quote = Quote.objects.get(pk=quoteNum)
 		try:
 			subject = 'Quote Accepted'
-			from_email = 'Venuebooker <gregwhyte14@gmail.com>'
+			from_email = 'Venuebooker <noreply@venuebooker.com>'
 			to = quote.enquiry.event_campaign.venue.organisation.primary_contact.email
 			name = quote.enquiry.event_campaign.venue.organisation.primary_contact
 			user = quote.enquiry.user.username

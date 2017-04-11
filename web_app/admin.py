@@ -23,17 +23,14 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm, OrganisationUserForm, VenueUserForm, ContactForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
 admin.AdminSite.site_title = "Site Administration"
 
 admin.site.register(Event_type)
-admin.site.register(Contact)
 admin.site.register(ContactResponse)
-admin.site.register(VenueUser)
-admin.site.register(OrganisationUser)
 admin.site.register(VenuebookerUser)
 
 class EventImageInline(admin.StackedInline):
@@ -78,7 +75,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 	
 class VenueAdmin(admin.ModelAdmin):
 	form = VenueForm
-	user_fields = ['name','image','address','quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
+	user_fields = ['name', 'type', 'image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
 	admin_fields = ['approved']
 	def get_form(self, request, obj=None, **kwargs):
 		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
@@ -87,7 +84,7 @@ class VenueAdmin(admin.ModelAdmin):
 			self.fields = self.user_fields
 		return super(VenueAdmin, self).get_form(request, obj, **kwargs)
 
-	list_display = ('image_preview_small', 'name', 'address', 'organisation')
+	list_display = ('image_preview_small', 'name', 'type', 'address', 'organisation')
 	list_display_links = ('image_preview_small', 'name')
 	inlines = [VenueUserInline, VenueImageInline]
 	readonly_fields = ('image_preview_large',)
@@ -211,8 +208,52 @@ class CustomUserAdmin(UserAdmin):
 			return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
 		return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+class VenueUserAdmin(admin.ModelAdmin):
+	form = VenueUserForm
+	user_fields = ['user','position','venue']
+
+
+	list_display = ('user', 'position', 'venue')
+	list_display_links = ('user',)
+	search_fields = ['user']
+
+	
+	def get_queryset(self, request):
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			return VenueUser.objects.all()
+		elif hasattr(request.user, 'venueuser'):
+			return VenueUser.objects.filter(venue=request.user.venueuser.venue)
+		return VenueUser.objects.filter(venue__organisation=request.user.organisationuser.organisation)
+
+class OrganisationUserAdmin(admin.ModelAdmin):
+	form = OrganisationUserForm
+	user_fields = ['user','position','organisation']
+
+
+	list_display = ('user', 'position', 'organisation')
+	list_display_links = ('user',)
+	search_fields = ['user']
+
+	
+	def get_queryset(self, request):
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			return OrganisationUser.objects.all()
+		else:
+			return OrganisationUser.objects.filter(organisation=request.user.organisationuser.organisation)
+
+class ContactAdmin(admin.ModelAdmin):
+	form = ContactForm
+	user_fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
+	list_display = ('first_name', 'last_name', 'email', 'telephone', 'mobile')
+	list_display_links = ('first_name', 'last_name')
+	search_fields = ['first_name', 'last_name', 'email']
+
+
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
+admin.site.register(Contact, ContactAdmin)
+admin.site.register(VenueUser, VenueUserAdmin)
+admin.site.register(OrganisationUser, OrganisationUserAdmin)
 admin.site.register(Enquiry, EnquiryAdmin)
 admin.site.register(Quote, QuoteAdmin)
 admin.site.register(Event_campaign, EventCampaignAdmin)

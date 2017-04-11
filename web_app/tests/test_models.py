@@ -107,6 +107,7 @@ class Event_campaignModelTest(TestCase):
 def create_enquiry():
     Contact.objects.create(first_name="Joe", last_name="Bloggs", telephone="02590768976", mobile="07717453257",
                            email="j.bloggs@hotmail.com")
+	CustomUser.objects.create(username="JoeB123", email="j.bloggs@hotmail.com", password="Bloggsy1234", contact=Contact.objects.all()[0])
     Event_type.objects.create(name="Christmas Dinner", description="This is a Christmas Dinner", active=True, seasonal=True)
 
     Organisation.object.create(name='MacDonald Hotels', primary_contact=Contact.objects.all()[0],
@@ -117,8 +118,8 @@ def create_enquiry():
                                             'It is all about location in California and the New York Hilton Midtown places you right in the heart of the action')
     Venue.object.create(name='MacDonald Los Angeles', address='1122 4th Ave, Los Angeles, CA 12019, USA', facebook_link="", facebook_link="", facebook_link="", description="", image=None, organisation=Organisation.objects.all()[0])
     Event_campaign.object.create(name='MacDonald Los Angeles Christmas Dinner', type=Event_type.objects.all()[0], details="", startTime="", endTime="", recurring=True, image=None, capacity=40, cost_per_capacity_unit=10, venue=Venue.objects.all()[0])
-    enquiry = Enquiry(message="Joe", attendeeNum="Bloggs", date="02590768976", event_campaign=Event_campaign.objects.all()[0],
-                           user=#########, approved=True)
+    enquiry = Enquiry(message="This is a test Enquiry", attendeeNum=100, date="2017-05-01", event_campaign=Event_campaign.objects.all()[0],
+                           user=CustomUser.objects.all()[0], approved=True)
     enquiry.save()
     
 
@@ -134,6 +135,7 @@ class EnquiryModelTest(TestCase):
 def create_quote():
     Contact.objects.create(first_name="Joe", last_name="Bloggs", telephone="02590768976", mobile="07717453257",
                            email="j.bloggs@hotmail.com")
+	CustomUser.objects.create(username="JoeB123", email="j.bloggs@hotmail.com", password="Bloggsy1234", contact=Contact.objects.all()[0])
     Event_type.objects.create(name="Christmas Dinner", description="This is a Christmas Dinner", active=True, seasonal=True)
 
     Organisation.object.create(name='MacDonald Hotels', primary_contact=Contact.objects.all()[0],
@@ -145,8 +147,8 @@ def create_quote():
     Venue.object.create(name='MacDonald Los Angeles', address='1122 4th Ave, Los Angeles, CA 12019, USA', facebook_link="", facebook_link="", facebook_link="", description="", image=None, organisation=Organisation.objects.all()[0])
     Event_campaign.object.create(name='MacDonald Los Angeles Christmas Dinner', type=Event_type.objects.all()[0], details="", startTime="", endTime="", recurring=True, image=None, capacity=40, cost_per_capacity_unit=10, venue=Venue.objects.all()[0])
     Enquiry.object.create(message="Joe", attendeeNum="Bloggs", date="02590768976", event_campaign=Event_campaign.objects.all()[0],
-                           user=#########, approved=True)
-    quote = Quote(description="Joe", cost="Bloggs", accepted="02590768976", enquiry=Enquiry.objects.all()[0])
+                           user=CustomUser.objects.all()[0], approved=True)
+    quote = Quote(description="This is a test Quote", cost=50, accepted=False, enquiry=Enquiry.objects.all()[0])
     quote.save()
     
 
