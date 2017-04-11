@@ -147,7 +147,7 @@ class ProfileUpdate(UpdateView):
 
 class VenueCreate(CreateView):
 	model = Venue
-	fields = ['name', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
+	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
 	success_url = "/venues"
 
 	def form_valid(self, form):
@@ -161,7 +161,7 @@ class VenueCreate(CreateView):
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 
 class VenueDelete(DeleteView):

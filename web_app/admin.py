@@ -76,7 +76,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 	
 class VenueAdmin(admin.ModelAdmin):
 	form = VenueForm
-	user_fields = ['name','image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
+	user_fields = ['name', 'type', 'image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
 	admin_fields = ['approved']
 	def get_form(self, request, obj=None, **kwargs):
 		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
@@ -85,7 +85,7 @@ class VenueAdmin(admin.ModelAdmin):
 			self.fields = self.user_fields
 		return super(VenueAdmin, self).get_form(request, obj, **kwargs)
 
-	list_display = ('image_preview_small', 'name', 'address', 'organisation')
+	list_display = ('image_preview_small', 'name', 'type', 'address', 'organisation')
 	list_display_links = ('image_preview_small', 'name')
 	inlines = [VenueUserInline, VenueImageInline]
 	readonly_fields = ('image_preview_large',)
@@ -215,7 +215,7 @@ class VenueUserAdmin(admin.ModelAdmin):
 
 
 	list_display = ('user', 'position', 'venue')
-	list_display_links = ('user')
+	list_display_links = ('user',)
 	search_fields = ['user']
 
 	
@@ -232,7 +232,7 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 
 
 	list_display = ('user', 'position', 'organisation')
-	list_display_links = ('user')
+	list_display_links = ('user',)
 	search_fields = ['user']
 
 	
