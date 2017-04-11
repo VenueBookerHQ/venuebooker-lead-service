@@ -23,7 +23,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm, OrganisationUserForm, VenueUserForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm, OrganisationUserForm, VenueUserForm, ContactForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
