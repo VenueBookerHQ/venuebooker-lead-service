@@ -214,7 +214,7 @@ class VenueUserAdmin(admin.ModelAdmin):
 	user_fields = ['user','position','venue']
 
 
-	list_display = ('user', 'postion', 'venue')
+	list_display = ('user', 'position', 'venue')
 	list_display_links = ('user')
 	search_fields = ['user']
 
@@ -231,7 +231,7 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 	user_fields = ['user','position','organisation']
 
 
-	list_display = ('user', 'postion', 'organisation')
+	list_display = ('user', 'position', 'organisation')
 	list_display_links = ('user')
 	search_fields = ['user']
 
