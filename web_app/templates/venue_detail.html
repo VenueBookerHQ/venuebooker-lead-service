@@ -55,7 +55,7 @@
 					<br>
 					<br>
 					<div class="row">
-					<h5><u>Images</u></h5>
+					<h3>Images</h3>
 						{% if venue.venueimage_set.all %}
                         {% for image in venue.venueimage_set.all %} 
 						<div class="col-sm-4">
@@ -65,11 +65,17 @@
 								</div>
 								</div>
 						</div>
+							{% if forloop.counter|divisibleby:3 %}
+							</div>
+							<div class="row">
+							{% endif %}
+   					    	{% if forloop.last %}
+							</div>
+							{% endif %}
                         {% endfor %}
 						{% else %}
 						<p>{{ venue.name }} has no Images yet</p>
 						{% endif %}
-					</div>
 					<br>
 					<br>
 				    <div class="row">
@@ -95,13 +101,20 @@
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
+							{% if forloop.counter|divisibleby:3 %}
+							</div>
+							<div class="row">
+							{% endif %}
+   					    	{% if forloop.last %}
+							</div>
+							{% endif %}
                         {% endfor %}
 						{% else %}
 						<p>{{ venue.name }} has no Event Campaigns yet</p>
 						{% endif %}
 
 
-                    </div><!-- end row -->
+                   
                 </div><!-- end related-hotels -->
 
             </div><!-- end container -->
