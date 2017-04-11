@@ -38,7 +38,7 @@
                                         <div class="pull-left">
 				            <h4><a href="{% url 'venue_detail' venue.pk %}"> {{ venue.name }} </a></h4>
                                             <h5>{{ venue.city }}</h5>
-											<h5>Type: {{ venue.type }}</h5>
+											<h5>Type: {{ venue.get_type_display }}</h5>
                                         </div>
                                     </div><!-- end ost-title -->
                                     <div class="post-content clearfix">
