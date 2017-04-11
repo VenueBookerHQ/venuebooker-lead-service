@@ -538,7 +538,7 @@ class VenuebookerUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
 
 	def __str__(self):
-		return "Venuebooker User " + str(self.user.username)
+		return str(self.user.username)
 
 class Enquiry(models.Model):
 	message = models.TextField()
