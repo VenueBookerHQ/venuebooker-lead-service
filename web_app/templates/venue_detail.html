@@ -56,6 +56,7 @@
 					<br>
 					<div class="row">
 					<h5><u>Images</u></h5>
+						{% if venue.venueimage_set.all %}
                         {% for image in venue.venueimage_set.all %} 
 						<div class="col-sm-4">
 							<div class="clearfix">
@@ -65,11 +66,15 @@
 								</div>
 						</div>
                         {% endfor %}
+						{% else %}
+						<h6>{{ venue.name }} has no Images yet</h6>
+						{% endif %}
 					</div>
 					<br>
 					<br>
 				    <div class="row">
 						<h3>Event campaigns at {{ venue.name }}</h3>
+						{% if event_list.all %}
                         {% for event_campaign in event_list %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
@@ -91,6 +96,9 @@
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
                         {% endfor %}
+						{% else % }
+						<h6>{{ venue.name }} has no Event Campaigns yet</h6>
+						{% endif %}
 
 
                     </div><!-- end row -->

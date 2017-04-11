@@ -44,9 +44,13 @@
                         </br>
                         </br>
                         <h5><u>Images</u></h5>
+						{% if event_campaign.eventimage_set.all %}
                         {% for image in event_campaign.eventimage_set.all %} 
                             <img src="{{ image.image.url }}" alt="" class="img-thumbnail" width="100%" height="300"/>
                         {% endfor %}
+						{% else %}
+						<p>This event has no images yet</p>
+						{% endif %}
                         <form action="{% url 'enquiry-add' event_campaign.pk %}" method="post">
 							{% csrf_token %}
 							<div class="col-sm-offset-2 col-sm-10">
