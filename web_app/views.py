@@ -310,8 +310,8 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth_login(request, user)
-			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser'):
-				return redirect('admin')
+			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser') or user.is_superuser:
+				return HttpResponseRedirect('/admin')
 			else:
 				return render(request, 'index.html')
 		else:
