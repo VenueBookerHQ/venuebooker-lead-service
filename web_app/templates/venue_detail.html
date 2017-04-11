@@ -74,7 +74,7 @@
 					<br>
 				    <div class="row">
 						<h3>Event campaigns at {{ venue.name }}</h3>
-						{% if event_list.all %}
+						{% if event_list %}
                         {% for event_campaign in event_list %}
                             <div class="col-sm-4">
                                 <div class="clearfix">
@@ -97,7 +97,7 @@
                             </div><!-- end col -->
                         {% endfor %}
 						{% else % }
-						<h6>{{ venue.name }} has no Event Campaigns yet</h6>
+						<p>{{ venue.name }} has no Event Campaigns yet</p>
 						{% endif %}
 
 
