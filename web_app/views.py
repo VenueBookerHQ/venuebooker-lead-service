@@ -27,6 +27,9 @@ from django.contrib.auth import update_session_auth_hash
 def index(request):
 	return render(request, 'index.html', {})
 
+def venue_signup_info(request):
+	return render(request, 'venue_signup.html', {})
+
 def handler404(request):
 	response = render_to_response('404.html', {}, context_instance=RequestContext(request))
 	response.status_code = 404
@@ -307,6 +310,9 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth_login(request, user)
+			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser')
+				return redirect('admin')
+			else:
 				return render(request, 'index.html')
 		else:
 			return render(request, 'web_app/login_form.html')

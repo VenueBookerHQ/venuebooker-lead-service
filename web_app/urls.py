@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^venues/$', views.venue_list, name='venue_list'),
     url(r'^venues/(?P<pk>[0-9]+)/$', views.venue_view, name='venue_detail'),
     url(r'^venues/add/$', login_required(views.VenueCreate.as_view()), name='venue-add'),
+	url(r'^venues/signup/$', views.venue_signup_info, name='venue_signup_info'),
     url(r'^venues/update/(?P<pk>[0-9]+)/$', login_required(views.VenueUpdate.as_view()), name='venue-update'),  
     url(r'^venues/(?P<pk>[0-9]+)/delete/$', login_required(views.VenueDelete.as_view()), name='venue-delete'),
     url(r'^eventcampaigns/$', views.event_list, name='event_campaign_list'),

@@ -416,7 +416,7 @@ class Venue(models.Model):
 		('OTHER', 'Other')
 	)
 	name = models.CharField(max_length=50)
-	type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='OTHER')
+	type = models.CharField(max_length=20, choices=TYPE_CHOICES)
 	address = models.CharField(max_length=150)
 	city = models.CharField(max_length=50)
 	country = CountryField(blank=True)
