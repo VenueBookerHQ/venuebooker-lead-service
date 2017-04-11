@@ -78,7 +78,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 	
 class VenueAdmin(admin.ModelAdmin):
 	form = VenueForm
-	user_fields = ['name','image','address','quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
+	user_fields = ['name','image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
 	admin_fields = ['approved']
 	def get_form(self, request, obj=None, **kwargs):
 		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
