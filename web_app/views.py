@@ -161,7 +161,7 @@ class VenueCreate(CreateView):
 
 class VenueUpdate(UpdateView):
 	model = Venue
-	fields = ['name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+	fields = ['name', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
 
 
 class VenueDelete(DeleteView):
