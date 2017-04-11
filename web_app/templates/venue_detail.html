@@ -34,9 +34,10 @@
                                 <div class="clearfix">
                                     <div class="post-title clearfix">
                                         <div class="pull-left">
+							<h5>Venue Type: {{ venue.type }}</h5>
                             <h4>Address: {{ venue.address }}</a></h4>
 						    <h5>City: {{ venue.city }}</a></h5>
-							<h4>Country: {{ venue.country }}</a></h4>
+							<h5>Country: {{ venue.country.name }}</h5>
 					    <br>
 					    <p>{{ venue.description }}</p>
                         <a href="{{ venue.facebook_link }}">Facebook</a>
