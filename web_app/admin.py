@@ -32,8 +32,6 @@ admin.AdminSite.site_title = "Site Administration"
 admin.site.register(Event_type)
 admin.site.register(Contact)
 admin.site.register(ContactResponse)
-admin.site.register(VenueUser)
-admin.site.register(OrganisationUser)
 admin.site.register(VenuebookerUser)
 
 class EventImageInline(admin.StackedInline):
@@ -246,6 +244,8 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
+admin.site.register(VenueUser, VenueUserAdmin)
+admin.site.register(OrganisationUser, OrganisationUserAdmin)
 admin.site.register(Enquiry, EnquiryAdmin)
 admin.site.register(Quote, QuoteAdmin)
 admin.site.register(Event_campaign, EventCampaignAdmin)
