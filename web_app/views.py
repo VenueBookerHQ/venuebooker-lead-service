@@ -145,7 +145,7 @@ def update_profile(request, pk):
 	template_name = 'web_app/customuser_form.html'
 
 	if request.method == 'POST':
-		user_form = CustomUserChangeForm(data=request.POST, instance=request.user)
+		user_form = ProfileForm(data=request.POST, instance=request.user)
 		contact_form = ContactForm(data=request.POST, instance=request.user)
 
 		if all([user_form.is_valid(), contact_form.is_valid()]):
