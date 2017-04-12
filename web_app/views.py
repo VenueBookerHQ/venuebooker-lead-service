@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm, ContactResponseForm, UserFormUpdate
+from .forms import UserForm, ContactForm, ContactResponseForm, UserFormUpdate, CustomUserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import PasswordChangeForm
@@ -145,7 +145,7 @@ def update_profile(request, pk):
 	template_name = 'web_app/customuser_form.html'
 
 	if request.method == 'POST':
-		user_form = UserFormUpdate(request.POST, request.FILES)
+		user_form = CustomUserChangeForm(request.POST, request.FILES)
 		contact_form = ContactForm(request.POST)
 
 		if all([user_form.is_valid(), contact_form.is_valid()]):
