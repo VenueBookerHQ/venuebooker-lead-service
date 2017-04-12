@@ -410,7 +410,7 @@ def venue_list(request):
 	country_abr = request.GET.get("country")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
-	if country:
+	if country_abr:
 		queryset_list = queryset_list.filter(country=country_abr)
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
