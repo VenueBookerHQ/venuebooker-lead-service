@@ -30,14 +30,14 @@
 							{% csrf_token %}
 							<div class="form-group">
 		                    <label class="control-label col-sm-2" for="id_username">Username</label>
-		                    <div class="col-sm-10">
-                                <input id="id_username" maxlength="30" name="username" type="text">
+		                    <div class="col-sm-3">
+                                <input id="id_username" class="form-control" maxlength="30" name="username" type="text">
                             </div>
 	                        </div>
                             <div class="form-group">
 		                    <label class="control-label col-sm-2" for="id_password">Password</label>
-		                    <div class="col-sm-10">
-                                <input id="id_password" maxlength="30" name="password" type="password">
+		                    <div class="col-sm-3">
+                                <input id="id_password" class="form-control" maxlength="30" name="password" type="password">
                             </div>
 	                        </div>
 							<div class="col-sm-offset-2 col-sm-10">
@@ -60,6 +60,9 @@
                         <img src="{% static 'images/twitter.png' %}" >
                         </a>
 						</br>
+						<a href="{% url "social:begin" "linkedin-oauth2" %}">
+                        <img src="{% static 'images/linkedin.png' %}" >
+                        </a>
 						</br>
                     </div>
 				</div>

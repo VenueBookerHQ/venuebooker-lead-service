@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm, ContactResponseForm
+from .forms import UserForm, ContactForm, ContactResponseForm, ProfileForm, CustomUserChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import PasswordChangeForm
@@ -140,12 +140,31 @@ class ProfileView(generic.DetailView):
 	template_name = 'profile.html'
 
 
-class ProfileUpdate(UpdateView):
-	model = CustomUser
-	fields = ['email', 'avatar']
+def update_profile(request, pk):
+	template_name = 'web_app/customuser_form.html'
 
-	def get_success_url(self):
-		return reverse('profile', kwargs={'pk':self.kwargs['pk']})
+	if request.method == 'POST':
+		user_form = ProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+		contact_form = ContactForm(data=request.POST, instance=request.user.contact)
+
+		if all([user_form.is_valid(), contact_form.is_valid()]):
+			contact = contact_form.save(commit=False)
+			user = user_form.save()
+			emailAddress = contact_form.cleaned_data['email']
+			user.email = emailAddress
+			user.avatar = user_form.cleaned_data['avatar']
+			contact.save()
+			user.contact = contact
+			user.save()
+			return redirect('profile', pk=request.user.id)
+
+		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+
+	else:
+		user_form = ProfileForm(instance=request.user)
+		contact_form = ContactForm(instance=request.user.contact)
+		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+
 
 class VenueCreate(CreateView):
 	model = Venue
@@ -387,8 +406,11 @@ def event_list(request):
 def venue_list(request):
 	queryset_list = Venue.objects.filter(approved=True)
 	query = request.GET.get("q")
+	country_abr = request.GET.get("co")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
+	if country_abr:
+		queryset_list = queryset_list.filter(country=country_abr)
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
@@ -401,6 +423,7 @@ def venue_list(request):
 
 	context = {
 		"object_list": queryset,
+		"country_list": COUNTRIES,
 		"title": "List",
 	}
 	return render(request, "venues.html", context)

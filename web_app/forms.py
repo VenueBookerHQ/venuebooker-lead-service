@@ -6,12 +6,18 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from web_app.models import CustomUser
 
+
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
 	
 	class Meta:
 		model = CustomUser
 		fields = ['username', 'avatar', 'password']
+
+class ProfileForm(forms.ModelForm):	
+	class Meta:
+		model = CustomUser
+		fields = ['avatar']
 
 class CustomUserCreationForm(UserCreationForm):
     """
@@ -43,7 +49,7 @@ class CustomUserChangeForm(UserChangeForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
-        fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
+        fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile', 'company']
 
 class ContactResponseForm(forms.ModelForm):
     class Meta:

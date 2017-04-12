@@ -40,8 +40,10 @@
 							<h5>Country: {{ venue.get_country_display }}</h5>
 					    <br>
 					    <p>{{ venue.description }}</p>
-                        <a href="{{ venue.facebook_link }}">Facebook</a>
-                        <a href="{{ venue.twitter_link }}">Twitter</a>
+						{% if venue.twitter_link %}
+						<a href="{{ venue.twitter_link }}" class="twitter-follow-button" data-show-count="false">Follow On Twitter</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+						{% endif %}
+						</br>
                         <a href="{{ venue.instagram_link }}">Instagram</a>
                         <br>
                                         </div>
@@ -50,6 +52,18 @@
                                     </div><!-- end post-content -->
                                 </div><!-- end post-wrapper -->
                             </div><!-- end col -->
+
+ <div class="col-sm-4">
+                                <div class="clearfix">
+                                    <div class="post-title clearfix">
+                                       
+{% if venue.facebook_link %}
+<div class="fb-page" data-href="{{ venue.facebook_link }}" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-width="500" data-show-facepile="true"><blockquote cite="{{ venue.facebook_link }}" class="fb-xfbml-parse-ignore"><a href="{{ venue.facebook_link }}">{{ venue.name }}</a></blockquote></div>
+{% endif %}
+                                </div>
+                            </div>
+						</div>
+
 
                     </div><!-- end row -->
 					<br>

@@ -285,6 +285,7 @@ class Contact(models.Model):
 	telephone = models.CharField('telephone', max_length=15, blank=True)
 	mobile = models.CharField('mobile', max_length=15, blank=True)
 	email = models.EmailField('email', max_length=50)
+	company = models.CharField('company (optional)', max_length=50, blank=True)
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
@@ -355,6 +356,38 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	class Meta:
 		verbose_name = 'User Account'
 		verbose_name_plural = 'My User Accounts'
+
+@receiver(post_save, sender=CustomUser)
+def social_auth_contact_email(sender, **kwargs):
+	user = kwargs.get('instance')
+	if user.is_authenticated:
+		if user.contact:
+			return
+		else:
+			if user.social_auth.filter(provider='google-oauth2'):
+				social = user.social_auth.get(provider='google-oauth2')
+			elif user.social_auth.filter(provider='facebook'):
+				social = user.social_auth.get(provider='facebook')
+				fname = social.extra_data['first_name']
+				lname = social.extra_data['last_name']
+				emailAddress = social.extra_data['email']
+				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
+				if created:
+					user.contact = contact
+					user.save()
+			elif user.social_auth.filter(provider='twitter'):
+				social = user.social_auth.get(provider='twitter')
+			elif user.social_auth.filter(provider='linkedin-oauth2'):
+				social = user.social_auth.get(provider='linkedin-oauth2')
+				fname = social.extra_data['first_name']
+				lname = social.extra_data['last_name']
+				emailAddress = social.extra_data['email_address']
+				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
+				if created:
+					user.contact = contact
+					user.save()
+			else:
+				return
 
 
 class Organisation(models.Model):

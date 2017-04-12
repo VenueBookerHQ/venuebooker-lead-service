@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^eventcampaigns/update/(?P<pk>[0-9]+)/$', login_required(views.EventCampaignUpdate.as_view()), name='event_campaign-update'), 
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/delete/$', login_required(views.EventCampaignDelete.as_view()), name='event_campaign-delete'),
     url(r'^profile/(?P<pk>[0-9]+)/$', login_required(views.ProfileView.as_view()), name='profile'),
-    url(r'^profile/update/(?P<pk>[0-9]+)/$', login_required(views.ProfileUpdate.as_view()), name='profile-update'),
+    url(r'^profile/update/(?P<pk>[0-9]+)/$', views.update_profile, name='profile-update'),
     url(r'^quote/accept/(?P<pk>[0-9]+)/$', login_required(views.QuoteAccept.as_view()), name='quote-accept'),
     url(r'^quote/decline/(?P<pk>[0-9]+)/$', login_required(views.QuoteDecline.as_view()), name='quote-decline'),
 ]

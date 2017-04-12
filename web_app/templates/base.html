@@ -61,8 +61,8 @@
                         <li><a href="https://www.facebook.com/Venuebooker.info"><i class="icon-facebook"></i></a></li>
                         <li><a href="https://www.linkedin.com/company/2749848"><i class="icon-linkedin"></i></a></li>
                         <li><a href="https://www.instagram.com/venuebooker_/"><i class="icon-instagrem"></i></a></li>
-                    </ul><!-- end list-style -->
-                </div><!-- end right -->
+                    </ul>
+                </div>
                 <div class="pull-right">
                     <ul class="topbar-social list-inline">
                         {% if user.is_authenticated %}
@@ -145,6 +145,14 @@
             </div><!-- end sidebar menu -->
         </header><!-- end header -->
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=423494424661399";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 {% block content %}
 

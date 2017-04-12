@@ -71,20 +71,26 @@
                       <div class="clearfix">
                         <h3>Your Enquiries</h3>
                         <table class="table table-hover">
+							<thead>
                             <tr>
                                 <th>Event</th>
                                 <th>Date</th>
                                 <th>Number of Attendees</th>
                                 <th>Message</th>
                             </tr>
+							</thead>
+						<tbody>
                         {% for enquiry in user.enquiry_set.all %} 
+							
                             <tr>
                                 <td>{{ enquiry.event_campaign }}</td>
                                 <td>{{ enquiry.date }}</td>
                                 <td>{{ enquiry.attendeeNum }}</td>
                                 <td>{{ enquiry.message }}</td>
                             </tr>
+						
                         {% endfor %}
+						</tbody>
                         </table>
                       </div>
                   </div><!-- end col -->
