@@ -18,6 +18,7 @@ class UserFormUpdate(UserForm):
 	class Meta:
 		model = CustomUser
 		fields = ['avatar']
+		exclude = ('username', 'password',)
 
 class CustomUserCreationForm(UserCreationForm):
     """
