@@ -78,6 +78,9 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FB_SECRET')
 SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = os.environ.get('FB_NS')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = ['first_name', 'last_name']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email', 
+}
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TW_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TW_SECRET')
 SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.environ.get('LI_KEY')
