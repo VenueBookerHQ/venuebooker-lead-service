@@ -3,8 +3,16 @@ from web_app.models import ContactResponse
 from web_app.models import Organisation, Venue, Event_campaign, Enquiry, Quote, Contact, OrganisationUser, VenueUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django import template
 
 from web_app.models import CustomUser
+
+
+register = template.Library()
+
+@register.filter(name='addclass')
+def addclass(field, inputclass):
+   return field.as_widget(attrs={"class":inputclass})
 
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
