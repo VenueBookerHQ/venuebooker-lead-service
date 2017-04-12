@@ -361,27 +361,31 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 def social_auth_contact_email(sender, **kwargs):
 	user = kwargs.get('instance')
 	if user.is_authenticated:
-		if user.social_auth.filter(provider='google-oauth2'):
-			social = user.social_auth.get(provider='google-oauth2')
-		elif user.social_auth.filter(provider='facebook'):
-			social = user.social_auth.get(provider='facebook')
-			fname = social.extra_data['first_name']
-			lname = social.extra_data['last_name']
-			emailAddress = social.extra_data['email']
-			contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
-			if created:
-				user.contact = contact
-		elif user.social_auth.filter(provider='twitter'):
-			social = user.social_auth.get(provider='twitter')
-		elif user.social_auth.filter(provider='linkedin-oauth2'):
-			social = user.social_auth.get(provider='linkedin-oauth2')
-			fname = social.extra_data['firstName']
-			lname = social.extra_data['lastName']
-			emailAddress = social.extra_data['emailAddress']
-			contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
-			if created:
-				user.contact = contact
+		if user.contact:
+			return
 		else:
+			if user.social_auth.filter(provider='google-oauth2'):
+				social = user.social_auth.get(provider='google-oauth2')
+			elif user.social_auth.filter(provider='facebook'):
+				social = user.social_auth.get(provider='facebook')
+				fname = social.extra_data['first_name']
+				lname = social.extra_data['last_name']
+				emailAddress = social.extra_data['email']
+				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
+				if created:
+					user.contact = contact
+			elif user.social_auth.filter(provider='twitter'):
+				social = user.social_auth.get(provider='twitter')
+			elif user.social_auth.filter(provider='linkedin-oauth2'):
+				social = user.social_auth.get(provider='linkedin-oauth2')
+				fname = social.extra_data['firstName']
+				lname = social.extra_data['lastName']
+				emailAddress = social.extra_data['emailAddress']
+				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
+				if created:
+					user.contact = contact
+			else:
+				return
 
 
 class Organisation(models.Model):
