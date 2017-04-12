@@ -370,7 +370,7 @@ def social_auth_contact_email(sender, **kwargs):
 				social = user.social_auth.get(provider='facebook')
 				fname = social.extra_data['first_name']
 				lname = social.extra_data['last_name']
-				emailAddress = social.extra_data['email']
+				emailAddress = social.scope['email']
 				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
 				if created:
 					user.contact = contact
