@@ -407,8 +407,11 @@ def event_list(request):
 def venue_list(request):
 	queryset_list = Venue.objects.filter(approved=True)
 	query = request.GET.get("q")
+	country_abr = request.GET.get("country")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
+	if country:
+		queryset_list = queryset_list.filter(country=country_abr)
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
@@ -421,6 +424,7 @@ def venue_list(request):
 
 	context = {
 		"object_list": queryset,
+		"country_list": COUNTRIES,
 		"title": "List",
 	}
 	return render(request, "venues.html", context)
