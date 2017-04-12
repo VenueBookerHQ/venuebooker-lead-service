@@ -77,7 +77,7 @@ SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FB_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FB_SECRET')
 SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = os.environ.get('FB_NS')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = ['first_name', 'last_name']
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = ['first_name', 'last_name', 'email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id,name,email', 
 }
