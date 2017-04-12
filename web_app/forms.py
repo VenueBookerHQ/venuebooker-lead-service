@@ -13,6 +13,12 @@ class UserForm(forms.ModelForm):
 		model = CustomUser
 		fields = ['username', 'avatar', 'password']
 
+class UserFormUpdate(UserForm):
+	
+	class Meta:
+		model = CustomUser
+		fields = ['avatar']
+
 class CustomUserCreationForm(UserCreationForm):
     """
     A form that creates a user, with no privileges, from the given email and

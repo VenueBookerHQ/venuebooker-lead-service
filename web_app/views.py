@@ -141,12 +141,31 @@ class ProfileView(generic.DetailView):
 	template_name = 'profile.html'
 
 
-class ProfileUpdate(UpdateView):
-	model = CustomUser
-	fields = ['email', 'avatar']
+def update_profile(request, pk):
+	template_name = 'web_app/customuser_form.html'
 
-	def get_success_url(self):
-		return reverse('profile', kwargs={'pk':self.kwargs['pk']})
+	if request.method == 'POST':
+		user_form = UserFormUpdate(request.POST, request.FILES)
+		contact_form = ContactForm(request.POST)
+
+		if all([user_form.is_valid(), contact_form.is_valid()]):
+			contact = contact_form.save(commit=False)
+			user = user_form.save(commit=False)
+			emailAddress = contact_form.cleaned_data['email']
+			user.email = emailAddress
+			user.avatar = user_form.cleaned_data['avatar']
+			contact.save()
+			user.contact = contact
+			user.save()
+			return redirect('profile', pk=request.user.id)
+
+		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+
+	else:
+		user_form = UserForm(None)
+		contact_form = ContactForm(None)
+		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
+
 
 class VenueCreate(CreateView):
 	model = Venue
