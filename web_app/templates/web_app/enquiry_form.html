@@ -21,7 +21,7 @@
                 <div class="top-destinations clearfix">
 
                     <div class="row">
-			<div class ="col-sm-12 col md-7">
+			<div class ="col-sm-8 col md-7">
 				<div class ="panel panel-default">
 					<div class ="panel-body">
 						<form class ="form-horizontal" action="" method="post" enctype="multipart/form-data">
@@ -34,30 +34,30 @@
   							</ul>
 							{% endif %}
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-4">
-			<span class="text-danger small"></span>
-		</div>
 		<label class="control-label col-sm-2"><label for="id_message">Message:</label></label>
 		<div class="col-sm-4"><textarea class="form-control" cols="40" id="id_message" name="message" rows="10">
 </textarea></div>
+		<div class="col-sm-offset-2 col-sm-4">
+			<span class="text-danger small"></span>
+		</div>
 	</div>
 
 
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-4">
-			<span class="text-danger small"></span>
-		</div>
 		<label class="control-label col-sm-2"><label for="id_attendeeNum">Number of Attendees:</label></label>
 		<div class="col-sm-4"><input id="id_attendeeNum" class="form-control" name="attendeeNum" type="number" /></div>
+		<div class="col-sm-offset-2 col-sm-4">
+			<span class="text-danger small"></span>
+		</div>
 	</div>
 
 
 	<div class="form-group">
+		<label class="control-label col-sm-2"><label for="id_date">Date:</label></label>
+		<div class="col-sm-4"><input id="id_date" class="form-control" name="date" type="date" value="" /></div>
 		<div class="col-sm-offset-2 col-sm-4">
 			<span class="text-danger small"></span>
 		</div>
-		<label class="control-label col-sm-2"><label for="id_date">Date:</label></label>
-		<div class="col-sm-4"><input id="id_date" class="form-control" name="date" type="date" value="" /></div>
 	</div>
 							<div class="col-sm-offset-2 col-sm-10">
 								<button type="submit" class="btn btn-primary btn-lg border-radius">Submit</button>
