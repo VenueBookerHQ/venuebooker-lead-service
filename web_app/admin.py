@@ -243,10 +243,10 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 
 class ContactAdmin(admin.ModelAdmin):
 	form = ContactForm
-	user_fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile']
-	list_display = ('first_name', 'last_name', 'email', 'telephone', 'mobile')
+	user_fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile', 'company']
+	list_display = ('first_name', 'last_name', 'email', 'telephone', 'mobile', 'company')
 	list_display_links = ('first_name', 'last_name')
-	search_fields = ['first_name', 'last_name', 'email']
+	search_fields = ['first_name', 'last_name', 'email', 'company']
 
 
 admin.site.register(EventImage)

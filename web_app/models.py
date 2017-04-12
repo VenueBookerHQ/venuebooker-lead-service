@@ -285,6 +285,7 @@ class Contact(models.Model):
 	telephone = models.CharField('telephone', max_length=15, blank=True)
 	mobile = models.CharField('mobile', max_length=15, blank=True)
 	email = models.EmailField('email', max_length=50)
+	company = models.CharField('company (optional)', max_length=50, blank=True)
 
 	def __str__(self):
 		return self.first_name + " " + self.last_name
