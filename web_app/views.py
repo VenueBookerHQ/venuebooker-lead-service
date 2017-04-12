@@ -162,8 +162,8 @@ def update_profile(request, pk):
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 	else:
-		user_form = UserForm(None)
-		contact_form = ContactForm(None)
+		user_form = ProfileForm(instance=request.user)
+		contact_form = ContactForm(instance=request.user.contact)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
 
