@@ -62,6 +62,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+	'social_core.backends.linkedin.LinkedinOAuth2',
     # Uncomment following if you want to access the admin
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -78,6 +79,14 @@ SOCIAL_AUTH_FACEBOOK_APP_NAMESPACE = os.environ.get('FB_NS')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TW_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TW_SECRET')
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.environ.get('LI_KEY')
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = os.environ.get('LI_SECRET')
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ['r_basicprofile', 'r_emailaddress']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_FIELD_SELECTORS = ['email-address']
+SOCIAL_AUTH_LINKEDIN_OAUTH2_EXTRA_DATA = [('id', 'id'),
+                                   ('firstName', 'first_name'),
+                                   ('lastName', 'last_name'),
+                                   ('emailAddress', 'email_address')]
 LOGIN_REDIRECT_URL ="/index"
 LOGIN_URL ="/login"
 
