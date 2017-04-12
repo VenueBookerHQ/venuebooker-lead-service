@@ -357,6 +357,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		verbose_name = 'User Account'
 		verbose_name_plural = 'My User Accounts'
 
+@receiver(post_save, sender=CustomUser)
+def social_auth_contact_email(sender, **kwargs):
+	user = kwargs.get('instance')
+	contact = user.contact
+	contact.email = user.email
+	contact.save()
+
 
 class Organisation(models.Model):
 	name = models.CharField(max_length=50)
