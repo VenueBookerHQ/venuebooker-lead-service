@@ -146,7 +146,7 @@ def update_profile(request, pk):
 
 	if request.method == 'POST':
 		user_form = ProfileForm(data=request.POST, instance=request.user)
-		contact_form = ContactForm(data=request.POST, instance=request.user)
+		contact_form = ContactForm(data=request.POST, instance=request.user.contact)
 
 		if all([user_form.is_valid(), contact_form.is_valid()]):
 			contact = contact_form.save(commit=False)
