@@ -407,7 +407,7 @@ def event_list(request):
 def venue_list(request):
 	queryset_list = Venue.objects.filter(approved=True)
 	query = request.GET.get("q")
-	country_abr = request.GET.get("country")
+	country_abr = request.GET.get("co")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
 	if country_abr:
