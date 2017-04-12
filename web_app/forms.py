@@ -13,12 +13,10 @@ class UserForm(forms.ModelForm):
 		model = CustomUser
 		fields = ['username', 'avatar', 'password']
 
-class UserFormUpdate(forms.ModelForm):
-	
+class ProfileForm(forms.ModelForm):	
 	class Meta:
 		model = CustomUser
 		fields = ['avatar']
-		exclude = ('username', 'password',)
 
 class CustomUserCreationForm(UserCreationForm):
     """

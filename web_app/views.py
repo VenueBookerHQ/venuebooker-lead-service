@@ -145,12 +145,12 @@ def update_profile(request, pk):
 	template_name = 'web_app/customuser_form.html'
 
 	if request.method == 'POST':
-		user_form = CustomUserChangeForm(request.POST, request.FILES)
-		contact_form = ContactForm(request.POST)
+		user_form = CustomUserChangeForm(data=request.POST, instance=request.user)
+		contact_form = ContactForm(data=request.POST, instance=request.user)
 
 		if all([user_form.is_valid(), contact_form.is_valid()]):
 			contact = contact_form.save(commit=False)
-			user = user_form.save(commit=False)
+			user = user_form.save()
 			emailAddress = contact_form.cleaned_data['email']
 			user.email = emailAddress
 			user.avatar = user_form.cleaned_data['avatar']
