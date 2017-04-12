@@ -382,9 +382,6 @@ def social_auth_contact_email(sender, **kwargs):
 			if created:
 				user.contact = contact
 		else:
-			return
-	contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
-	contact.save()
 
 
 class Organisation(models.Model):
