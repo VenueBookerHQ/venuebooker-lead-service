@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 		model = CustomUser
 		fields = ['username', 'avatar', 'password']
 
-class UserFormUpdate(UserForm):
+class UserFormUpdate(forms.ModelForm):
 	
 	class Meta:
 		model = CustomUser
