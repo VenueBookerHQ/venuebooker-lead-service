@@ -146,3 +146,7 @@
         $( "#datepicker7" ).datepicker();
         $( "#datepicker8" ).datepicker();
         $( "#datepicker9" ).datepicker();
+
+})(jQuery); 
+
+
