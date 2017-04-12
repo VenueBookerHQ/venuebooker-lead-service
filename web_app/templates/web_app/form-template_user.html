@@ -2,7 +2,11 @@
 {% for field in user_form %}
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ field.label_tag }}</label>
+		{% ifnotequal field.label_tag "Avatar:" %}
 		<div class="col-sm-10">{{ field|addclass:"form-control" }}</div>
+		{% else %}
+		<div class="col-sm-10">{{ field }}</div>
+		{% endifnotequal %}
 		<div class="col-sm-offset-2 col-sm-10">
 			<span class="text-danger small">{{ field.err }}</span>
 		</div>
@@ -12,11 +16,7 @@
 {% for field in contact_form %}
 	<div class="form-group">
 		<label class="control-label col-sm-2">{{ field.label_tag }}</label>
-		{% ifnotequal field.label_tag "Avatar:" %}
 		<div class="col-sm-10">{{ field|addclass:"form-control" }}</div>
-		{% else %}
-		<div class="col-sm-10">{{ field }}</div>
-		{% endif %}
 		<div class="col-sm-offset-2 col-sm-4">
 			<span class="text-danger small">{{ field.err }}</span>
 		</div>
