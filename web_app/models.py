@@ -378,9 +378,9 @@ def social_auth_contact_email(sender, **kwargs):
 				social = user.social_auth.get(provider='twitter')
 			elif user.social_auth.filter(provider='linkedin-oauth2'):
 				social = user.social_auth.get(provider='linkedin-oauth2')
-				fname = social.extra_data['firstName']
-				lname = social.extra_data['lastName']
-				emailAddress = social.extra_data['emailAddress']
+				fname = social.profile_extra_params['name']
+				lname = social.profile_extra_params['name']
+				emailAddress = social.profile_extra_params['emailAddress']
 				contact, created = Contact.objects.get_or_create(first_name=fname, last_name=lname, email=emailAddress,)
 				if created:
 					user.contact = contact
