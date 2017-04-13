@@ -268,6 +268,18 @@ COUNTRIES = (
 	('ZW', _('Zimbabwe')), 
 )
 
+TYPE_CHOICES = (
+		('BAR', 'Bar'),
+		('RESTAURANT', 'Restaurant'),
+		('HOTEL', 'Hotel'),
+		('CONFERENCE', 'Conference Center'),
+		('GALLERY', 'Gallery'),
+		('WAREHOUSE', 'Warehouse'),
+		('OUTSIDE', 'Outside'),
+		('ROOFTOP', 'Rooftop'),
+		('PRIVATE', 'Private Venue'),
+		('OTHER', 'Other')
+	)
 class CountryField(models.CharField):
 	
 	def __init__(self, *args, **kwargs):
@@ -436,18 +448,6 @@ class Organisation(models.Model):
 		verbose_name_plural = 'My Organisations'	
 
 class Venue(models.Model):
-	TYPE_CHOICES = (
-		('BAR', 'Bar'),
-		('RESTAURANT', 'Restaurant'),
-		('HOTEL', 'Hotel'),
-		('CONFERENCE', 'Conference Center'),
-		('GALLERY', 'Gallery'),
-		('WAREHOUSE', 'Warehouse'),
-		('OUTSIDE', 'Outside'),
-		('ROOFTOP', 'Rooftop'),
-		('PRIVATE', 'Private Venue'),
-		('OTHER', 'Other')
-	)
 	name = models.CharField(max_length=50)
 	type = models.CharField(max_length=20, choices=TYPE_CHOICES)
 	address = models.CharField(max_length=150)

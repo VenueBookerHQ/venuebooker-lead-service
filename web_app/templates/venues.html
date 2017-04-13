@@ -23,11 +23,17 @@
                         <form method="GET" class="form-inline" action="">
                         <input type="text" name="q" class="form-control" placeholder="Search Venues"/>
 						<select id="id_country" class="form-control" name="co">
-<option value="" selected="selected">---------</option>
-{% for country in country_list %}
-<option value="{{ country.0 }}">{{ country.1 }}</option>
-{% endfor %}
-</select>
+						<option value="" selected="selected">Select Country...</option>
+						{% for country in country_list %}
+						<option value="{{ country.0 }}">{{ country.1 }}</option>
+						{% endfor %}
+						</select>
+						<select id="id_type" class="form-control" name="t">
+						<option value="" selected="selected">Select Type...</option>
+						{% for type in type_list %}
+						<option value="{{ type.0 }}">{{ type.1 }}</option>
+						{% endfor %}
+						</select>
                         <button type="submit" class="form-control btn btn-default">Search</button>
                         </form>
                     </div>
