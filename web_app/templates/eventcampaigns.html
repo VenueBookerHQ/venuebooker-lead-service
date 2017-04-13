@@ -20,18 +20,18 @@
             <div class="container">
                 <div class="top-destinations clearfix">
                     <div class="hotel-title text-center">
-                        <form method="GET" id="form_search" action="">
-                        <select name="q" placeholder="Search Event Types"/>
+                        <form method="GET" id="form_search" class="form-inline" action="">
+                        <select name="q" class="form-control" placeholder="Search Event Types"/>
 						<option selected="selected" value="">All</option>
 						{% for event_type in type_list %}
 						<option value="{{ event_type.name }}">{{ event_type.name }}</option>
 						{% endfor %}
 						</select>
-						<input type="text" name="min" placeholder="Min Cost"/> 
-						<input type="text" name="max" placeholder="Max Cost"/>
-                        <input type="text" name="capmin" placeholder="Min Capacity"/> <input type="text" name="capmax" placeholder="Max Capacity"/>
+						<input type="text" class="form-control" name="min" placeholder="Min Cost"/> 
+						<input type="text" class="form-control" name="max" placeholder="Max Cost"/>
+                        <input type="text" class="form-control" name="capmin" placeholder="Min Capacity"/> <input type="text" name="capmax" placeholder="Max Capacity"/>
                         </br>                        
-                        <input id="button_submit" type="submit" value="Search"/>
+                        <button type="submit">Search</button>
                         </form>
                     </div>
 
