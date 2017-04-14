@@ -15,7 +15,7 @@
     "model": "web_app.customuser",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$24000$STZVdluodaRP$FFVUg709DSpSqSv0A4iGhcv1frRhfrllnFjk0tFWxK8=",
+        "password": "pbkdf2_sha256$24000$9vASo7cNJbw4$VwW9WTv9YC+0J9Og2zyiP+ZwmXRdrMfNb9IqjH+JWmc=",
         "last_login": "2016-10-07T17:45:50.322Z",
         "is_superuser": true,
         "username": "admin",
