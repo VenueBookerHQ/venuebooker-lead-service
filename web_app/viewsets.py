@@ -51,4 +51,9 @@ class Event_typeViewSet(viewsets.ModelViewSet):
     queryset = Event_type.objects.all()
     serializer_class = Event_typeSerializer
 
+class LeadViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Event_type.objects.all()
+    serializer_class = LeadSerializer
+
 

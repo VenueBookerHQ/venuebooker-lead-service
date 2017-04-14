@@ -48,3 +48,8 @@ class Event_typeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event_type
         fields = ('name', 'description', 'active', 'seasonal')
+
+class LeadSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Lead
+        fields = ('name', 'email', 'budget', 'comments', 'created', 'date_from', 'date_to', 'location', 'guests', 'occasion', 'received')

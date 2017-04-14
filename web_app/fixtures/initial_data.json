@@ -1,0 +1,33 @@
+[
+{
+    "model": "web_app.contact",
+    "pk": 1,
+    "fields": {
+        "first_name": "Admin",
+        "last_name": "Account",
+        "telephone": "028 8014 6440",
+        "mobile": "058 9000 0000",
+        "email": "contact@venuebooker.com",
+        "company": "Venuebooker"
+    }
+},
+{
+    "model": "web_app.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$STZVdluodaRP$FFVUg709DSpSqSv0A4iGhcv1frRhfrllnFjk0tFWxK8=",
+        "last_login": "2016-10-07T17:45:50.322Z",
+        "is_superuser": true,
+        "username": "admin",
+        "email": "contact@venuebooker.com",
+		"contact": 1,
+		"avatar": "default.jpg",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:33Z",
+        "groups": [],
+        "user_permissions": []
+	}
+}
+
+]

@@ -671,3 +671,23 @@ class EventImage(models.Model):
 	class Meta:
 		verbose_name = 'Event Campaign Image'
 		verbose_name_plural = 'My Event Campaign\'s Images'
+
+class Lead(models.Model):
+	name = models.CharField(max_length=50, blank=False)
+	email = models.EmailField('email', max_length=50, blank=False)
+	budget = models.DecimalField('Budget', max_digits=10, decimal_places=2, blank=False)
+	comments = models.TextField()
+	created = models.DateTimeField(_('created'), auto_now_add=True)
+	date_from = models.DateField(blank=False)
+	date_to = models.DateField(blank=False)
+	location = models.CharField(max_length=50, blank=False)
+	guests = models.IntegerField(blank=False)
+	occasion = models.CharField(max_length=50, blank=False)
+	received = models.BooleanField()
+
+
+	def __str__(self):			  
+		return self.name + ' ' + str(occasion) + ' ' + str(self.created)
+	class Meta:
+		verbose_name = 'Lead'
+		verbose_name_plural = 'My Leads'

@@ -15,6 +15,7 @@ from .models import OrganisationUser
 from .models import VenuebookerUser
 from .models import EventImage
 from .models import VenueImage
+from .models import Lead
 
 
 from django.utils.safestring import mark_safe
@@ -248,7 +249,7 @@ class ContactAdmin(admin.ModelAdmin):
 	list_display_links = ('first_name', 'last_name')
 	search_fields = ['first_name', 'last_name', 'email', 'company']
 
-
+admin.site.register(Lead)
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
 admin.site.register(Contact, ContactAdmin)
