@@ -9,10 +9,22 @@ from web_app.models import CustomUser
 
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput)
+    password_confirm = forms.CharField(widget=forms.PasswordInput)
 	
 	class Meta:
 		model = CustomUser
-		fields = ['username', 'avatar', 'password']
+		fields = ['username', 'avatar', 'password', 'password_confirm']
+    
+    def clean(self):
+        clean_data = super(UserForm, self).clean()
+
+        password = clean_data.get('password')
+        password_confirm = clean_data.get('password_confirm')
+
+        if password and password_confirm:
+            if password != password_confirm:
+                raise forms.ValidationError("The passwords do not match.")
+        return clean_data
 
 class ProfileForm(forms.ModelForm):	
 	class Meta:
