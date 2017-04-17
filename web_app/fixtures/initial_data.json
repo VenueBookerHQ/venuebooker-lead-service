@@ -28,6 +28,187 @@
         "groups": [],
         "user_permissions": []
 	}
+},
+{
+    "model": "web_app.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$J6BinnZ9DLyJ$TFBuKDeiJJkScaGRGxI9voYhLcN1Y3yKyW069txR0jc=",
+        "last_login": "2016-10-07T17:45:50.322Z",
+        "is_superuser": false,
+        "username": "welcomeuser",
+        "email": "contact@venuebooker.com",
+		"contact": 1,
+		"avatar": "default.jpg",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:33Z",
+        "groups": [],
+        "user_permissions": []
+	}
+},
+{
+    "model": "web_app.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$STZVdluodaRP$FFVUg709DSpSqSv0A4iGhcv1frRhfrllnFjk0tFWxK8=",
+        "last_login": "2016-10-07T17:45:50.322Z",
+        "is_superuser": true,
+        "username": "admin_user",
+        "email": "contact@venuebooker.com",
+		"contact": 1,
+		"avatar": "default.jpg",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-10-06T15:54:33Z",
+        "groups": [],
+        "user_permissions": []
+	}
+},
+{
+    "model": "web_app.contactresponse",
+    "pk": 1,
+    "fields": {
+        "name": "Joe Bloggs",
+        "email": "jbloggs@hotmail.com",
+        "phone": "07818276857",
+        "message": "This is a test message sent through the contact form.",
+        "timestamp": "2017-10-06T19:06:36.298Z"
+    }
+},
+{
+    "model": "web_app.contactresponse",
+    "pk": 2,
+    "fields": {
+        "name": "John Smith",
+        "email": "jsmith@gmail.com",
+        "phone": "028373683782",
+        "message": "This is a test message sent through the contact form on the website.",
+        "timestamp": "2017-10-06T19:02:22.021Z"
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 1,
+    "fields": {
+        "name": "Hitlon Hotels",
+        "image": "default.jpg",
+        "address": "123 Oxford Street",
+        "primary_contact": 1,
+        "description": "This is Hilton Hotels International"
+    }
+},
+{
+    "model": "web_app.organisation",
+    "pk": 2,
+    "fields": {
+        "name": "Dundee Bars",
+        "image": "default.jpg",
+        "address": "123 Perth Road",
+        "primary_contact": 1,
+        "description": "This is Dundee Bars Company"
+    }
+},
+{
+    "model": "web_app.venue",
+    "pk": 1,
+    "fields": {
+        "name": "Hilton London",
+        "type": "HOTEL",
+        "address": "123 Downing Street",
+        "city": "London",
+        "country": "GB",
+        "description": "This is the Hilton Hotel london",
+        "image": "default.jpg",
+        "quoteImage": "default.jpg",
+        "organisation": 1,
+        "approved": true
+    }
+},
+{
+    "model": "web_app.venue",
+    "pk": 2,
+    "fields": {
+        "name": "Nether Inn",
+        "type": "BAR",
+        "address": "123 Perth Road",
+        "city": "Dundee",
+        "country": "GB",
+        "description": "This is the Nether Inn Dundee",
+        "image": "default.jpg",
+        "quoteImage": "default.jpg",
+        "organisation": 2,
+        "approved": true
+    }
+},
+{
+    "model": "web_app.venue",
+    "pk": 3,
+    "fields": {
+        "name": "NetherBar",
+        "type": "BAR",
+        "address": "123 Dundee Court",
+        "city": "Aberdeen",
+        "country": "GB",
+        "description": "This is the Nether Bar Aberdeen",
+        "image": "default.jpg",
+        "quoteImage": "default.jpg",
+        "organisation": 2,
+        "approved": false
+    }
+},
+{
+    "model": "web_app.event_type",
+    "pk": 1,
+    "fields": {
+        "name": "Christmas Dinner",
+        "description": "Christmas Dinner Event Type",
+        "active": true,
+        "seasonal": true
+    }
+},
+{
+    "model": "web_app.event_type",
+    "pk": 2,
+    "fields": {
+        "name": "Conference",
+        "description": "Conference Event Type",
+        "active": true,
+        "seasonal": false
+    }
+},
+{
+    "model": "web_app.event_campaign",
+    "pk": 1,
+    "fields": {
+        "name": "Christmas Dinner",
+        "type": 1,
+        "details": "This is a christmas dinner at Hilton London",
+        "startTime": "09:00:00",
+        "endTime": "12:00:00",
+        "recurring": true,
+        "image": "default.jpg",
+        "capacity": "200",
+        "cost_per_capacity_unit": "20",
+        "venue": 1
+    }
+},
+{
+    "model": "web_app.event_campaign",
+    "pk": 2,
+    "fields": {
+        "name": "Conference at Hilton London",
+        "type": 2,
+        "details": "This is a conference in Hilton London",
+        "startTime": "10:00:00",
+        "endTime": "18:00:00",
+        "recurring": true,
+        "image": "default.jpg",
+        "capacity": "150",
+        "cost_per_capacity_unit": "10",
+        "venue": 1
+    }
 }
+
 
 ]

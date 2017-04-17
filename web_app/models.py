@@ -630,7 +630,7 @@ def send_quote_email(sender, **kwargs):
 		venue_image = quote.enquiry.event_campaign.venue.quoteImage
 		text = get_template(template_text)
 		html = get_template(template_html)
-		d = Context({'username': username, 'venue': venue, 'image': venue_image})
+		d = {'username': username, 'venue': venue, 'image': venue_image}
 		text_content = text.render(d)
 		html_content = html.render(d)
 
@@ -687,7 +687,7 @@ class Lead(models.Model):
 
 
 	def __str__(self):			  
-		return self.name + ' ' + str(occasion) + ' ' + str(self.created)
+		return self.name + ' ' + str(self.occasion) + ' ' + str(self.created)
 	class Meta:
 		verbose_name = 'Lead'
 		verbose_name_plural = 'My Leads'

@@ -62,7 +62,7 @@ def contact(request):
 					to = vbemail
 					text = get_template(template_text)
 					html = get_template(template_html)
-					d = Context({'name': name, 'emailAddress': emailAddress, 'phone': phone, 'timestamp': timestamp, 'message': message})
+					d = {'name': name, 'emailAddress': emailAddress, 'phone': phone, 'timestamp': timestamp, 'message': message}
 					text_content = text.render(d)
 					html_content = html.render(d)
 
@@ -74,9 +74,10 @@ def contact(request):
 				except KeyError:
 					return HttpResponse('Please fill in all fields')
 				   
-			return redirect('index')
+			messages.success(request, 'Thanks for contacting us. We will be in touch with you shortly.')
+			return HttpResponseRedirect(reverse(contact))
 
-		return render(request, template_name, {})
+		return render(request, template_name, {'form': form})
 
 	else:
 		contactresponse_form = ContactResponseForm(None)
@@ -92,7 +93,7 @@ def newsletter(request):
 		to = emailAddress
 		text = get_template(template_text)
 		html = get_template(template_html)
-		d = Context({'email': to })
+		d = {'email': to }
 		text_content = text.render(d)
 		html_content = html.render(d)
 
@@ -119,28 +120,35 @@ def privacy(request):
 
 def venue_view(request, pk):
 	venuepk = pk
-	venueObj = Venue.objects.get(pk=venuepk)
+	venueObj = get_object_or_404(Venue, pk=venuepk)
 	eventqueryset = Event_campaign.objects.filter(venue=venueObj)
 	context = {
 		"venue": venueObj,
 		"event_list": eventqueryset,
 	}
-	return render(request, "venue_detail.html", context)
+	if venueObj.approved:
+		return render(request, "venue_detail.html", context)
+	else:
+		return render(request, "index.html")
 
-class DetailViewEvent(generic.DetailView):
-	model = Event_campaign
-	template_name = 'event_campaign_detail.html'
+def event_campaign_view(request, pk):
+	eventpk = pk
+	eventObj = get_object_or_404(Event_campaign, pk=eventpk)
+	context = {
+		"event_campaign": eventObj,
+	}
+	return render(request, "event_campaign_detail.html", context)
 
-class DetailViewOrganisation(generic.DetailView):
-	model = Organisation
-	template_name = 'organisation_detail.html'
+@login_required(login_url='login')
+def profile_view(request, pk):
+	profilepk = pk
+	userObj = get_object_or_404(CustomUser, pk=profilepk)
+	context = {
+		"user": userObj,
+	}
+	return render(request, "profile.html", context)
 
-
-class ProfileView(generic.DetailView):
-	model = CustomUser
-	template_name = 'profile.html'
-
-
+@login_required(login_url='login')
 def update_profile(request, pk):
 	template_name = 'web_app/customuser_form.html'
 
@@ -181,39 +189,6 @@ class VenueCreate(CreateView):
 	def get_success_url(self):
 		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-class VenueUpdate(UpdateView):
-	model = Venue
-	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
-
-
-class VenueDelete(DeleteView):
-	model = Venue
-	success_url = reverse_lazy('index')
-
-class OrganisationCreate(CreateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
-
-class OrganisationUpdate(UpdateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
-
-class OrganisationDelete(DeleteView):
-	model = Organisation
-	success_url = reverse_lazy('index')
-
-class EventCampaignCreate(CreateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
-
-class EventCampaignUpdate(UpdateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
-
-class EventCampaignDelete(DeleteView):
-	model = Event_campaign
-	success_url = reverse_lazy('index')
-
 class EnquiryCreate(CreateView):
 	model = Enquiry
 	fields = ['message', 'attendeeNum', 'date']
@@ -243,7 +218,7 @@ class QuoteCreate(CreateView):
 			to = emailAddress
 			text = get_template(template_text)
 			html = get_template(template_html)
-			d = Context({'username': username })
+			d = {'username': username }
 			text_content = text.render(d)
 			html_content = html.render(d)
 
@@ -332,7 +307,7 @@ def login(request):
 			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser') or user.is_superuser:
 				return HttpResponseRedirect('/admin')
 			else:
-				return render(request, 'index.html')
+				return HttpResponseRedirect('/index')
 		else:
 			return render(request, 'web_app/login_form.html')
 	return render(request, 'web_app/login_form.html')
@@ -346,6 +321,7 @@ def logout_user(request):
 
 	return render(request, 'web_app/login_form.html', {'form' : form})
 
+@login_required(login_url='login')
 def change_password(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
@@ -449,7 +425,7 @@ class QuoteAccept(View):
 			user = quote.enquiry.user.username
 			text = get_template(template_text)
 			html = get_template(template_html)
-			d = Context({'user': user, 'name': name})
+			d = {'user': user, 'name': name}
 			text_content = text.render(d)
 			html_content = html.render(d)
 

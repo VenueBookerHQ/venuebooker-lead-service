@@ -149,6 +149,12 @@ WSGI_APPLICATION = 'base_site.wsgi.application'
 # }
 
 DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
+import sys
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_venuebooker'
+    }
 
 
 

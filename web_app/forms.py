@@ -23,8 +23,8 @@ class UserForm(forms.ModelForm):
 
 		if password and password_confirm:
 			if password != password_confirm:
-                msg = "The passwords do not match."
-                self.add_error('password_confirm', msg)
+				msg = "The passwords do not match."
+				self.add_error('password_confirm', msg)
 				raise forms.ValidationError("The passwords do not match.")
 		return clean_data
 
