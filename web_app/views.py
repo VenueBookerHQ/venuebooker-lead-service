@@ -30,11 +30,6 @@ def index(request):
 def venue_signup_info(request):
 	return render(request, 'venue_signup.html', {})
 
-def handler404(request):
-	response = render_to_response('404.html', {}, context_instance=RequestContext(request))
-	response.status_code = 404
-	return response
-
 def contact(request):
 	template_name = 'contact.html'
 	template_html = 'emails/contact.html'
