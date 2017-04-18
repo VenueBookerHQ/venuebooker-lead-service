@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'social_django',
     'storages',
     'django_ses',
+	'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,25 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
+)
+
+CORS_ORIGIN_WHITELIST = (
+    'venuebooker.com',
+	'localhost:8888',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+	'options',
 )
 
 AUTHENTICATION_BACKENDS = (
