@@ -63,7 +63,7 @@ class UpdateProfileViewTest(TestCase):
 
     def test_should_fail_if_valid_response_not_returned_for_update_profile_request(self):
         self.client.login(username='welcomeuser', password='welcomepassword')
-        response = self.client.get(reverse('profile-update', kwargs={'pk': 2}))
+        response = self.client.get(reverse('profile-update'))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
         self.assertTemplateUsed(response, "web_app/customuser_form.html", 'Profile Update template not returned')
 
@@ -135,7 +135,7 @@ class VenueProfileViewTest(TestCase):
         self.client.login(username='welcomeuser', password='welcomepassword')
         response = self.client.get(reverse('venue_detail', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
-        self.assertTemplateUsed(response, "venue_detail.html", 'Volunteer single template not'
+        self.assertTemplateUsed(response, "venue_detail.html", 'Venue single template not'
                                                                       'returned')
         self.assertEqual(response.context['venue'].id, 1, 'Venue with id 1 not sent to template')
 
@@ -143,11 +143,11 @@ class VenueProfileViewTest(TestCase):
         self.client.login(username='welcomeuser', password='welcomepassword')
         response = self.client.get(reverse('venue_detail', kwargs={'pk': 6}))
         self.assertEqual(response.status_code, 404, 'Status code not 404')
-        self.assertTemplateUsed(response, '404.html', '404 template not returned')
 
     def test_should_fail_if_valid_response_not_returned_for_venue_not_approved(self):
+        self.client.login(username='welcomeuser', password='welcomepassword')
         response = self.client.get(reverse('venue_detail', kwargs={'pk': 3}))
-        self.assertEqual(response.status_code, 200, 'Status code not 404')
+        self.assertEqual(response.status_code, 200, 'Status code not 200')
         self.assertTemplateUsed(response, 'index.html', 'Index template not returned')
 
 
@@ -178,28 +178,27 @@ class EventCampaignViewTest(TestCase):
         self.client.login(username='welcomeuser', password='welcomepassword')
         response = self.client.get(reverse('event_campaign_detail', kwargs={'pk': 6}))
         self.assertEqual(response.status_code, 404, 'Status code not 404')
-        self.assertTemplateUsed(response, '404.html', '404 template not returned')
 
 class ProfileTest(TestCase):
     fixtures = ['initial_data']
 
     def test_should_fail_if_login_redirect_not_performed_for_incorrect_user_credentials_users(self):
         self.client.login(username='welcomeuser', password='welcomepword')
-        response = self.client.get(reverse('profile', kwargs={'pk': 2}), follow=True)
+        response = self.client.get(reverse('profile'), follow=True)
         self.assertEqual(response.status_code, 200, "Final status code not 200")
         self.assertEqual(len(response.redirect_chain), 1, "Not 1 redirect in redirect chain")
         self.assertEqual(response.redirect_chain[0][0], "%s?next=%s" % (reverse('login'),
-                                                                        reverse('profile', kwargs={'pk': 2})),
+                                                                        reverse('profile')),
                          "Initial redirect url not login page")
         self.assertEqual(response.redirect_chain[0][1], 302, "Initial status code not 302")
         self.assertTemplateUsed(response, 'web_app/login_form.html', 'Login template not used in response')
 
     def test_should_fail_if_login_redirect_not_performed_for_unauthenticated_users(self):
-        response = self.client.get(reverse('profile', kwargs={'pk': 2}), follow=True)
+        response = self.client.get(reverse('profile'), follow=True)
         self.assertEqual(response.status_code, 200, "Final status code not 200")
         self.assertEqual(len(response.redirect_chain), 1, "Not 1 redirect in redirect chain")
         self.assertEqual(response.redirect_chain[0][0], "%s?next=%s" % (reverse('login'),
-                                                                        reverse('profile', kwargs={'pk': 2})),
+                                                                        reverse('profile')),
                          "Initial redirect url not"
                          "login page")
         self.assertEqual(response.redirect_chain[0][1], 302, "Initial status code not 302")

@@ -23,13 +23,15 @@ from django.template import *
 from django.template.loader import get_template
 from django.contrib.auth import update_session_auth_hash
 
-# Create your views here.
+#Index view for web platform
 def index(request):
 	return render(request, 'index.html', {})
 
+#View for information about venue signup, preceeds venue add process
 def venue_signup_info(request):
 	return render(request, 'venue_signup.html', {})
 
+#View used for contact response form, sends email to company contact email with contact message and details
 def contact(request):
 	template_name = 'contact.html'
 	template_html = 'emails/contact.html'
@@ -78,6 +80,7 @@ def contact(request):
 		contactresponse_form = ContactResponseForm(None)
 		return render(request, template_name, {})
 
+#View used for newsletter signup
 def newsletter(request):
 	template_html = 'emails/newsletter.html'
 	template_text = 'emails/newsletter.txt'
@@ -107,12 +110,16 @@ def newsletter(request):
 		next = 'index'
 	return redirect(next)
 
+#Terms and conditions view
 def terms(request):
 	return render(request, 'terms.html', {})
 
+#Privacy policy view
 def privacy(request):
 	return render(request, 'privacy.html', {})
 
+#View for viewing a venue, venue based on request pk, redirect if not approved venue
+@login_required(login_url='login')
 def venue_view(request, pk):
 	venuepk = pk
 	venueObj = get_object_or_404(Venue, pk=venuepk)
@@ -126,6 +133,8 @@ def venue_view(request, pk):
 	else:
 		return render(request, "index.html")
 
+#View for viewing an event campaign, gets event campaign based on request pk
+@login_required(login_url='login')
 def event_campaign_view(request, pk):
 	eventpk = pk
 	eventObj = get_object_or_404(Event_campaign, pk=eventpk)
@@ -134,6 +143,7 @@ def event_campaign_view(request, pk):
 	}
 	return render(request, "event_campaign_detail.html", context)
 
+#View for viewing the users profile, requires login 
 @login_required(login_url='login')
 def profile_view(request):
 	profilepk = request.user.id
@@ -143,6 +153,7 @@ def profile_view(request):
 	}
 	return render(request, "profile.html", context)
 
+#View for updating user profile with information entered in the form, Using Profile and Contact Forms, requires login
 @login_required(login_url='login')
 def update_profile(request):
 	template_name = 'web_app/customuser_form.html'
@@ -169,6 +180,7 @@ def update_profile(request):
 		contact_form = ContactForm(instance=request.user.contact)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
+#View for creating a venue, requires login
 @login_required(login_url='login')
 def venue_create(request):
 	template_name = 'web_app/venue_form.html'
@@ -189,6 +201,7 @@ def venue_create(request):
 		venue_form = VenueForm()
 		return render(request, template_name, {'form' : venue_form})
 
+#CreateView class for creating an enquiry and setting its user and event campaign based on the current user and chosen event
 class EnquiryCreate(CreateView):
 	model = Enquiry
 	fields = ['message', 'attendeeNum', 'date']
@@ -203,37 +216,7 @@ class EnquiryCreate(CreateView):
 	def get_success_url(self):
 		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-class QuoteCreate(CreateView):
-	model = Quote
-	fields = ['description', 'cost']
-	success_url = "/eventcampaigns"
-
-	def form_valid(self, form):
-		enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
-		form.instance.enquiry = enquiry
-		form.save()
-		try:
-			subject = 'Quote Received'
-			from_email = 'Venuebooker <noreply@venuebooker.com>'
-			to = emailAddress
-			text = get_template(template_text)
-			html = get_template(template_html)
-			d = {'username': username }
-			text_content = text.render(d)
-			html_content = html.render(d)
-
-			email = EmailMultiAlternatives(subject, text_content, from_email, [to])
-			email.attach_alternative(html_content, "text/html")  
-			email.content_subtype = 'html'	
-			email.mixed_subtype = 'related'					   
-			email.send()
-		except Exception as e:
-			return redirect('index')
-		return super(QuoteCreate, self).form_valid(form)
-
-	def get_success_url(self):
-		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
-
+#Register view which allows users to create accounts on the platform, then sends them an email
 def register(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/index')
@@ -243,7 +226,6 @@ def register(request):
 	
 
 	if request.method == 'POST':
-		#form = self.form_class(request.POST)
 		user_form = UserForm(request.POST, request.FILES)
 		contact_form = ContactForm(request.POST)
 
@@ -293,7 +275,7 @@ def register(request):
 		contact_form = ContactForm(None)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
-#User Login View
+#User Login View, allows users to login, redirects admins to admin panel
 def login(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/index')
@@ -321,6 +303,7 @@ def logout_user(request):
 
 	return render(request, 'web_app/login_form.html', {'form' : form})
 
+#View for changing user password, then updates session authentication hash so user stays logged in
 @login_required(login_url='login')
 def change_password(request):
 	if request.method == 'POST':
@@ -336,6 +319,7 @@ def change_password(request):
 		form = PasswordChangeForm(request.user)
 	return render(request, 'web_app/change_password.html', {'form': form})
 
+#View for viewing events list and used for searching events with get request parameters
 @login_required(login_url='login')
 def event_list(request):
 	queryset_list = Event_campaign.objects.filter(venue__approved=True)
@@ -379,6 +363,7 @@ def event_list(request):
 	}
 	return render(request, "eventcampaigns.html", context)
 
+#View for viewing venues list and used for searching venues with get request parameters
 @login_required(login_url='login')
 def venue_list(request):
 	queryset_list = Venue.objects.filter(approved=True)
@@ -410,6 +395,7 @@ def venue_list(request):
 	return render(request, "venues.html", context)
 
 
+#View class for accepting quotes, sends an email to venues associated with quote
 class QuoteAccept(View):
 	def post(self, request, pk):
 		template_html = 'emails/quote_accepted.html'
@@ -439,6 +425,7 @@ class QuoteAccept(View):
 		url = reverse('profile', kwargs={'pk': request.user.id})
 		return HttpResponseRedirect(url)
 
+#View class for declining quotes, deletes quote from database
 class QuoteDecline(View):
 	def post(self, request, pk):
 		quoteNum = pk

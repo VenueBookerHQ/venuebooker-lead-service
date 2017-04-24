@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 
 from . import views
 
+# Url Patterns used for directing to views in the views.py file
+# Url patterns act as almost a controller in the traditional MVC pattern
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^index$', views.index, name='index'),
