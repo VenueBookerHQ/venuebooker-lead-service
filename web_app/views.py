@@ -135,8 +135,8 @@ def event_campaign_view(request, pk):
 	return render(request, "event_campaign_detail.html", context)
 
 @login_required(login_url='login')
-def profile_view(request, pk):
-	profilepk = pk
+def profile_view(request):
+	profilepk = request.user.id
 	userObj = get_object_or_404(CustomUser, pk=profilepk)
 	context = {
 		"user": userObj,
@@ -144,7 +144,7 @@ def profile_view(request, pk):
 	return render(request, "profile.html", context)
 
 @login_required(login_url='login')
-def update_profile(request, pk):
+def update_profile(request):
 	template_name = 'web_app/customuser_form.html'
 
 	if request.method == 'POST':
@@ -160,7 +160,7 @@ def update_profile(request, pk):
 			contact.save()
 			user.contact = contact
 			user.save()
-			return redirect('profile', pk=request.user.id)
+			return redirect('profile')
 
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 

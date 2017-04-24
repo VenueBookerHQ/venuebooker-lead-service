@@ -21,8 +21,8 @@ urlpatterns = [
     url(r'^eventcampaigns/$', views.event_list, name='event_campaign_list'),
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/$', views.event_campaign_view, name='event_campaign_detail'),
     url(r'^eventcampaigns/(?P<pk>[0-9]+)/enquiry/$', login_required(views.EnquiryCreate.as_view()), name='enquiry-add'),
-    url(r'^profile/(?P<pk>[0-9]+)/$', views.profile_view, name='profile'),
-    url(r'^profile/update/(?P<pk>[0-9]+)/$', views.update_profile, name='profile-update'),
+    url(r'^profile/$', views.profile_view, name='profile'),
+    url(r'^profile/update/$', views.update_profile, name='profile-update'),
     url(r'^quote/accept/(?P<pk>[0-9]+)/$', login_required(views.QuoteAccept.as_view()), name='quote-accept'),
     url(r'^quote/decline/(?P<pk>[0-9]+)/$', login_required(views.QuoteDecline.as_view()), name='quote-decline'),
 ]
