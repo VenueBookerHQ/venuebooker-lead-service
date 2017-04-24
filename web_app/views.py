@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm, ContactResponseForm, ProfileForm, CustomUserChangeForm
+from .forms import UserForm, ContactForm, ContactResponseForm, ProfileForm, CustomUserChangeForm, VenueForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import PasswordChangeForm
@@ -169,20 +169,25 @@ def update_profile(request, pk):
 		contact_form = ContactForm(instance=request.user.contact)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
+@login_required(login_url='login')
+def venue_create(request):
+	template_name = 'web_app/venue_form.html'
 
-class VenueCreate(CreateView):
-	model = Venue
-	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
-	success_url = "/venues"
+	if request.method == 'POST':
+		venue_form = VenueForm(data=request.POST, files=request.FILES)
 
-	def form_valid(self, form):
-		if hasattr(request.user, 'organisationuser'):
-			form.instance.organisation = self.request.user.organisationuser.organisation		 
-		form.save()
-		return super(VenueCreate, self).form_valid(form)
+		if venue_form.is_valid():
+			venue = venue_form.save(commit=False)
+			venue.image = venue_form.cleaned_data['image']
+			venue.quoteImage = venue_form.cleaned_data['quoteImage']
+			venue.save()
+			return redirect('venue_list')
 
-	def get_success_url(self):
-		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
+		return render(request, template_name, {'form' : venue_form})
+
+	else:
+		venue_form = VenueForm()
+		return render(request, template_name, {'form' : venue_form})
 
 class EnquiryCreate(CreateView):
 	model = Enquiry
