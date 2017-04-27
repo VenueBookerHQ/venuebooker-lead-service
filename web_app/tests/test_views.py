@@ -135,7 +135,7 @@ class VenueProfileViewTest(TestCase):
         self.client.login(username='welcomeuser', password='welcomepassword')
         response = self.client.get(reverse('venue_detail', kwargs={'pk': 1}))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
-        self.assertTemplateUsed(response, "venue_detail.html", 'Venue single template not'
+        self.assertTemplateUsed(response, "venue_detail.html", 'Venue template not'
                                                                       'returned')
         self.assertEqual(response.context['venue'].id, 1, 'Venue with id 1 not sent to template')
 

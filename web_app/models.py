@@ -267,7 +267,9 @@ COUNTRIES = (
 	('ZM', _('Zambia')), 
 	('ZW', _('Zimbabwe')), 
 )
+##
 
+# Choices of Type for Venues
 TYPE_CHOICES = (
 		('BAR', 'Bar'),
 		('RESTAURANT', 'Restaurant'),
@@ -280,6 +282,8 @@ TYPE_CHOICES = (
 		('PRIVATE', 'Private Venue'),
 		('OTHER', 'Other')
 	)
+
+## Country Codes and CountryField https://djangosnippets.org/snippets/1476/ author username: dougal
 class CountryField(models.CharField):
 	
 	def __init__(self, *args, **kwargs):
@@ -290,7 +294,9 @@ class CountryField(models.CharField):
 
 	def get_internal_type(self):
 		return "CharField"
+##
 
+## Contact Database Model, used for user contact details
 class Contact(models.Model):
 	first_name = models.CharField('first name', max_length=30)
 	last_name = models.CharField('last name', max_length=30)
@@ -302,6 +308,7 @@ class Contact(models.Model):
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
+## User Manager which extends the Base User Manager from Django
 class CustomUserManager(BaseUserManager):
 
 	def _create_user(self, username, email, password,
@@ -331,6 +338,7 @@ class CustomUserManager(BaseUserManager):
 		return self._create_user(username, email, password, True, True,
 								 **extra_fields)
 
+## CustomUser  extends the Base User Model from Django, adds in contact details link and Image for Avatar
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 	username = models.CharField(max_length=40, unique=True)
 	email = models.EmailField('email', max_length=50)
@@ -369,6 +377,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		verbose_name = 'User Account'
 		verbose_name_plural = 'My User Accounts'
 
+## Used after Users are created to add Facebook details or LinkedIn details from Users Accounts
 @receiver(post_save, sender=CustomUser)
 def social_auth_contact_email(sender, **kwargs):
 	user = kwargs.get('instance')
@@ -401,7 +410,7 @@ def social_auth_contact_email(sender, **kwargs):
 			else:
 				return
 
-
+## Organisation Model, details about an Organisation and its primary contact as a foreignkey
 class Organisation(models.Model):
 	name = models.CharField(max_length=50)
 	image = models.ImageField(blank=True, default='default.jpg')
@@ -447,6 +456,8 @@ class Organisation(models.Model):
 		verbose_name = 'Organisation'
 		verbose_name_plural = 'My Organisations'	
 
+## Venue Model, contains details about a Venue 
+## can link back to an Organisation and must be approved before going live on the platform
 class Venue(models.Model):
 	name = models.CharField(max_length=50)
 	type = models.CharField(max_length=20, choices=TYPE_CHOICES)
@@ -489,7 +500,7 @@ class Venue(models.Model):
 		verbose_name = 'Venue'
 		verbose_name_plural = 'My Venues'
 
-
+## Event Type contains details about an event type which is used for event campaigns
 class Event_type(models.Model):
 	name = models.CharField(max_length=50)
 	description = models.TextField('description', blank=True)
@@ -502,6 +513,8 @@ class Event_type(models.Model):
 		verbose_name = 'Event Type'
 		verbose_name_plural = 'My Event Types'
 
+## Event Camapign Model contains details about an event camapign and links back to 
+## a venue which it is associated with and an Event Type
 class Event_campaign(models.Model):
 	name = models.CharField(max_length=50)
 	type = models.ForeignKey(Event_type, on_delete=models.CASCADE)
@@ -541,7 +554,7 @@ class Event_campaign(models.Model):
 		verbose_name = 'Event Campaign'
 		verbose_name_plural = 'My Event Campaigns'
 
-
+## Venue User is a user created to oversee a specific venue, consists of a link to user and back to the venue
 class VenueUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
 	position = models.CharField(max_length=50, blank=True)
@@ -553,6 +566,7 @@ class VenueUser(models.Model):
 		verbose_name = 'Venue User'
 		verbose_name_plural = 'My Venue Users'
 
+## Automatically makes VenueUsers staff on creation, allows Venue Users to access Django Admin dashboard
 @receiver(post_save, sender=VenueUser)
 def make_VenueUser_staff(sender, **kwargs):
 	venueuser = kwargs.get('instance')
@@ -561,7 +575,8 @@ def make_VenueUser_staff(sender, **kwargs):
 	user.save()
 
 
-	
+## Organisation User is a user created to oversee a specific organisation and its respective venues, 
+## consists of a link to user and back to the organisation	
 class OrganisationUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
 	position = models.CharField(max_length=50, blank=True)
@@ -573,6 +588,7 @@ class OrganisationUser(models.Model):
 		verbose_name = 'Organisation User'
 		verbose_name_plural = 'My Organisation Users' 
 
+## Automatically makes Organisation Users staff on creation, allows Organisation Users to access Django Admin dashboard
 @receiver(post_save, sender=OrganisationUser)
 def make_OrgUser_staff(sender, **kwargs):
 	orguser = kwargs.get('instance')
@@ -580,12 +596,16 @@ def make_OrgUser_staff(sender, **kwargs):
 	user.is_staff=True
 	user.save()
 
+## Venuebooker User is a user which has full access to the web platform for viewing and editing
+##  Consists just as a list of user links 
 class VenuebookerUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)
 
 	def __str__(self):
 		return str(self.user.username)
 
+## Enquiry Model contains details about any enquiries which are made, links to the user who created the enquiry
+## as well as the event camapign it is for. Must be approved before Venues can see it 
 class Enquiry(models.Model):
 	message = models.TextField()
 	attendeeNum = models.IntegerField('Number of Attendees')
@@ -602,6 +622,8 @@ class Enquiry(models.Model):
 		verbose_name = 'Enquiry'
 		verbose_name_plural = 'My Enquiries'
 
+## Quote Model contains details about any quotes which are made by venues, links to the enquiry
+## for which it is associated 
 class Quote(models.Model):
 	description = models.TextField()
 	cost = models.FloatField()
@@ -616,6 +638,7 @@ class Quote(models.Model):
 		verbose_name = 'Quote'
 		verbose_name_plural = 'My Quotes'
 
+## Sends an email to the user once they have recieved a new quote, can contain a venues preset quote image
 @receiver(post_save, sender=Quote)
 def send_quote_email(sender, **kwargs):
 	quote = kwargs.get('instance')
@@ -642,6 +665,7 @@ def send_quote_email(sender, **kwargs):
 	except Exception as e:
 		pass
 
+## Contact Response Model is used for any contact us requests which come in through the contact page
 class ContactResponse(models.Model):
 	name = models.CharField('name', max_length=300)
 	email = models.EmailField('email', max_length=50)
@@ -655,6 +679,8 @@ class ContactResponse(models.Model):
 		verbose_name = 'Contact Form Response'
 		verbose_name_plural = 'My Contact Form Responses'
 
+## Venue Image Model is associated with a venue and has a link to it. Stores images which
+## relate to specific venues, appear on their profile
 class VenueImage(models.Model):
 	image = models.ImageField(blank=True)
 	venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
@@ -663,7 +689,8 @@ class VenueImage(models.Model):
 		verbose_name = 'Venue Image'
 		verbose_name_plural = 'My Venue\'s Images'
 
-
+## Event Image Model is associated with an event campaign and has a link to it. Stores images which
+## relate to specific event campaigns, they appear on the events page
 class EventImage(models.Model):
 	image = models.ImageField(blank=True)
 	event_campaign = models.ForeignKey(Event_campaign, on_delete=models.CASCADE)
@@ -672,6 +699,7 @@ class EventImage(models.Model):
 		verbose_name = 'Event Campaign Image'
 		verbose_name_plural = 'My Event Campaign\'s Images'
 
+## Lead Model is used for storing data taken in from the Ask an Expert System on Venuebooker.com
 class Lead(models.Model):
 	name = models.CharField(max_length=50, blank=False)
 	email = models.EmailField('email', max_length=50, blank=False)

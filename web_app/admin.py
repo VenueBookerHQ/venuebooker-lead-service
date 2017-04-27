@@ -34,25 +34,30 @@ admin.site.register(Event_type)
 admin.site.register(ContactResponse)
 admin.site.register(VenuebookerUser)
 
+
+## Inline view for Event Image, used with event campaign
 class EventImageInline(admin.StackedInline):
 	model = EventImage
 	max_num = 10
 	extra = 0
 
+## Inline view for Venue Image, used with Venue
 class VenueImageInline(admin.StackedInline):
 	model = VenueImage
 	max_num = 10
 	extra = 0
 
+## Inline view for Organisation User, used with Organisation
 class OrganisationUserInline(admin.StackedInline):
 	model = OrganisationUser
 	extra = 1
 
+## Inline view for Venue User, used Venue
 class VenueUserInline(admin.StackedInline):
 	model = VenueUser
 	extra = 1
 
-
+## Admin model for Organisation, limits view to Venuebooker users or users for that organisation
 class OrganisationAdmin(admin.ModelAdmin):
 	form = OrganisationForm
 	fieldsets = (
@@ -73,7 +78,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 			return Organisation.objects.all()
 		return Organisation.objects.filter(name=request.user.organisationuser.organisation)
 
-	
+## Admin model for Venue, limits view to Venuebooker users or users of that venue or an overarching organisation	
 class VenueAdmin(admin.ModelAdmin):
 	form = VenueForm
 	user_fields = ['name', 'type', 'image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
@@ -103,6 +108,8 @@ class VenueAdmin(admin.ModelAdmin):
 			return Venue.objects.filter(name=request.user.venueuser.venue)
 		return Venue.objects.filter(organisation=request.user.organisationuser.organisation)
 
+## Admin model for Event Campaign, limits view of event campaigns to ones associated with the users venue or organisation 
+## Also limits choice of venue when creating event campaigns
 class EventCampaignAdmin(admin.ModelAdmin):
 	form = EventCampaignForm
 	fieldsets = (
@@ -134,6 +141,7 @@ class EventCampaignAdmin(admin.ModelAdmin):
 			return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
 		return Event_campaign.objects.filter(venue=request.user.venueuser.venue)
 
+## Admin model for Enquiry, limits view of enquiries to ones linked to the users venue or organisation
 class EnquiryAdmin(admin.ModelAdmin):
 	form = EnquiryForm
 	fieldsets = (
@@ -153,6 +161,8 @@ class EnquiryAdmin(admin.ModelAdmin):
 			return Enquiry.objects.filter(event_campaign__venue__organisation=request.user.organisationuser.organisation, approved=True)
 		return Enquiry.objects.filter(event_campaign__venue=request.user.venueuser.venue, approved=True)
 
+## Admin model for Quote, limits view of quotes to ones linked to the users venue or organisation
+## Also limits choice of enquiry on quote creation
 class QuoteAdmin(admin.ModelAdmin):
 	form = QuoteForm
 	fieldsets = (
@@ -183,6 +193,7 @@ class QuoteAdmin(admin.ModelAdmin):
 			return Quote.objects.filter(enquiry__event_campaign__venue__organisation=request.user.organisationuser.organisation, enquiry__approved=True)
 		return Quote.objects.filter(enquiry__event_campaign__venue=request.user.venueuser.venue, enquiry__approved=True)
 
+## Admin model for New User Model, limits view for users associated with the venue or organisation, unless user is Venuebooker staff
 class CustomUserAdmin(UserAdmin):
 	fieldsets = (
 		(None, {'fields': ('username', 'email', 'avatar', 'contact', 'password')}),
@@ -209,6 +220,7 @@ class CustomUserAdmin(UserAdmin):
 			return CustomUser.objects.filter(Q(organisationuser__organisation=request.user.organisationuser.organisation) | Q(venueuser__venue__organisation=request.user.organisationuser.organisation))
 		return CustomUser.objects.filter(venueuser__venue=request.user.venueuser.venue)
 
+## Admin model for VenueUser, limits view of users to ones linked to the users venue or organisation
 class VenueUserAdmin(admin.ModelAdmin):
 	form = VenueUserForm
 	user_fields = ['user','position','venue']
@@ -226,6 +238,7 @@ class VenueUserAdmin(admin.ModelAdmin):
 			return VenueUser.objects.filter(venue=request.user.venueuser.venue)
 		return VenueUser.objects.filter(venue__organisation=request.user.organisationuser.organisation)
 
+## Admin model for OrganisationUser, limits view of users to ones linked to the users organisation
 class OrganisationUserAdmin(admin.ModelAdmin):
 	form = OrganisationUserForm
 	user_fields = ['user','position','organisation']
@@ -242,6 +255,7 @@ class OrganisationUserAdmin(admin.ModelAdmin):
 		else:
 			return OrganisationUser.objects.filter(organisation=request.user.organisationuser.organisation)
 
+## Admin model for Contact, used for altering display of fields in Admin view
 class ContactAdmin(admin.ModelAdmin):
 	form = ContactForm
 	user_fields = ['first_name', 'last_name', 'email', 'telephone', 'mobile', 'company']
