@@ -118,6 +118,10 @@ def terms(request):
 def privacy(request):
 	return render(request, 'privacy.html', {})
 
+#About Us view
+def about(request):
+	return render(request, 'about.html', {})
+
 #View for viewing a venue, venue based on request pk, redirect if not approved venue
 @login_required(login_url='login')
 def venue_view(request, pk):

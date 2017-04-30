@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^password/$', views.change_password, name='change_password'),
     url(r'^terms$', views.terms, name='terms'),
     url(r'^privacy$', views.privacy, name='privacy'),
+    url(r'^about$', views.privacy, name='privacy'),
     url(r'^contact$', views.contact, name='contact'),
     url(r'^venues/$', views.venue_list, name='venue_list'),
     url(r'^venues/(?P<pk>[0-9]+)/$', views.venue_view, name='venue_detail'),
