@@ -17,11 +17,18 @@ class TermsViewTest(SimpleTestCase):
     def test_should_fail_if_valid_response_not_returned_for_terms_request(self):
         response = self.client.get(reverse('terms'))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
-        self.assertTemplateUsed(response, "terms.html", 'Contact template not returned')
+        self.assertTemplateUsed(response, "terms.html", 'Terms template not returned')
+
+class AboutViewTest(SimpleTestCase):
+
+    def test_should_fail_if_valid_response_not_returned_for_about_request(self):
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200, 'Status code not 200')
+        self.assertTemplateUsed(response, "about.html", 'About template not returned')
 
 class PrivacyViewTest(SimpleTestCase):
 
-    def test_should_fail_if_valid_response_not_returned_for_terms_request(self):
+    def test_should_fail_if_valid_response_not_returned_for_privacy_request(self):
         response = self.client.get(reverse('privacy'))
         self.assertEqual(response.status_code, 200, 'Status code not 200')
         self.assertTemplateUsed(response, "privacy.html", 'Privacy Policy template not returned')
