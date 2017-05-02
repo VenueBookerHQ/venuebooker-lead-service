@@ -58,10 +58,7 @@ MIDDLEWARE_CLASSES = (
 	'corsheaders.middleware.CorsMiddleware',
 )
 
-CORS_ORIGIN_WHITELIST = (
-    'venuebooker.com',
-	'localhost:8888',
-)
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_HEADERS = (
     'accept',
