@@ -10,7 +10,6 @@
 <div class="email-background" style="background:#eeeeee;padding: 10px;">
 
 <div class="email-container" style="max-width:500px;background: white;font-family: sans-serif;margin: 0 auto;overflow: hidden;border-radius: 5px;text-align: center;">
-<h1>Quote Received!</h1>
 
 <a href="venuebooker-app.herokuapp.com">
 {% if not image or image.url == '/static/images/vblogo.jpg' %}
@@ -19,6 +18,9 @@
 <img src="{{ image.url }}" style="width: 80%; margin:0 auto;">
 {% endif %}
 </a>
+<br>
+<h1>Quote Received!</h1>
+
 
 <p>Hi {{ username }}!<p>
 <br>

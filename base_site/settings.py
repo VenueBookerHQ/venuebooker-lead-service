@@ -25,7 +25,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'social_django',
     'storages',
     'django_ses',
+	'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,25 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+	'corsheaders.middleware.CorsMiddleware',
+)
+
+CORS_ORIGIN_WHITELIST = (
+    'venuebooker.com',
+	'localhost:8888',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+	'options',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -149,6 +169,12 @@ WSGI_APPLICATION = 'base_site.wsgi.application'
 # }
 
 DATABASES = {'default': dj_database_url.config(conn_max_age=600)}
+import sys
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test_venuebooker'
+    }
 
 
 

@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.contrib.auth import authenticate, login as auth_login, logout
 from .models import *
-from .forms import UserForm, ContactForm, ContactResponseForm, ProfileForm, CustomUserChangeForm
+from .forms import UserForm, ContactForm, ContactResponseForm, ProfileForm, CustomUserChangeForm, VenueForm
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import PasswordChangeForm
@@ -23,17 +23,15 @@ from django.template import *
 from django.template.loader import get_template
 from django.contrib.auth import update_session_auth_hash
 
+#Index view for web platform
 def index(request):
 	return render(request, 'index.html', {})
 
+#View for information about venue signup, preceeds venue add process
 def venue_signup_info(request):
 	return render(request, 'venue_signup.html', {})
 
-def handler404(request):
-	response = render_to_response('404.html', {}, context_instance=RequestContext(request))
-	response.status_code = 404
-	return response
-
+#View used for contact response form, sends email to company contact email with contact message and details
 def contact(request):
 	template_name = 'contact.html'
 	template_html = 'emails/contact.html'
@@ -61,7 +59,7 @@ def contact(request):
 					to = vbemail
 					text = get_template(template_text)
 					html = get_template(template_html)
-					d = Context({'name': name, 'emailAddress': emailAddress, 'phone': phone, 'timestamp': timestamp, 'message': message})
+					d = {'name': name, 'emailAddress': emailAddress, 'phone': phone, 'timestamp': timestamp, 'message': message}
 					text_content = text.render(d)
 					html_content = html.render(d)
 
@@ -73,14 +71,16 @@ def contact(request):
 				except KeyError:
 					return HttpResponse('Please fill in all fields')
 				   
-			return redirect('index')
+			messages.success(request, 'Thanks for contacting us. We will be in touch with you shortly.')
+			return HttpResponseRedirect(reverse(contact))
 
-		return render(request, template_name, {})
+		return render(request, template_name, {'form': form})
 
 	else:
 		contactresponse_form = ContactResponseForm(None)
 		return render(request, template_name, {})
 
+#View used for newsletter signup
 def newsletter(request):
 	template_html = 'emails/newsletter.html'
 	template_text = 'emails/newsletter.txt'
@@ -91,7 +91,7 @@ def newsletter(request):
 		to = emailAddress
 		text = get_template(template_text)
 		html = get_template(template_html)
-		d = Context({'email': to })
+		d = {'email': to }
 		text_content = text.render(d)
 		html_content = html.render(d)
 
@@ -110,37 +110,56 @@ def newsletter(request):
 		next = 'index'
 	return redirect(next)
 
+#Terms and conditions view
 def terms(request):
 	return render(request, 'terms.html', {})
 
+#Privacy policy view
 def privacy(request):
 	return render(request, 'privacy.html', {})
 
+#About Us view
+def about(request):
+	return render(request, 'about.html', {})
+
+#View for viewing a venue, venue based on request pk, redirect if not approved venue
+@login_required(login_url='login')
 def venue_view(request, pk):
 	venuepk = pk
-	venueObj = Venue.objects.get(pk=venuepk)
+	venueObj = get_object_or_404(Venue, pk=venuepk)
 	eventqueryset = Event_campaign.objects.filter(venue=venueObj)
 	context = {
 		"venue": venueObj,
 		"event_list": eventqueryset,
 	}
-	return render(request, "venue_detail.html", context)
+	if venueObj.approved:
+		return render(request, "venue_detail.html", context)
+	else:
+		return render(request, "index.html")
 
-class DetailViewEvent(generic.DetailView):
-	model = Event_campaign
-	template_name = 'event_campaign_detail.html'
+#View for viewing an event campaign, gets event campaign based on request pk
+@login_required(login_url='login')
+def event_campaign_view(request, pk):
+	eventpk = pk
+	eventObj = get_object_or_404(Event_campaign, pk=eventpk)
+	context = {
+		"event_campaign": eventObj,
+	}
+	return render(request, "event_campaign_detail.html", context)
 
-class DetailViewOrganisation(generic.DetailView):
-	model = Organisation
-	template_name = 'organisation_detail.html'
+#View for viewing the users profile, requires login 
+@login_required(login_url='login')
+def profile_view(request):
+	profilepk = request.user.id
+	userObj = get_object_or_404(CustomUser, pk=profilepk)
+	context = {
+		"user": userObj,
+	}
+	return render(request, "profile.html", context)
 
-
-class ProfileView(generic.DetailView):
-	model = CustomUser
-	template_name = 'profile.html'
-
-
-def update_profile(request, pk):
+#View for updating user profile with information entered in the form, Using Profile and Contact Forms, requires login
+@login_required(login_url='login')
+def update_profile(request):
 	template_name = 'web_app/customuser_form.html'
 
 	if request.method == 'POST':
@@ -156,7 +175,7 @@ def update_profile(request, pk):
 			contact.save()
 			user.contact = contact
 			user.save()
-			return redirect('profile', pk=request.user.id)
+			return redirect('profile')
 
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
@@ -165,54 +184,28 @@ def update_profile(request, pk):
 		contact_form = ContactForm(instance=request.user.contact)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
+#View for creating a venue, requires login
+@login_required(login_url='login')
+def venue_create(request):
+	template_name = 'web_app/venue_form.html'
 
-class VenueCreate(CreateView):
-	model = Venue
-	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation', 'image']
-	success_url = "/venues"
+	if request.method == 'POST':
+		venue_form = VenueForm(data=request.POST, files=request.FILES)
 
-	def form_valid(self, form):
-		if hasattr(request.user, 'organisationuser'):
-			form.instance.organisation = self.request.user.organisationuser.organisation		 
-		form.save()
-		return super(VenueCreate, self).form_valid(form)
+		if venue_form.is_valid():
+			venue = venue_form.save(commit=False)
+			venue.image = venue_form.cleaned_data['image']
+			venue.quoteImage = venue_form.cleaned_data['quoteImage']
+			venue.save()
+			return redirect('venue_list')
 
-	def get_success_url(self):
-		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
+		return render(request, template_name, {'form' : venue_form})
 
-class VenueUpdate(UpdateView):
-	model = Venue
-	fields = ['name', 'type', 'address', 'city', 'country', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'image']
+	else:
+		venue_form = VenueForm()
+		return render(request, template_name, {'form' : venue_form})
 
-
-class VenueDelete(DeleteView):
-	model = Venue
-	success_url = reverse_lazy('index')
-
-class OrganisationCreate(CreateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
-
-class OrganisationUpdate(UpdateView):
-	model = Organisation
-	fields = ['name', 'image', 'address', 'primary_contact', 'description']
-
-class OrganisationDelete(DeleteView):
-	model = Organisation
-	success_url = reverse_lazy('index')
-
-class EventCampaignCreate(CreateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
-
-class EventCampaignUpdate(UpdateView):
-	model = Event_campaign
-	fields = ['name', 'type', 'details', 'startTime', 'endTime', 'recurring', 'capacity', 'cost_per_capacity_unit', 'venue', 'image']
-
-class EventCampaignDelete(DeleteView):
-	model = Event_campaign
-	success_url = reverse_lazy('index')
-
+#CreateView class for creating an enquiry and setting its user and event campaign based on the current user and chosen event
 class EnquiryCreate(CreateView):
 	model = Enquiry
 	fields = ['message', 'attendeeNum', 'date']
@@ -227,37 +220,7 @@ class EnquiryCreate(CreateView):
 	def get_success_url(self):
 		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
 
-class QuoteCreate(CreateView):
-	model = Quote
-	fields = ['description', 'cost']
-	success_url = "/eventcampaigns"
-
-	def form_valid(self, form):
-		enquiry = get_object_or_404(Enquiry, pk=self.kwargs['pk'])
-		form.instance.enquiry = enquiry
-		form.save()
-		try:
-			subject = 'Quote Received'
-			from_email = 'Venuebooker <noreply@venuebooker.com>'
-			to = emailAddress
-			text = get_template(template_text)
-			html = get_template(template_html)
-			d = Context({'username': username })
-			text_content = text.render(d)
-			html_content = html.render(d)
-
-			email = EmailMultiAlternatives(subject, text_content, from_email, [to])
-			email.attach_alternative(html_content, "text/html")  
-			email.content_subtype = 'html'	
-			email.mixed_subtype = 'related'					   
-			email.send()
-		except Exception as e:
-			return redirect('index')
-		return super(QuoteCreate, self).form_valid(form)
-
-	def get_success_url(self):
-		return reverse('event_campaign_detail', kwargs={'pk':self.kwargs['pk']})
-
+#Register view which allows users to create accounts on the platform, then sends them an email
 def register(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/index')
@@ -267,7 +230,6 @@ def register(request):
 	
 
 	if request.method == 'POST':
-		#form = self.form_class(request.POST)
 		user_form = UserForm(request.POST, request.FILES)
 		contact_form = ContactForm(request.POST)
 
@@ -317,7 +279,7 @@ def register(request):
 		contact_form = ContactForm(None)
 		return render(request, template_name, {'user_form' : user_form, 'contact_form' : contact_form,})
 
-#User Login View
+#User Login View, allows users to login, redirects admins to admin panel
 def login(request):
 	if request.user.is_authenticated():
 		return HttpResponseRedirect('/index')
@@ -331,7 +293,7 @@ def login(request):
 			if hasattr(user, 'venuebookeruser') or hasattr(user, 'organisationuser') or hasattr(user, 'venueuser') or user.is_superuser:
 				return HttpResponseRedirect('/admin')
 			else:
-				return render(request, 'index.html')
+				return HttpResponseRedirect('/index')
 		else:
 			return render(request, 'web_app/login_form.html')
 	return render(request, 'web_app/login_form.html')
@@ -345,6 +307,8 @@ def logout_user(request):
 
 	return render(request, 'web_app/login_form.html', {'form' : form})
 
+#View for changing user password, then updates session authentication hash so user stays logged in
+@login_required(login_url='login')
 def change_password(request):
 	if request.method == 'POST':
 		form = PasswordChangeForm(request.user, request.POST)
@@ -359,6 +323,7 @@ def change_password(request):
 		form = PasswordChangeForm(request.user)
 	return render(request, 'web_app/change_password.html', {'form': form})
 
+#View for viewing events list and used for searching events with get request parameters
 @login_required(login_url='login')
 def event_list(request):
 	queryset_list = Event_campaign.objects.filter(venue__approved=True)
@@ -402,15 +367,19 @@ def event_list(request):
 	}
 	return render(request, "eventcampaigns.html", context)
 
+#View for viewing venues list and used for searching venues with get request parameters
 @login_required(login_url='login')
 def venue_list(request):
 	queryset_list = Venue.objects.filter(approved=True)
 	query = request.GET.get("q")
+	venuetype = request.GET.get("t")
 	country_abr = request.GET.get("co")
 	if query:
 		queryset_list = queryset_list.filter(name__icontains=query)
 	if country_abr:
 		queryset_list = queryset_list.filter(country=country_abr)
+	if venuetype:
+		queryset_list = queryset_list.filter(type=venuetype)
 	paginator = Paginator(queryset_list, 9)
 	page_request_var = "page"
 	page = request.GET.get(page_request_var)
@@ -424,11 +393,13 @@ def venue_list(request):
 	context = {
 		"object_list": queryset,
 		"country_list": COUNTRIES,
+		"type_list": TYPE_CHOICES,
 		"title": "List",
 	}
 	return render(request, "venues.html", context)
 
 
+#View class for accepting quotes, sends an email to venues associated with quote
 class QuoteAccept(View):
 	def post(self, request, pk):
 		template_html = 'emails/quote_accepted.html'
@@ -444,7 +415,7 @@ class QuoteAccept(View):
 			user = quote.enquiry.user.username
 			text = get_template(template_text)
 			html = get_template(template_html)
-			d = Context({'user': user, 'name': name})
+			d = {'user': user, 'name': name}
 			text_content = text.render(d)
 			html_content = html.render(d)
 
@@ -458,6 +429,7 @@ class QuoteAccept(View):
 		url = reverse('profile', kwargs={'pk': request.user.id})
 		return HttpResponseRedirect(url)
 
+#View class for declining quotes, deletes quote from database
 class QuoteDecline(View):
 	def post(self, request, pk):
 		quoteNum = pk
