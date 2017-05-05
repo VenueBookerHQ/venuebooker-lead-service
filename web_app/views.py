@@ -426,7 +426,7 @@ class QuoteAccept(View):
 			email.send()
 		except Exception as e:
 			return HttpResponseRedirect('/index')
-		url = reverse('profile', kwargs={'pk': request.user.id})
+		url = reverse('profile')
 		return HttpResponseRedirect(url)
 
 #View class for declining quotes, deletes quote from database
