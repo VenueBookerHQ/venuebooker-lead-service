@@ -82,7 +82,7 @@ class OrganisationAdmin(admin.ModelAdmin):
 ## Admin model for Venue, limits view to Venuebooker users or users of that venue or an overarching organisation	
 class VenueAdmin(admin.ModelAdmin):
 	form = VenueForm
-	user_fields = ['name', 'type', 'image','address', 'city', 'country', 'quoteImage','facebook_link','twitter_link','instagram_link','description','organisation']
+	user_fields = ['name', 'type', 'image','address', 'city', 'country', 'postcode', 'quoteImage','facebook_link','twitter_link','instagram_link','description', 'nearest_transport_link','organisation']
 	admin_fields = ['approved']
 	def get_form(self, request, obj=None, **kwargs):
 		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):

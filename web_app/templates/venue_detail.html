@@ -37,9 +37,11 @@
 							<h5>Venue Type: {{ venue.get_type_display }}</h5>
                             <h4>Address: {{ venue.address }}</a></h4>
 						    <h5>City: {{ venue.city }}</a></h5>
+							<h5>Postcode: {{ venue.postcode }}</h5>
 							<h5>Country: {{ venue.get_country_display }}</h5>
 					    <br>
 					    <p>{{ venue.description }}</p>
+						<h6>Nearest Transport Link: {{ venue.nearest_transport_link }}</h6>
 						{% if venue.twitter_link %}
 						<a href="{{ venue.twitter_link }}" class="twitter-follow-button" data-show-count="false">Follow On Twitter</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 						{% endif %}

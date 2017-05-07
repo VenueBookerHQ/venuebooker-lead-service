@@ -27,7 +27,7 @@ class ContactResponseSerializer(serializers.HyperlinkedModelSerializer):
 class VenueSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Venue
-        fields = ('name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'organisation')
+        fields = ('name', 'address', 'facebook_link', 'twitter_link', 'instagram_link', 'description', 'nearest_transport_link', 'organisation')
 
 class Event_campaignSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
