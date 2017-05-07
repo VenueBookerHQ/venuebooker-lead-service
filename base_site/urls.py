@@ -25,6 +25,7 @@ router.register(r'enquiries', EnquiryViewSet)
 router.register(r'quotes', QuoteViewSet)
 router.register(r'event_types', Event_typeViewSet)
 router.register(r'leads', LeadViewSet)
+router.register(r'rooms', RoomViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),

@@ -16,6 +16,7 @@ from .models import VenuebookerUser
 from .models import EventImage
 from .models import VenueImage
 from .models import Lead
+from .models import Room
 
 
 from django.utils.safestring import mark_safe
@@ -24,7 +25,7 @@ from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
 from web_app.models import CustomUser
-from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm, OrganisationUserForm, VenueUserForm, ContactForm
+from web_app.forms import CustomUserChangeForm, CustomUserCreationForm, OrganisationForm, VenueForm, EventCampaignForm, EnquiryForm, QuoteForm, OrganisationUserForm, VenueUserForm, ContactForm, RoomForm
 
 admin.AdminSite.site_header = "Venuebooker Administration"
 admin.AdminSite.site_title = "Venuebooker Site Admin"
@@ -140,6 +141,36 @@ class EventCampaignAdmin(admin.ModelAdmin):
 		elif hasattr(request.user, 'organisationuser'):
 			return Event_campaign.objects.filter(venue__organisation=request.user.organisationuser.organisation)
 		return Event_campaign.objects.filter(venue=request.user.venueuser.venue)
+
+class RoomAdmin(admin.ModelAdmin):
+	form = RoomForm
+	fieldsets = (
+		('Basic Details', {
+			'fields': ('name', ('image', 'image_preview_large'), 'description', 'capacity', 'size', 'venue')
+		}),
+	)
+
+	list_display = ('image_preview_small', 'name', 'capacity', 'venue')
+	list_display_links = ('image_preview_small', 'name')
+	readonly_fields = ('image_preview_large',)
+	search_fields = ['name', 'venue']
+	
+	def get_form(self, request, obj=None, **kwargs):
+		form = super(RoomAdmin, self).get_form(request, obj, **kwargs)
+		if hasattr(request.user, 'organisationuser'):
+			form.base_fields['venue'].queryset = Venue.objects.filter(organisation=request.user.organisationuser.organisation)
+		elif hasattr(request.user, 'venueuser'):
+			form.base_fields['venue'].queryset = Venue.objects.filter(name=request.user.venueuser.venue)
+		else:
+			form.base_fields['venue'].queryset = Venue.objects.all()
+		return form
+
+	def get_queryset(self, request):
+		if request.user.is_superuser or hasattr(request.user, 'venuebookeruser'):
+			return Room.objects.all()
+		elif hasattr(request.user, 'organisationuser'):
+			return Room.objects.filter(venue__organisation=request.user.organisationuser.organisation)
+		return Room.objects.filter(venue=request.user.venueuser.venue)
 
 ## Admin model for Enquiry, limits view of enquiries to ones linked to the users venue or organisation
 class EnquiryAdmin(admin.ModelAdmin):
@@ -264,6 +295,7 @@ class ContactAdmin(admin.ModelAdmin):
 	search_fields = ['first_name', 'last_name', 'email', 'company']
 
 admin.site.register(Lead)
+admin.site.register(Room, RoomAdmin)
 admin.site.register(EventImage)
 admin.site.register(VenueImage)
 admin.site.register(Contact, ContactAdmin)

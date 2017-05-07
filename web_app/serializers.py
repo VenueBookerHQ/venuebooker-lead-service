@@ -53,3 +53,8 @@ class LeadSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Lead
         fields = ('name', 'email', 'budget', 'comments', 'created', 'date_from', 'date_to', 'location', 'guests', 'occasion', 'received')
+
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Room
+        fields = ('name', 'description', 'capacity', 'size', 'venue')

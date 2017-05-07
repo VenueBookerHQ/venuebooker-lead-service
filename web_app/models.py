@@ -554,6 +554,38 @@ class Event_campaign(models.Model):
 		verbose_name = 'Event Campaign'
 		verbose_name_plural = 'My Event Campaigns'
 
+class Room(models.Model):
+	name = models.CharField(max_length=50)
+	description = models.TextField('description', blank=True)
+	image = models.ImageField(blank=True)
+	capacity = models.IntegerField()
+	size = models.IntegerField('Size in Sq Feet')
+	venue = models.ForeignKey(Venue, on_delete=models.CASCADE, blank=True)
+
+	def image_preview_large(self):
+		if self.image:
+			return format_html(
+				'<img src="{}" width="150" height="150"/>',
+				self.image.url
+			)
+		return 'No Logo'
+
+	image_preview_large.short_description = 'Image Preview'
+
+	def image_preview_small(self):
+		if self.image:
+			return format_html(
+				'<img src="{}" width="50" height="50"/>',
+				self.image.url
+			)
+		return 'No Logo'
+
+	def __str__(self):			  
+		return self.name
+	class Meta:
+		verbose_name = 'Room'
+		verbose_name_plural = 'My Rooms'
+
 ## Venue User is a user created to oversee a specific venue, consists of a link to user and back to the venue
 class VenueUser(models.Model):
 	user = models.OneToOneField(CustomUser, verbose_name="User account details", null=True)

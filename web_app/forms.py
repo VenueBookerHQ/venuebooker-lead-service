@@ -117,3 +117,9 @@ class VenueUserForm(forms.ModelForm):
 		model = VenueUser
 		fields = ['user','position','venue']
 
+#Room Form, used for creation of Rooms
+class RoomForm(forms.ModelForm):
+	class Meta:
+		model = Room
+		fields = ['name','image','description', 'capacity', 'size', 'venue']
+

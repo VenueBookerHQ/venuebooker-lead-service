@@ -53,7 +53,12 @@ class Event_typeViewSet(viewsets.ModelViewSet):
 
 class LeadViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
-    queryset = Event_type.objects.all()
+    queryset = Lead.objects.all()
     serializer_class = LeadSerializer
+
+class RoomViewSet(viewsets.ModelViewSet):
+    pagination_class = StandardResultsSetPagination
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
 
 
