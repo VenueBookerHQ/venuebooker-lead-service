@@ -128,9 +128,11 @@ def venue_view(request, pk):
 	venuepk = pk
 	venueObj = get_object_or_404(Venue, pk=venuepk)
 	eventqueryset = Event_campaign.objects.filter(venue=venueObj)
+	roomqueryset = Room.objects.filter(venue=venueObj)
 	context = {
 		"venue": venueObj,
 		"event_list": eventqueryset,
+		"room_list": roomqueryset,
 	}
 	if venueObj.approved:
 		return render(request, "venue_detail.html", context)
