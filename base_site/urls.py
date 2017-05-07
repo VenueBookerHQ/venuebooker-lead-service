@@ -17,10 +17,14 @@ admin.autodiscover()
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'contacts', ContactViewSet)
-router.register(r'organisation', OrganisationViewSet)
+router.register(r'organisations', OrganisationViewSet)
 router.register(r'eventcampaigns', Event_campaignViewSet)
 router.register(r'venues', VenueViewSet)
-router.register(r'contactresponse', ContactResponseViewSet)
+router.register(r'contactresponses', ContactResponseViewSet)
+router.register(r'enquiries', EnquiryViewSet)
+router.register(r'quotes', QuoteViewSet)
+router.register(r'event_types', Event_typeViewSet)
+router.register(r'leads', LeadViewSet)
 
 urlpatterns = [
     url(r'^$', web_app.views.index, name='index'),
@@ -28,11 +32,12 @@ urlpatterns = [
     url(r'', include('web_app.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url('', include('social_django.urls', namespace='social')),
-    url(r'^\.well-known/', include('letsencrypt.urls')),
+    #url(r'^\.well-known/', include('letsencrypt.urls')),
 
     url(r'^api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^admin/django-ses/', include('django_ses.urls')),
 ]
 
 

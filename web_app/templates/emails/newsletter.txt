@@ -1,0 +1,11 @@
+===============  Venuebooker Newsletter ==================
+==========================================================
+Hi {{ email }}
+
+Thank you for signing up to our Newsletter, it will be sent out each month to tell you about all the offers going on and any excting new developments in the Venuebooker community.
+
+Regards,
+
+The Venuebooker Team              
+==========================================================          
+==========================================================

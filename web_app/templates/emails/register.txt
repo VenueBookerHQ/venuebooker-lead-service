@@ -1,0 +1,11 @@
+===================  Venuebooker =========================
+==========================================================
+Hi {{ username }}
+
+Thank you for registering for Venuebooker.com, you can now check out your profile and make enquiries to venues for your next big event!
+
+Regards,
+
+The Venuebooker Team              
+==========================================================          
+==========================================================

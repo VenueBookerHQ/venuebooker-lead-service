@@ -1,0 +1,13 @@
+===================  Venuebooker =========================
+==========================================================
+Hi {{ name }}
+
+The quote you sent to {{ user }} has been accepted!
+
+We appreciate your continued business with Venuebooker
+
+Regards,
+
+The Venuebooker Team              
+==========================================================          
+==========================================================

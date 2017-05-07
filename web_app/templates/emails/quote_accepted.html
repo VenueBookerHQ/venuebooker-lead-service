@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Quote Accepted</title>
+
+
+</head>
+<body>
+<div class="email-background" style="background:#eeeeee;padding: 10px;">
+
+<div class="email-container" style="max-width:500px;background: white;font-family: sans-serif;margin: 0 auto;overflow: hidden;border-radius: 5px;text-align: center;">
+<a href="venuebooker-app.herokuapp.com">
+<img src="http://venuebooker-app.herokuapp.com/static/images/vblogo.jpg" style="width: 80%; margin:0 auto;">
+</a>
+<br>
+<h1>Quote Accepted!</h1>
+
+
+<p>Hi {{ name }}<p>
+<br>
+<p>The quote you sent to {{ user }} has been accepted!</p>
+
+<p>We appreciate your continued business with Venuebooker</p>
+
+<div class="cta" style="margin: 20px;">
+<a href="venuebooker-app.herokuapp.com/login" style="text-decoration: none;display: inline-block;background:#3d87f5;color: white;padding: 10px 20px 10px;border-radius: 5px;">View the quote now!</a>
+</div>
+
+<p>Regards,</p>
+
+<p>The Venuebooker Team</p> 
+
+</div>
+<div class="footer">
+Venuebooker | <a href="">Unsubscribe</a>
+</div>
+</body>
+
+
+
+
+</html>

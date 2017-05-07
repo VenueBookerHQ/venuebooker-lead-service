@@ -2,107 +2,46 @@
 {% load staticfiles %}
 
 {% block content %}
-        <article class="parallax-slider">
-            <div class="tp-banner-container">
-                <div id="banner3" class="tp-banner">
-                    <ul>
-                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1000"
-                            data-thumb="% static 'uploads/home_slider_01.jpg' %}" data-saveperformance="off" data-title="Parallax 3D">
-                            <img src="{% static 'images/dummy.png' %}" alt="greenbg"
-                                 data-lazyload="{% static 'uploads/home_slider_01.jpg' %}" data-bgposition="center top"
-                                 data-bgfit="cover" data-bgrepeat="no-repeat" style="opacity:0.5">
-                            <div class="tp-caption slider-title tp-fade tp-resizeme rs-parallaxlevel-2"
-                                 data-x="center"
-                                 data-y="361"
-                                 data-speed="1000"
-                                 data-start="800"
-                                 data-easing="Power3.easeInOut"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 data-endspeed="300"
-                                 style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">
-                                VENUE BOOKING MADE EASY
-                            </div>
-                            <div class="tp-caption slider-title1 tp-fade tp-resizeme rs-parallaxlevel-2"
-                                 data-x="center"
-                                 data-y="491"
-                                 data-speed="1000"
-                                 data-start="1000"
-                                 data-easing="Power3.easeInOut"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 data-endspeed="300"
-                                 style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;height:25px">
-                                Discover the perfect venue that matches</br> your needs and requirements
-                            </div>
-                        </li>
-
-                        <li data-transition="slideup" data-slotamount="7" data-masterspeed="1000"
-                            data-thumb="uploads/home_slider_02.jpg" data-saveperformance="off" data-title="Parallax 3D">
-                            <img src="{% static 'images/dummy.png' %}" alt="greenbg"
-                                 data-lazyload="{% static 'uploads/home_slider_02.jpg' %}" data-bgposition="center top"
-                                 data-bgfit="cover" data-bgrepeat="no-repeat">
-                            <div class="tp-caption slider-title tp-fade tp-resizeme rs-parallaxlevel-2"
-                                 data-x="center"
-                                 data-y="361"
-                                 data-speed="1000"
-                                 data-start="800"
-                                 data-easing="Power3.easeInOut"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 data-endspeed="300"
-                                 style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">OUR EXPERT
-                                VENUE SERVICE IS FREE</br>
-                            </div>
-                            <div class="tp-caption slider-title1 tp-fade tp-resizeme rs-parallaxlevel-2"
-                                 data-x="center"
-                                 data-y="491"
-                                 data-speed="1000"
-                                 data-start="1000"
-                                 data-easing="Power3.easeInOut"
-                                 data-elementdelay="0.1"
-                                 data-endelementdelay="0.1"
-                                 data-endspeed="300"
-                                 style="z-index: 5; max-width: auto; max-height: auto; white-space: nowrap;">We gurantee
-                                to always match a Venue's best prices!
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+				<br>
+				<br>
+				<br>
+				<br>
+                <h3>Login</h3>
             </div>
-        </article>
-
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
         <section class="section clearfix">
             <div class="container">
                 <div class="top-destinations clearfix">
-                    <div class="hotel-title text-center">
-                        <h3>Login</h3>
-                        <hr>
-                    </div>
 
                     <div class="row">
-			<div class ="col-sm-12 col md-7">
+			<div class ="col-sm-12 col-md-12">
 				<div class ="panel panel-default">
 					<div class ="panel-body">
                         {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                         {% endif %}
-						<form class ="form-horizontal" role="form" action="{% url 'login_user'%}" method="post" enctype="multipart/form-data">
+						<form class ="form-horizontal" role="form" action="{% url 'login'%}" method="post" enctype="multipart/form-data">
 							{% csrf_token %}
 							<div class="form-group">
 		                    <label class="control-label col-sm-2" for="id_username">Username</label>
-		                    <div class="col-sm-10">
-                                <input id="id_username" maxlength="30" name="username" type="text">
+		                    <div class="col-sm-3">
+                                <input id="id_username" class="form-control" maxlength="30" name="username" type="text">
                             </div>
 	                        </div>
                             <div class="form-group">
 		                    <label class="control-label col-sm-2" for="id_password">Password</label>
-		                    <div class="col-sm-10">
-                                <input id="id_password" maxlength="30" name="password" type="password">
+		                    <div class="col-sm-3">
+                                <input id="id_password" class="form-control" maxlength="30" name="password" type="password">
                             </div>
 	                        </div>
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-success">Submit</button>
+								<button type="submit" class="btn btn-primary btn-lg border-radius">Login</button>
 							</div>
 						</form>
                     </div>
@@ -120,6 +59,11 @@
                         <a href="{% url "social:begin" "twitter" %}">
                         <img src="{% static 'images/twitter.png' %}" >
                         </a>
+						</br>
+						<a href="{% url "social:begin" "linkedin-oauth2" %}">
+                        <img src="{% static 'images/linkedin.png' %}" >
+                        </a>
+						</br>
                     </div>
 				</div>
 			</div>
@@ -198,77 +142,4 @@
                 </div><!-- end row -->
             </div><!-- end container -->
         </section><!-- end section -->
-
-        <footer class="footer clearfix">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="widget">
-                            <div class="widget-title">
-                                <h3>NEWSLETTER</h3>
-                            </div><!-- end title -->
-                            <div class="newsletterwidget">
-                                <p>Subscribe to our newsletter to receive news & updates. We promise not spamming you,
-                                    super promise! </p>
-                                <form id="newsletter" class="form-inline">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control border-radius"
-                                               placeholder="Your email here">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-lg border-radius">Send</button>
-                                </form>
-                            </div><!-- end newsletter widget -->
-                        </div><!-- end widget -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
-            </div><!-- end container -->
-        </footer><!-- end copyrights -->
-
-        <div class="copyrights clearfix">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-left">
-                        <p>VENUEBOOKER 2016. ALL RIGHT RESERVED</p>
-                    </div><!-- end col -->
-
-                    <div class="col-md-6 text-right">
-                        <div class="social-footer">
-                            <a href="https://www.facebook.com/Venuebooker.info" title="Facebook"><i class="icon-facebook"></i></a>
-                            <a href="https://twitter.com/Venuebooker" title="Twitter"><i class="icon-twitter"></i></a>
-                            <a href="https://in.pinterest.com/v6606/" title="Pinterest"><i class="icon-pinterest"></i></a>
-                            <!--<a href="#" title="SU.PR"><i class="icon-stumbleupon"></i></a> -->
-                            <a href="https://www.instagram.com/venuebooker_/" title="Instagram"><i class="icon-instagrem"></i></a>
-                            <!--<a href="#" title="Dribbble"><i class="icon-dribbble"></i></a>
-                            <a href="#" title="Vimeo"><i class="icon-vimeo"></i></a> -->
-                            <a href="http://venuebookerblog.tumblr.com/" title="Tumblr"><i class="icon-tumblr"></i></a>
-                            <a href="#" title="RSS"><i class="icon-rss"></i></a>
-                        </div><!-- end social-footer -->
-                    </div><!-- end col -->
-                </div><!-- end row -->
-            </div><!-- end container -->
-        </div><!-- end copyrights -->
-    </div><!-- end wrapper -->
-
-    <!-- Template core JavaScript's
-    ================================================== -->
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/jquery-ui.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/retina.js' %}"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/circle.js' %}"></script>
-    <script src="{% static 'js/progress.js' %}"></script>
-    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
-    <script src="{% static 'js/contact.js' %}"></script>
-    <script src="{% static 'js/parallax.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.js' %}"></script>
-    <script src="{% static 'js/bootstrap-select.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}"></script>
-
-    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
-    <script src="{% static 'rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
-    <script src="{% static 'rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
-    <script src="{% static 'js/revslider.js' %}"></script>
-
-
 {% endblock %}

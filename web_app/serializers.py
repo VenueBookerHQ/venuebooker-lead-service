@@ -2,7 +2,7 @@ from rest_framework import serializers
 from web_app.models import *
 
 
-# Serializers define the API representation.
+# Serializers define the REST API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CustomUser
@@ -33,3 +33,23 @@ class Event_campaignSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event_campaign
         fields = ('name', 'type', 'details', 'startTime', 'endTime', 'capacity', 'cost_per_capacity_unit', 'venue')
+
+class EnquirySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Enquiry
+        fields = ('message', 'attendeeNum', 'date', 'event_campaign', 'user', 'approved')
+
+class QuoteSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Quote
+        fields = ('description', 'cost', 'accepted', 'enquiry')
+
+class Event_typeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Event_type
+        fields = ('name', 'description', 'active', 'seasonal')
+
+class LeadSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Lead
+        fields = ('name', 'email', 'budget', 'comments', 'created', 'date_from', 'date_to', 'location', 'guests', 'occasion', 'received')

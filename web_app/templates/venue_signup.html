@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<section id="page-header" class="section background">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+				<br>
+				<br>
+				<br>
+				<br>
+                 <h3>WHY USE VENUEBOOKER?</h3>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end section -->
+<section class="section clearfix">
+<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="service-style row">
+                    <div class="icon-container border-radius col-md-2 col-sm-2 col-xs-2">
+                        <i class="icon-hotel16"></i>
+                    </div>
+                    <div class="col-md-9 col-xs-9 col-sm-9">
+                        <h5>List your Venue </h5>
+                        <p>Venuebooker works with event bookers of many types, from individuals event planners to some
+                            the world's
+                            biggest companies. Get new customers by showcasing your event services on your Venuebooker
+                            platform
+                            profile page. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="service-style row">
+                    <div class="icon-container border-radius col-md-2 col-sm-2 col-xs-2">
+                        <i class="icon-airplane51"></i>
+                    </div>
+                    <div class="col-md-9 col-xs-9 col-sm-9">
+                        <h5>Accelerate your sales online</h5>
+                        <p>Receive qualifying booking enquiries from Venuebooker clients and send quotes, messages and
+                            payment
+                            information directly through your Venuebooker account.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="service-style row">
+                    <div class="icon-container border-radius col-md-2 col-sm-2 col-xs-2">
+                        <i class="icon-sedan3"></i>
+                    </div>
+                    <div class="col-md-9 col-xs-9 col-sm-9">
+                        <h5>Personal Approach</h5>
+                        <p>We ensure you benefit from proper booking enquiries from people who will get back to you. A
+                            dedicated
+                            Venuebooker team member will personally look after every booking enquiry from the first
+                            contact to
+                            confirmation. We provide front line support via phone 24/7. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-light section clearfix">
+    <div class="container">
+        <div class="hotel-title">
+            <h3>Other Venue Services </h3>
+            <hr class="left">
+        </div><!-- end hotel-title -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="service-style row">
+                    <div class="icon-container border-radius col-md-2 col-sm-2 col-xs-2">
+                        <i class="icon-hotel16"></i>
+                    </div>
+                    <div class="col-md-9 col-xs-9 col-sm-9">
+                        <h5>Online Marketing Team</h5>
+                        <p>Venuebooker can help your venue promote one event type at a time; We provide venues of all
+                            sizes with
+                            services including online marketing content creation to individually tailored marketing
+                            campings for pacific
+                            event types.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="service-style row">
+                    <div class="icon-container border-radius col-md-2 col-sm-2 col-xs-2">
+                        <i class="icon-airplane51"></i>
+                    </div>
+                    <div class="col-md-9 col-xs-9 col-sm-9">
+                        <h5>Modern Hospitality Knowledge Base</h5>
+                        <p>Venuebooker also provides consultancy services to guide venue managers in the areas of
+                            digital and social
+                            media marketing strategy and online revenue generation for venues proving event and function
+                            services... </p>
+                    </div>
+                </div>
+				<form action="{% url 'venue-add' %}" method="post">
+							{% csrf_token %}
+							{% include 'web_app/form-template.html' %}
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-primary btn-lg border-radius">Get Started</button>
+							</div>
+			    </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
